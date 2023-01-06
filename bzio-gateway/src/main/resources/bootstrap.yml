@@ -1,0 +1,26 @@
+server:
+  port: 9080
+
+spring:
+  application:
+    name: bzio-gateway
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+        # nacos 认证密码
+        username: nacos
+        # nacos 认证密码
+        password: nacos
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        # nacos 认证密码
+        username: nacos
+        # nacos 认证密码
+        password: nacos
+        # 配置文件格式
+        file-extension: yml
+        shared-configs:
+          - application.${spring.cloud.nacos.config.file-extension}

@@ -1,0 +1,19 @@
+server:
+  port: 10001
+
+spring:
+  application:
+    name: bzio-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+        file-extension: yml
+        shared-configs:
+          - application.${spring.cloud.nacos.config.file-extension}

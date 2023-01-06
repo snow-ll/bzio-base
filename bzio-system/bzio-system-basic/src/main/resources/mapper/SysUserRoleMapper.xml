@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bzio.system.mapper.SysUserRoleMapper">
+
+    <resultMap type="org.bzio.system.entity.SysUserRole" id="SysUserMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- 查询用户是否包含该角色 -->
+    <select id="queryHasRole" resultType="boolean">
+        select count(0) from sys_user_role where user_id = #{userId} and role_id = #{roleId}
+    </select>
+
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user_role(id, user_id, role_id)
+        values (#{id}, #{userId}, #{roleId})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user_role(id, user_id, role_id) values
+        <foreach collection="sysUserRoles" item="entity" separator=",">
+            (#{entity.id}, #{entity.userId}, #{entity.roleId})
+        </foreach>
+    </insert>
+
+    <!-- 删除用户权限 -->
+    <delete id="delete">
+        delete from sys_user_role where user_id = #{userId} and role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteByUserId">
+        delete from sys_user_role where user_id = #{userId}
+    </delete>
+</mapper>
+

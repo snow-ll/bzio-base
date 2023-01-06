@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bzio.system.mapper.SysMenuMapper">
+
+    <resultMap type="org.bzio.system.entity.SysMenu" id="SysMenuMap">
+        <result property="menuId" column="menu_id" jdbcType="VARCHAR"/>
+        <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <result property="orderNum" column="order_num" jdbcType="VARCHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="isFrame" column="is_frame" jdbcType="INTEGER"/>
+        <result property="isCache" column="is_cache" jdbcType="INTEGER"/>
+        <result property="menuType" column="menu_type" jdbcType="VARCHAR"/>
+        <result property="visible" column="visible" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="perms" column="perms" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createName" column="create_name" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateName" column="update_name" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="selectMenu">
+        select
+            m.menu_id, m.menu_name, m.parent_id, m.order_num, m.path, m.component, m.is_frame,
+            m.is_cache, m.menu_type, m.visible, m.status, m.perms, m.icon,
+            m.create_by, m.create_name, m.create_date, m.update_by, m.update_name, m.update_date,
+            m.remark
+        from sys_menu m
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysMenuMap">
+        <include refid="selectMenu"/>
+        where m.menu_id = #{menuId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="SysMenuMap">
+        <include refid="selectMenu"/>
+        <where>
+            <if test="menuId != null and menuId != ''">
+                and m.menu_id = #{menuId}
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and m.menu_name = #{menuName}
+            </if>
+            <if test="parentId != null">
+                and m.parent_id = #{parentId}
+            </if>
+            <if test="orderNum != null">
+                and m.order_num = #{orderNum}
+            </if>
+            <if test="path != null and path != ''">
+                and m.path = #{path}
+            </if>
+            <if test="component != null and component != ''">
+                and m.component = #{component}
+            </if>
+            <if test="isFrame != null">
+                and m.is_frame = #{isFrame}
+            </if>
+            <if test="isCache != null">
+                and m.is_cache = #{isCache}
+            </if>
+            <if test="menuType != null and menuType != ''">
+                and m.menu_type = #{menuType}
+            </if>
+            <if test="visible != null and visible != ''">
+                and m.visible = #{visible}
+            </if>
+            <if test="status != null and status != ''">
+                and m.status = #{status}
+            </if>
+            <if test="perms != null and perms != ''">
+                and m.perms = #{perms}
+            </if>
+            <if test="icon != null and icon != ''">
+                and m.icon = #{icon}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and m.create_by = #{createBy}
+            </if>
+            <if test="createName != null and createName != ''">
+                and m.create_name = #{createName}
+            </if>
+            <if test="createDate != null">
+                and m.create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and m.update_by = #{updateBy}
+            </if>
+            <if test="updateName != null and updateName != ''">
+                and m.update_name = #{updateName}
+            </if>
+            <if test="updateDate != null">
+                and m.update_date = #{updateDate}
+            </if>
+            <if test="remark != null and remark != ''">
+                and m.remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryPermByUserId" resultType="java.lang.String">
+        select
+            m.perms
+        from sys_menu m
+                 left join sys_role_menu rm on rm.menu_id = m.menu_id
+                 left join sys_user_role ur on ur.role_id = rm.role_id
+        where ur.user_id = #{userId}
+    </select>
+
+    <select id="queryTreeNode" resultType="org.bzio.common.core.web.entity.TreeNode">
+        select menu_id "id", menu_name "label", parent_id "pid" from sys_menu
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="menuId" useGeneratedKeys="true">
+        insert into sys_menu(menu_id, menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values (#{menuId}, #{menuName}, #{parentId}, #{orderNum}, #{path}, #{component}, #{isFrame}, #{isCache}, #{menuType}, #{visible}, #{status}, #{perms}, #{icon}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="menuId" useGeneratedKeys="true">
+        insert into sys_menu(menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.menuName}, #{entity.parentId}, #{entity.orderNum}, #{entity.path}, #{entity.component}, #{entity.isFrame}, #{entity.isCache}, #{entity.menuType}, #{entity.visible}, #{entity.status}, #{entity.perms}, #{entity.icon}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="menuId" useGeneratedKeys="true">
+        insert into sys_menu(menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.menuName}, #{entity.parentId}, #{entity.orderNum}, #{entity.path}, #{entity.component}, #{entity.isFrame}, #{entity.isCache}, #{entity.menuType}, #{entity.visible}, #{entity.status}, #{entity.perms}, #{entity.icon}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        menu_name = values(menu_name),
+        parent_id = values(parent_id),
+        order_num = values(order_num),
+        path = values(path),
+        component = values(component),
+        is_frame = values(is_frame),
+        is_cache = values(is_cache),
+        menu_type = values(menu_type),
+        visible = values(visible),
+        status = values(status),
+        perms = values(perms),
+        icon = values(icon),
+        create_by = values(create_by),
+        create_name = values(create_name),
+        create_date = values(create_date),
+        update_by = values(update_by),
+        update_name = values(update_name),
+        update_date = values(update_date),
+        remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_menu
+        <set>
+            menu_name = #{menuName},
+            parent_id = #{parentId},
+            order_num = #{orderNum},
+            path = #{path},
+            component = #{component},
+            is_frame = #{isFrame},
+            is_cache = #{isCache},
+            menu_type = #{menuType},
+            visible = #{visible},
+            status = #{status},
+            perms = #{perms},
+            icon = #{icon},
+            create_by = #{createBy},
+            create_name = #{createName},
+            create_date = #{createDate},
+            update_by = #{updateBy},
+            update_name = #{updateName},
+            update_date = #{updateDate},
+            remark = #{remark},
+        </set>
+        where menu_id = #{menuId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sys_menu where menu_id = #{menuId}
+    </delete>
+
+</mapper>
+

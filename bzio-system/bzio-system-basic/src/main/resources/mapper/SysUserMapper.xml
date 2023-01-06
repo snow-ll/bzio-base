@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bzio.system.mapper.SysUserMapper">
+
+    <resultMap type="org.bzio.system.entity.SysUser" id="SysUserMap">
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="idCard" column="id_card" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="fax" column="fax" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
+        <result property="loginIp" column="login_ip" jdbcType="VARCHAR"/>
+        <result property="loginDate" column="login_date" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createName" column="create_name" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateName" column="update_name" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="selectUser">
+        select
+            u.user_id, u.user_name, u.password, u.nick_name, u.birthday, u.sex, u.id_card, u.phone_number,
+            u.email, u.fax, u.avatar, u.status, u.del_flag, u.login_ip, u.login_date,
+            u.create_by, u.create_name, u.create_date, u.update_by, u.update_name, u.update_date,
+            u.remark
+        from sys_user u
+    </sql>
+
+    <select id="queryByUserId" resultMap="SysUserMap">
+        <include refid="selectUser"/>
+        where u.user_id = #{userId}
+    </select>
+
+    <select id="queryByUserName" resultMap="SysUserMap">
+        <include refid="selectUser"/>
+        where u.user_name = #{userName}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAll" resultMap="SysUserMap">
+        <include refid="selectUser"/>
+        left join sys_user_dept ud on ud.user_id=u.user_id
+        left join sys_dept d on d.dept_id=ud.dept_id
+        <where>
+            <if test="userId != null and userId != ''">
+                and u.user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and u.user_name = #{userName}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and u.nick_name = #{nickName}
+            </if>
+            <if test="birthday != null">
+                and u.birthday = #{birthday}
+            </if>
+            <if test="sex != null">
+                and u.sex = #{sex}
+            </if>
+            <if test="idCard != null and idCard != ''">
+                and u.id_card = #{idCard}
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                and u.phone_number = #{phoneNumber}
+            </if>
+            <if test="email != null and email != ''">
+                and u.email = #{email}
+            </if>
+            <if test="fax != null and fax != ''">
+                and u.fax = #{fax}
+            </if>
+            <if test="status != null and status != ''">
+                and u.status = #{status}
+            </if>
+            <if test="delFlag != null">
+                and u.del_flag = #{delFlag}
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                and u.login_ip = #{loginIp}
+            </if>
+            <if test="loginDate != null">
+                and u.login_date = #{loginDate}
+            </if>
+            <if test="deptId != null and deptId != ''">
+                and d.dept_id = #{deptId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into sys_user(user_id, user_name, password, nick_name, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values (#{userId}, #{userName}, #{password}, #{nickName}, #{birthday}, #{sex}, #{idCard}, #{phoneNumber}, #{email}, #{fax}, #{avatar}, #{status}, #{delFlag}, #{loginIp}, #{loginDate}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into sys_user(user_name, password, nick_name, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userName}, #{entity.password}, #{entity.nickName}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into sys_user(user_name, password, nick_name, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userName}, #{entity.password}, #{entity.nickName}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        user_name = values(user_name),
+        password = values(password),
+        nick_name = values(nick_name),
+        birthday = values(birthday),
+        sex = values(sex),
+        id_card = values(id_card),
+        phone_number = values(phone_number),
+        email = values(email),
+        fax = values(fax),
+        avatar = values(avatar),
+        status = values(status),
+        del_flag = values(del_flag),
+        login_ip = values(login_ip),
+        login_date = values(login_date),
+        create_by = values(create_by),
+        create_name = values(create_name),
+        create_date = values(create_date),
+        update_by = values(update_by),
+        update_name = values(update_name),
+        update_date = values(update_date),
+        remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_user
+        <set>
+            user_name = #{userName},
+            password = #{password},
+            nick_name = #{nickName},
+            birthday = #{birthday},
+            sex = #{sex},
+            id_card = #{idCard},
+            phone_number = #{phoneNumber},
+            email = #{email},
+            fax = #{fax},
+            avatar = #{avatar},
+            status = #{status},
+            del_flag = #{delFlag},
+            login_ip = #{loginIp},
+            login_date = #{loginDate},
+            create_by = #{createBy},
+            create_name = #{createName},
+            create_date = #{createDate},
+            update_by = #{updateBy},
+            update_name = #{updateName},
+            update_date = #{updateDate},
+            remark = #{remark},
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <update id="updateLoginInfo">
+        update sys_user set login_ip = #{loginIp}, login_date = #{loginDate} where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteByUserName">
+        delete from sys_user where user_name = #{userName}
+    </delete>
+
+</mapper>
+
