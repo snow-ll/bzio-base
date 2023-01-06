@@ -1,7 +1,7 @@
 package org.bzio.auth.controller;
 
 import org.bzio.auth.service.AuthService;
-import org.bzio.common.core.exception.system.user.UserException;
+import org.bzio.common.core.util.AesUtil;
 import org.bzio.common.core.util.DateUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.controller.BaseController;
@@ -12,9 +12,7 @@ import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.common.security.entity.LoginUser;
 import org.bzio.system.entity.SysUser;
 import org.bzio.system.mapper.SysUserMapper;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,7 +37,6 @@ public class AuthController extends BaseController {
     @Resource
     StringRedisService stringRedisService;
 
-
     /**
      * 用户登陆
      */
@@ -50,10 +47,10 @@ public class AuthController extends BaseController {
             // 登录过程
             LoginUser loginUser = authService.login(sysUser);
             // 生成token
-            key = AuthConfig.prefix + loginUser.getUserId() + DateUtil.getNowDateStr("yyyyMMdd");
+            key = loginUser.getUserId() + "_" +  DateUtil.format(loginUser.getLoginTime(), "yyyyMMddHHmmss");
             String token = jwtUtil.generateToken(sysUser.getUserName());
             // redis缓存token,
-            stringRedisService.set(key, token, AuthConfig.expiration, TimeUnit.MILLISECONDS);
+            stringRedisService.set(AuthConfig.prefix + key, token, AuthConfig.expiration, TimeUnit.MILLISECONDS);
             logger.info("登录成功！");
             // 修改最后登录的信息
             sysUserMapper.updateLoginInfo(loginUser.getIpaddr(), loginUser.getLoginTime(), loginUser.getUserId());
@@ -62,7 +59,7 @@ public class AuthController extends BaseController {
             logger.error("登录失败，异常信息：" + e);
             return AjaxResult.error("登录失败！");
         }
-        return AjaxResult.success("登录成功！", key);
+        return AjaxResult.success("登录成功！", AesUtil.encrypt(key, AuthConfig.aesKey));
     }
 
     /**
@@ -96,7 +93,7 @@ public class AuthController extends BaseController {
     public AjaxResult logOut(HttpServletRequest request) {
         String key = request.getHeader(AuthConfig.header);
         // 清楚缓存中的token
-        boolean f = stringRedisService.delete(key);
+        boolean f = stringRedisService.delete(AuthConfig.prefix + AesUtil.decrypt(key, AuthConfig.aesKey));
         // 清空springsecurity登录信息
         SecurityContextHolder.clearContext();
         if (f)
@@ -109,7 +106,10 @@ public class AuthController extends BaseController {
      * 判断用户是否已经登录
      */
     @PostMapping("/isLogin")
-    public AjaxResult isLogin(SysUser sysUser) {
-        return AjaxResult.success(StringUtil.isNotEmpty(stringRedisService.get("")));
+    public AjaxResult isLogin(String userName) {
+        SysUser user = sysUserMapper.queryByUserName(userName);
+        String key = AuthConfig.prefix + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), "yyyyMMddHHmmss");
+        String token = stringRedisService.get(key);
+        return AjaxResult.success(StringUtil.isNotEmpty(token));
     }
 }

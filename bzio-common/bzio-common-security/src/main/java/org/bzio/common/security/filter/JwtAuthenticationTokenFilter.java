@@ -1,5 +1,6 @@
 package org.bzio.common.security.filter;
 
+import org.bzio.common.core.util.AesUtil;
 import org.bzio.common.core.util.JwtUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.config.AuthConfig;
@@ -42,16 +43,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(AuthConfig.header);
         if (StringUtil.isNotEmpty(authHeader)) {
-            String authToken = stringRedisService.get(authHeader);
+            String authToken = stringRedisService.get(AuthConfig.prefix + AesUtil.decrypt(authHeader, AuthConfig.aesKey));
             String username = jwtUtil.getUserNameFromToken(authToken);
-            if (authHeader.startsWith(AuthConfig.prefix)) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-                if (jwtUtil.validateToken(authToken, userDetails.getUsername())) {
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    logger.info("authenticated user:{}", username);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            if (jwtUtil.validateToken(authToken, userDetails.getUsername())) {
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                logger.info("authenticated user:{}", username);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
         filterChain.doFilter(request, response);

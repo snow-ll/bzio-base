@@ -18,6 +18,8 @@ public class AuthConfig {
 
     public static Long expiration;
 
+    public static String aesKey;
+
     public String getHeader() {
         return header;
     }
@@ -48,5 +50,13 @@ public class AuthConfig {
 
     public void setExpiration(Long expiration) {
         AuthConfig.expiration = expiration;
+    }
+
+    public String getAesKey() {
+        return aesKey;
+    }
+
+    public void setAesKey(String aesKey) {
+        AuthConfig.aesKey = aesKey;
     }
 }

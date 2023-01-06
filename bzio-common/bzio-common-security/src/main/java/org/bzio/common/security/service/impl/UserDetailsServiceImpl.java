@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +35,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     SysMenuMapper sysMenuMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         SysUser user = sysUserMapper.queryByUserName(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("未查询到相关用户信息！");
+        }
         return new LoginUser(user.getUserId(),
                              user.getUserName(),
                              user.getPassword(),

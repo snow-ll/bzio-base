@@ -3,7 +3,6 @@ package org.bzio.common.core.exception;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  *
  * @author: snow
  */
-@Order(9)
 @RestControllerAdvice
 public class ExceptionHandlerResolver {
 
