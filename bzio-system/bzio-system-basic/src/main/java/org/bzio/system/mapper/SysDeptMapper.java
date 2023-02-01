@@ -1,7 +1,6 @@
 package org.bzio.system.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.system.entity.SysDept;
 import org.bzio.system.entity.TreeSelect;
 

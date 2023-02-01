@@ -60,7 +60,7 @@ public class SysDept extends BaseEntity {
     /**
      * 部门状态:0正常,1停用
      */
-    private String status;
+    private Integer status;
     /**
      * 删除标志（0代表存在 1代表删除）
      */
@@ -68,7 +68,7 @@ public class SysDept extends BaseEntity {
     /**
      * 子部门
      */
-    private List<SysDept> children = new ArrayList<SysDept>();
+    private List<SysDept> children = new ArrayList<>();
 
     public String getDeptId() {
         return deptId;
@@ -158,11 +158,11 @@ public class SysDept extends BaseEntity {
         this.subLevel = subLevel;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

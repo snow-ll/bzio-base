@@ -11,18 +11,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AuthUtil {
 
     public static String getUserName() {
-        // 获取登录用户信息
-        LoginUser user = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userName = user.getUsername();
-
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        String userName = auth.getName();
-        return userName;
+
+        // 获取登录用户信息
+        LoginUser user = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return user.getUsername();
     }
 
     public static String getNickName() {
         LoginUser user = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String nickName = user.getNickName();
-        return nickName;
+        return user.getNickName();
     }
 }

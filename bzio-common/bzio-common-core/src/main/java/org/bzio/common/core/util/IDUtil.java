@@ -11,8 +11,6 @@ public class IDUtil {
 
     /**
      * 生成UUID
-     *
-     * @return
      */
     public static String randomUUID() {
         return UUID.randomUUID().toString();
@@ -20,8 +18,6 @@ public class IDUtil {
 
     /**
      * 简化的UUID，去掉了横线
-     *
-     * @return
      */
     public static String simpleUUID() {
         return UUID.randomUUID().toString().replace("-", "");

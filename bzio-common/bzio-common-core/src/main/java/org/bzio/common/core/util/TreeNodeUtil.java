@@ -29,11 +29,10 @@ public class TreeNodeUtil {
     public static List<TreeNode> buildTreeList(List<TreeNode> treeNodeList) {
         // 获取根节点
         // filter过滤StringUtil.isEmpty(m.getPid())的数据，查出根节点
-        return treeNodeList.stream().filter(m -> StringUtil.isEmpty(m.getPid())).map((m) -> {
+        return treeNodeList.stream().filter(m -> StringUtil.isEmpty(m.getPid())).peek((m) ->
             // 子级集合添加到根节点对象
-            m.setChildren(getChildrenList(m, treeNodeList));
-            return m;
-        }).collect(Collectors.toList());
+            m.setChildren(getChildrenList(m, treeNodeList))
+        ).collect(Collectors.toList());
     }
 
     /**
@@ -44,10 +43,9 @@ public class TreeNodeUtil {
      */
     public static List<TreeNode> getChildrenList(TreeNode node, List<TreeNode> treeNodeList) {
         // 同根节点的操作，过滤出和node节点像
-        return treeNodeList.stream().filter(item -> Objects.equals(item.getPid(), node.getId())).map(item -> {
-            item.setChildren(getChildrenList(item, treeNodeList));
-            return item;
-        }).collect(Collectors.toList());
+        return treeNodeList.stream().filter(item -> Objects.equals(item.getPid(), node.getId())).peek(item ->
+                item.setChildren(getChildrenList(item, treeNodeList))
+        ).collect(Collectors.toList());
     }
 
     /******************************************************************************************************************/

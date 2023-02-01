@@ -7,10 +7,10 @@
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
         <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
         <result property="roleSort" column="role_sort" jdbcType="INTEGER"/>
-        <result property="dataScope" column="data_scope" jdbcType="VARCHAR"/>
+        <result property="dataScope" column="data_scope" jdbcType="INTEGER"/>
         <result property="menuCheckStrictly" column="menu_check_strictly" jdbcType="INTEGER"/>
         <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="INTEGER"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createName" column="create_name" jdbcType="VARCHAR"/>

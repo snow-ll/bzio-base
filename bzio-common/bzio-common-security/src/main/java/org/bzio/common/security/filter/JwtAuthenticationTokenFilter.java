@@ -7,6 +7,7 @@ import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.redis.service.StringRedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,13 +41,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     StringRedisService stringRedisService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader(AuthConfig.header);
         if (StringUtil.isNotEmpty(authHeader)) {
             String authToken = stringRedisService.get(AuthConfig.prefix + AesUtil.decrypt(authHeader, AuthConfig.aesKey));
             String username = jwtUtil.getUserNameFromToken(authToken);
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            if (jwtUtil.validateToken(authToken, userDetails.getUsername())) {
+            if (StringUtil.isNotEmpty(username) && jwtUtil.validateToken(authToken, username)) {
+                UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 logger.info("authenticated user:{}", username);

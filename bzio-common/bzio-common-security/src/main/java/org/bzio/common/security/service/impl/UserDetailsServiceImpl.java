@@ -51,7 +51,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * 获取权限字符
-     *
      * 自定义方式添加
      */
     private List<GrantedAuthority> getAuthorities(String userId) {
@@ -67,11 +66,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<String> perms = sysMenuMapper.queryPermByUserId(userId);
         authorities.addAll(perms);
 
-        /**
-         * 错误记录：
-         * queryPermByUserId查询返回：SysMenu类型
-         * toArray类型不同导致空指针
-         */
-        return AuthorityUtils.createAuthorityList(authorities.toArray(new String[authorities.size()]));
+        return AuthorityUtils.createAuthorityList(authorities.toArray(new String[0]));
     }
 }

@@ -27,7 +27,7 @@ public class SysRole extends BaseEntity {
     /**
      * 数据范围（1：全部数据权限 2：自定数据权限）
      */
-    private String dataScope;
+    private Integer dataScope;
     /**
      * 菜单树选择项是否关联显示
      */
@@ -39,7 +39,7 @@ public class SysRole extends BaseEntity {
     /**
      * 角色状态（0正常 1停用）
      */
-    private String status;
+    private Integer status;
     /**
      * 删除标志（0代表存在 2代表删除）
      */
@@ -77,11 +77,11 @@ public class SysRole extends BaseEntity {
         this.roleSort = roleSort;
     }
 
-    public String getDataScope() {
+    public Integer getDataScope() {
         return dataScope;
     }
 
-    public void setDataScope(String dataScope) {
+    public void setDataScope(Integer dataScope) {
         this.dataScope = dataScope;
     }
 
@@ -101,11 +101,11 @@ public class SysRole extends BaseEntity {
         this.deptCheckStrictly = deptCheckStrictly;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 /**
  * 限流规则配置类
  *
@@ -22,6 +24,6 @@ public class KeyResolverConfiguration {
     @Primary
     @Bean(value = "ipKeyResolver")
     public KeyResolver ipKeyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
+        return exchange -> Mono.just(Objects.requireNonNull(exchange.getRequest().getRemoteAddress()).getHostName());
     }
 }

@@ -54,7 +54,6 @@ public class BeanUtil extends BeanUtils {
      * 对象转map
      *
      * @param o 需要转换的对象
-     * @return
      */
     public static Map beanToMap(Object o) {
         Map<String, Object> dataMap = new HashMap<>();

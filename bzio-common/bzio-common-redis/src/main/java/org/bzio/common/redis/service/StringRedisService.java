@@ -65,16 +65,6 @@ public class StringRedisService {
     }
 
     /**
-     * 判断 key是否存在
-     *
-     * @param key 键
-     * @return true 存在 false不存在
-     */
-    public Boolean hasKey(String key) {
-        return redisTemplate.hasKey(key);
-    }
-
-    /**
      * 获得缓存的基本对象
      *
      * @param key 键值
@@ -102,5 +92,21 @@ public class StringRedisService {
      */
     public long delete(final Collection collection) {
         return redisTemplate.delete(collection);
+    }
+
+    /**
+     * 判断key是否存在
+     * @param key
+     * @return
+     */
+    public boolean exists(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    /**
+     * 判断key是否过期
+     */
+    public boolean isExpire(String key) {
+        return exists(key) && redisTemplate.opsForValue().getOperations().getExpire(key) > 0;
     }
 }

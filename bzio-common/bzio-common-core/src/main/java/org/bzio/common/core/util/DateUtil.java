@@ -1,5 +1,7 @@
 package org.bzio.common.core.util;
 
+import org.bzio.common.core.config.BaseConstant;
+
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,19 +18,16 @@ public class DateUtil {
     private static final int MONTHS_IN_A_YEAR = 12;
 
     // 确保SimpleDateFormat线程安全问题
-    private static ThreadLocal<SimpleDateFormat> threadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<SimpleDateFormat> THREAD_LOCAL = new ThreadLocal<>();
 
     /**
      * 获取SimpleDateFormat对象
-     *
-     * @param pattern
-     * @return
      */
-    private static SimpleDateFormat getDateFormat(String pattern) {
-        SimpleDateFormat format = threadLocal.get();
+    private static SimpleDateFormat getDateFormat() {
+        SimpleDateFormat format = THREAD_LOCAL.get();
         if (format == null) {
-            format = new SimpleDateFormat(pattern);
-            threadLocal.set(format);
+            format = new SimpleDateFormat(BaseConstant.YYYY_MM_DD_HH_MM_SS);
+            THREAD_LOCAL.set(format);
         }
         return format;
     }
@@ -49,35 +48,44 @@ public class DateUtil {
 
     /**
      * 获取当前时间字符串形式
-     *
-     * @param format
-     * @return
      */
-    public static String getNowDateStr(String format) {
-        return format(new Date(), format);
+    public static String getNowDateStr(String pattern) {
+        return format(new Date(), pattern);
     }
 
     /**
      * 时间类型转字符串
-     *
-     * @param date
-     * @param pattern
-     * @return
+     * 默认yyyy-MM-dd HH:mm:ss格式
+     */
+    public static String format(Date date) {
+        return format(date, BaseConstant.YYYY_MM_DD_HH_MM_SS);
+    }
+
+    /**
+     * 时间类型转字符串
      */
     public static String format(Date date, String pattern) {
-        return getDateFormat(pattern).format(date);
+        SimpleDateFormat simpleDateFormat = getDateFormat();
+        simpleDateFormat.applyPattern(pattern);
+        return simpleDateFormat.format(date);
     }
 
     /**
      * 字符串转时间类型
-     *
-     * @param date
-     * @param pattern
-     * @return
+     * 默认yyyy-MM-dd HH:mm:ss格式
+     */
+    public static Date parse(String date) {
+        return parse(date, BaseConstant.YYYY_MM_DD_HH_MM_SS);
+    }
+
+    /**
+     * 字符串转时间类型
      */
     public static Date parse(String date, String pattern) {
         try {
-            return getDateFormat(pattern).parse(date);
+            SimpleDateFormat simpleDateFormat = getDateFormat();
+            simpleDateFormat.applyPattern(pattern);
+            return simpleDateFormat.parse(date);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -85,10 +93,6 @@ public class DateUtil {
 
     /**
      * 计算两个时间相差月数
-     *
-     * @param date1
-     * @param date2
-     * @return
      */
     public static int getMonthDiff(Date date1, Date date2) {
         if (date1 == null || date2 == null) {
@@ -109,12 +113,30 @@ public class DateUtil {
         int month2 = calendar.get(Calendar.MONTH);
         int day2 = calendar.get(Calendar.DATE);
 
-        int months = 0;
+        int months;
         if (day2 >= day1) {
             months = month2 - month1;
         } else {
             months = month2 - month1 - 1;
         }
         return (year2 - year1) * MONTHS_IN_A_YEAR + months;
+    }
+
+    /**
+     * 判断时间是否处于某个时间段内
+     *
+     * @param date 需要比较的时间
+     * @param start 起始时间
+     * @param end 结束时间
+     */
+    public static boolean belongCalendar(Date date, Date start, Date end) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        Calendar after = Calendar.getInstance();
+        after.setTime(start);
+        Calendar before = Calendar.getInstance();
+        before.setTime(end);
+
+        return c.after(after) && c.before(before);
     }
 }

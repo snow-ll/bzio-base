@@ -12,10 +12,10 @@
         <result property="leader" column="leader" jdbcType="VARCHAR"/>
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
-        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
         <result property="level" column="level" jdbcType="VARCHAR"/>
         <result property="subLevel" column="sub_level" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createName" column="create_name" jdbcType="VARCHAR"/>
         <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>

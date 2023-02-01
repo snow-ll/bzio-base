@@ -12,8 +12,8 @@
         <result property="isFrame" column="is_frame" jdbcType="INTEGER"/>
         <result property="isCache" column="is_cache" jdbcType="INTEGER"/>
         <result property="menuType" column="menu_type" jdbcType="VARCHAR"/>
-        <result property="visible" column="visible" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="visible" column="visible" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="perms" column="perms" jdbcType="VARCHAR"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>

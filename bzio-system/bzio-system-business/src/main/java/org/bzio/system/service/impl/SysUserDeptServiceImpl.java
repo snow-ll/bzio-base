@@ -1,6 +1,5 @@
 package org.bzio.system.service.impl;
 
-import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.IDUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.system.entity.SysUserDept;

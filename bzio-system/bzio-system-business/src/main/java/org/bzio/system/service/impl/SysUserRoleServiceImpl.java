@@ -27,11 +27,9 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
         sysUserRoleMapper.deleteByUserId(sysUserRoles.get(0).getUserId());
 
         sysUserRoles.stream()
-                .map(sysUserRole -> {
-                    sysUserRole.setId(IDUtil.simpleUUID());
-                    return sysUserRole;
-                })
-                .collect(Collectors.toList());
+                .peek(sysUserRole ->
+                    sysUserRole.setId(IDUtil.simpleUUID())
+                ).collect(Collectors.toList());
 
         return sysUserRoleMapper.insertBatch(sysUserRoles);
     }

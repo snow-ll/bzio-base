@@ -1,7 +1,6 @@
 package org.bzio.auth.service.impl;
 
 import org.bzio.auth.service.AuthService;
-import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.IDUtil;
 import org.bzio.common.core.util.StringUtil;
@@ -14,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 认证业务服务层

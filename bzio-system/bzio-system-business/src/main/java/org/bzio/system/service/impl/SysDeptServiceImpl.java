@@ -47,8 +47,8 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      * 部门树状下拉列表
      */
     @Override
-    public List<TreeSelect> treeList(List<SysDept> sysDepts) {
-        List<SysDept> deptTrees = buildDeptTree(sysDepts);
+    public List<TreeSelect> treeList(List<SysDept> deptList) {
+        List<SysDept> deptTrees = buildDeptTree(deptList);
         return deptTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
@@ -105,23 +105,23 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      * 构建前端所需要树结构
      * 递归方式
      */
-    private List<SysDept> buildDeptTree(List<SysDept> depts) {
+    private List<SysDept> buildDeptTree(List<SysDept> deptList) {
         // 结果集
         List<SysDept> returnList = new ArrayList<>();
         // 临时集合，暂存部门id
         List<String> tempList = new ArrayList<>();
 
         // 遍历部门集合，部门id添加进入临时集合
-        for (SysDept dept : depts) {
+        for (SysDept dept : deptList) {
             tempList.add(dept.getDeptId());
         }
 
-        for (SysDept dept : depts) {
+        for (SysDept dept : deptList) {
             // tempList不包含dept父级id时，为顶级节点
             if (!tempList.contains(dept.getParentId())) {
                 // 如果是顶级节点, 遍历该父节点的所有子节点
                 // set部门t的子级部门集合
-                recursionFn(depts, dept);
+                recursionFn(deptList, dept);
                 // 将set子级集合children的部门返回
                 returnList.add(dept);
             }
@@ -129,7 +129,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
 
         // 空部门直接返回
         if (returnList.isEmpty()) {
-            returnList = depts;
+            returnList = deptList;
         }
         return returnList;
     }

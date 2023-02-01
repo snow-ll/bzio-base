@@ -7,6 +7,7 @@ import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author: snow
@@ -17,7 +18,6 @@ public class AesUtil {
 
     private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
     private static final String AES = "AES";
-    private static final String UTF8 = "utf-8";
 
     public static String encrypt(String content, String key) {
         try {
@@ -32,7 +32,7 @@ public class AesUtil {
             // 第二个参数为生成的AES密钥
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             // 获取加密内容的字节数组
-            byte[] byteContent = content.getBytes(UTF8);
+            byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
             // 密码器加密数据
             byte[] encodeContent = cipher.doFinal(byteContent);
             BASE64Encoder base64 = new BASE64Encoder();
@@ -60,7 +60,7 @@ public class AesUtil {
             // 密码器解密数据
             byte[] byteContent = cipher.doFinal(encodeContent);
             // 将解密后的数据转换为字符串返回
-            return new String(byteContent, UTF8);
+            return new String(byteContent, StandardCharsets.UTF_8);
         } catch (Exception e) {
             logger.error("解密异常，异常信息：" + e);
             return "";
