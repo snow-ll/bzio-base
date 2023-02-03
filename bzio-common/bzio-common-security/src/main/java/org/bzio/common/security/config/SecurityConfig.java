@@ -1,6 +1,7 @@
 package org.bzio.common.security.config;
 
 import org.bzio.common.security.filter.JwtAuthenticationTokenFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,10 @@ import javax.annotation.Resource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
+    @Value("${security.whitelist}")
+    private String[] WHITE_LIST;
+
     @Resource
     JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
@@ -36,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/isLogin").permitAll()
+                .antMatchers(WHITE_LIST).permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

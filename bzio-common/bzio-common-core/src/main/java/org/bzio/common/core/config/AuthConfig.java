@@ -1,6 +1,7 @@
 package org.bzio.common.core.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "jwt")
+@RefreshScope
 public class AuthConfig {
 
     public static String header;

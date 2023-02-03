@@ -20,6 +20,6 @@ public class IDUtil {
      * 简化的UUID，去掉了横线
      */
     public static String simpleUUID() {
-        return UUID.randomUUID().toString().replace("-", "");
+        return randomUUID().replace("-", "");
     }
 }
