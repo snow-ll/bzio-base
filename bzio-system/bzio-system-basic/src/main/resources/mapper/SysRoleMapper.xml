@@ -7,7 +7,6 @@
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
         <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
         <result property="roleSort" column="role_sort" jdbcType="INTEGER"/>
-        <result property="dataScope" column="data_scope" jdbcType="INTEGER"/>
         <result property="menuCheckStrictly" column="menu_check_strictly" jdbcType="INTEGER"/>
         <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="INTEGER"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
@@ -23,7 +22,7 @@
 
     <sql id="selectRole">
         select
-            r.role_id, r.role_name, r.role_key, r.role_sort, r.data_scope,
+            r.role_id, r.role_name, r.role_key, r.role_sort,
             r.menu_check_strictly, r.dept_check_strictly, r.status, r.del_flag,
             r.create_by, r.create_name, r.create_date, r.update_by, r.update_name, r.update_date,
             r.remark
@@ -51,9 +50,6 @@
             </if>
             <if test="roleSort != null">
                 and r.role_sort = #{roleSort}
-            </if>
-            <if test="dataScope != null and dataScope != ''">
-                and r.data_scope = #{dataScope}
             </if>
             <if test="menuCheckStrictly != null">
                 and r.menu_check_strictly = #{menuCheckStrictly}
@@ -101,29 +97,28 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="roleId" useGeneratedKeys="true">
-        insert into sys_role(role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_name, create_date, update_by, update_name, update_date, remark)
-        values (#{roleId}, #{roleName}, #{roleKey}, #{roleSort}, #{dataScope}, #{menuCheckStrictly}, #{deptCheckStrictly}, #{status}, #{delFlag}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
+        insert into sys_role(role_id, role_name, role_key, role_sort, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values (#{roleId}, #{roleName}, #{roleKey}, #{roleSort}, #{menuCheckStrictly}, #{deptCheckStrictly}, #{status}, #{delFlag}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
     </insert>
 
     <insert id="insertBatch" keyProperty="roleId" useGeneratedKeys="true">
-        insert into sys_role(role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        insert into sys_role(role_name, role_key, role_sort, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_name, create_date, update_by, update_name, update_date, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+        (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="roleId" useGeneratedKeys="true">
-        insert into sys_role(role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        insert into sys_role(role_name, role_key, role_sort, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_name, create_date, update_by, update_name, update_date, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+            (#{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
         </foreach>
         on duplicate key update
         role_name = values(role_name),
         role_key = values(role_key),
         role_sort = values(role_sort),
-        data_scope = values(data_scope),
         menu_check_strictly = values(menu_check_strictly),
         dept_check_strictly = values(dept_check_strictly),
         status = values(status),
@@ -149,9 +144,6 @@
             </if>
             <if test="roleSort != null">
                 role_sort = #{roleSort},
-            </if>
-            <if test="dataScope != null and dataScope != ''">
-                data_scope = #{dataScope},
             </if>
             <if test="menuCheckStrictly != null">
                 menu_check_strictly = #{menuCheckStrictly},

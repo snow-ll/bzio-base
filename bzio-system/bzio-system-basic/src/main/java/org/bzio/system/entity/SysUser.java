@@ -191,25 +191,4 @@ public class SysUser extends BaseEntity {
     public void setLoginDate(Date loginDate) {
         this.loginDate = loginDate;
     }
-
-    @Override
-    public String toString() {
-        return "SysUser{" +
-                "userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", birthday='" + birthday + '\'' +
-                ", sex=" + sex +
-                ", idCard='" + idCard + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", fax='" + fax + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", status='" + status + '\'' +
-                ", delFlag=" + delFlag +
-                ", loginIp='" + loginIp + '\'' +
-                ", loginDate=" + loginDate +
-                "} " + super.toString();
-    }
 }

@@ -1,3 +1,139 @@
+-- 基于MYSQL数据库
+
+-- 用户表
+create table bzio_base.sys_user
+(
+    USER_ID      varchar(50)  not null primary key ,
+    USER_NAME    varchar(50)  null,
+    PASSWORD     varchar(100) null,
+    NICK_NAME    varchar(100) null,
+    BIRTHDAY     timestamp    null,
+    SEX          tinyint      null,
+    ID_CARD      varchar(50)  null,
+    PHONE_NUMBER varchar(50)  null,
+    EMAIL        varchar(100) null,
+    FAX          varchar(100) null,
+    AVATAR       varchar(10)  null,
+    STATUS       char         null,
+    DEL_FLAG     tinyint      null,
+    LOGIN_IP     varchar(50)  null,
+    LOGIN_DATE   timestamp    null,
+    CREATE_BY    varchar(50)  null,
+    CREATE_NAME  varchar(50)  null,
+    CREATE_DATE  timestamp    null,
+    UPDATE_BY    varchar(50)  null,
+    UPDATE_NAME  varchar(50)  null,
+    UPDATE_DATE  timestamp    null,
+    REMARK       varchar(50)  null
+);
+
+-- 角色表
+create table bzio_base.sys_role
+(
+    ROLE_ID             varchar(50)  not null primary key,
+    ROLE_NAME           varchar(100) null,
+    ROLE_KEY            varchar(50)  null,
+    ROLE_SORT           int          null,
+    MENU_CHECK_STRICTLY int          null,
+    DEPT_CHECK_STRICTLY int          null,
+    STATUS              char         null,
+    DEL_FLAG            tinyint      null,
+    CREATE_BY           varchar(50)  null,
+    CREATE_NAME         varchar(50)  null,
+    CREATE_DATE         timestamp    null,
+    UPDATE_BY           varchar(50)  null,
+    UPDATE_NAME         varchar(50)  null,
+    UPDATE_DATE         timestamp    null,
+    REMARK              varchar(50)  null
+);
+
+-- 部门表
+create table bzio_base.sys_dept
+(
+    DEPT_ID     varchar(50)  not null
+        primary key,
+    DEPT_NAME   varchar(100) null,
+    PARENT_ID   varchar(50)  null,
+    PARENT_NAME varchar(100) null,
+    ANCESTORS   varchar(500) null,
+    ORDER_NUM   int          null,
+    LEADER      varchar(50)  null,
+    PHONE       varchar(50)  null,
+    EMAIL       varchar(100) null,
+    LEVEL       varchar(50)  null,
+    SUB_LEVEL   varchar(50)  null,
+    STATUS      char         null,
+    DEL_FLAG    tinyint      null,
+    CREATE_BY   varchar(50)  null,
+    CREATE_NAME varchar(50)  null,
+    CREATE_DATE timestamp    null,
+    UPDATE_BY   varchar(50)  null,
+    UPDATE_NAME varchar(50)  null,
+    UPDATE_DATE timestamp    null,
+    REMARK      varchar(50)  null
+);
+
+-- 菜单表
+create table bzio_base.sys_menu
+(
+    MENU_ID     varchar(50)  not null
+        primary key,
+    MENU_NAME   varchar(100) null,
+    PARENT_ID   varchar(50)  null,
+    ORDER_NUM   int          null,
+    PATH        varchar(50)  null,
+    COMPONENT   varchar(100) null,
+    IS_FRAME    char         null,
+    IS_CACHE    char         null,
+    MENU_TYPE   varchar(50)  null,
+    VISIBLE     char         null,
+    STATUS      char         null,
+    PERMS       varchar(50)  null,
+    ICON        varchar(50)  null,
+    CREATE_BY   varchar(50)  null,
+    CREATE_NAME varchar(50)  null,
+    CREATE_DATE timestamp    null,
+    UPDATE_BY   varchar(50)  null,
+    UPDATE_NAME varchar(50)  null,
+    UPDATE_DATE timestamp    null,
+    REMARK      varchar(50)  null
+);
+
+-- 关联表
+create table bzio_base.sys_user_role
+(
+    ID      varchar(50) not null primary key,
+    USER_ID varchar(50) null,
+    ROLE_ID varchar(50) null
+);
+
+create table bzio_base.sys_role_menu
+(
+    ID      varchar(50) not null primary key,
+    ROLE_ID varchar(50) null,
+    MENU_ID varchar(50) null
+);
+
+create table bzio_base.sys_user_dept
+(
+    ID      varchar(50) not null primary key,
+    USER_ID varchar(50) null,
+    DEPT_ID varchar(50) null
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- 基于DM数据库
 
 -- 用户表
@@ -57,7 +193,6 @@ CREATE TABLE "BZIO-BASE"."SYS_ROLE"
     "ROLE_NAME" VARCHAR2(100),
     "ROLE_KEY" VARCHAR2(50),
     "ROLE_SORT" INTEGER,
-    "DATASCOPE" CHAR(1),
     "MENU_CHECK_STRICTLY" INTEGER,
     "DEPT_CHECK_STRICTLY" INTEGER,
     "STATUS" CHAR(1),
@@ -74,7 +209,6 @@ COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."ROLE_ID" IS '角色主键';
 COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."ROLE_NAME" IS '角色名称';
 COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."ROLE_KEY" IS '角色权限字符串';
 COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."ROLE_SORT" IS '显示顺序';
-COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."DATASCOPE" IS '数据范围（1：全部数据权限 2：自定数据权限）';
 COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."MENU_CHECK_STRICTLY" IS '菜单树选择项是否关联显示';
 COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."DEPT_CHECK_STRICTLY" IS '部门树选择项是否关联显示';
 COMMENT ON COLUMN "BZIO-BASE"."SYS_ROLE"."STATUS" IS '角色状态（0正常 1停用）';

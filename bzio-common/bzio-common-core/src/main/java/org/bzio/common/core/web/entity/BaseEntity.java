@@ -99,14 +99,12 @@ public class BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "BaseEntity{" +
-                "createBy='" + createBy + '\'' +
+        return  ", createBy='" + createBy + '\'' +
                 ", createName='" + createName + '\'' +
                 ", createDate=" + createDate +
                 ", updateBy='" + updateBy + '\'' +
                 ", updateName='" + updateName + '\'' +
                 ", updateDate=" + updateDate +
-                ", remark='" + remark + '\'' +
-                '}';
+                ", remark='" + remark + '\'';
     }
 }

@@ -15,6 +15,7 @@
         <module>bzio-common-core</module>
         <module>bzio-common-redis</module>
         <module>bzio-common-security</module>
+        <module>bzio-common-log</module>
     </modules>
 
     <properties>

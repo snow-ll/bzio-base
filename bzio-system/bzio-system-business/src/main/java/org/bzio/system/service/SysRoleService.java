@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface SysRoleService {
 
-    SysRole queryInfo(String userName);
+    SysRole queryInfo(String roleId);
 
     List<SysRole> queryAll(SysRole sysRole);
 

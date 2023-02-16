@@ -77,13 +77,4 @@ public class TreeSelect implements Serializable {
     public void setPid(String pid) {
         this.pid = pid;
     }
-
-    @Override
-    public String toString() {
-        return "TreeSelect{" +
-                "id='" + id + '\'' +
-                ", label='" + label + '\'' +
-                ", children=" + children +
-                '}';
-    }
 }

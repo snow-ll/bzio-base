@@ -25,10 +25,6 @@ public class SysRole extends BaseEntity {
      */
     private Integer roleSort;
     /**
-     * 数据范围（1：全部数据权限 2：自定数据权限）
-     */
-    private Integer dataScope;
-    /**
      * 菜单树选择项是否关联显示
      */
     private Integer menuCheckStrictly;
@@ -75,14 +71,6 @@ public class SysRole extends BaseEntity {
 
     public void setRoleSort(Integer roleSort) {
         this.roleSort = roleSort;
-    }
-
-    public Integer getDataScope() {
-        return dataScope;
-    }
-
-    public void setDataScope(Integer dataScope) {
-        this.dataScope = dataScope;
     }
 
     public Integer getMenuCheckStrictly() {
