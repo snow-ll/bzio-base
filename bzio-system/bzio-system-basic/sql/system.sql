@@ -121,7 +121,24 @@ create table bzio_base.sys_user_dept
     DEPT_ID varchar(50) null
 );
 
-
+-- 系统日志表
+create table bzio_base.sys_log
+(
+    LOG_ID     varchar(50)  not null
+        primary key,
+    TITLE               varchar(50)  null,
+    BUSINESS_NAME       varchar(50)  null,
+    REQUEST_METHOD      varchar(50)  null,
+    OPERATION_NAME      varchar(50)  null,
+    OPERATION_DEPT      varchar(50)  null,
+    OPERATION_URL       varchar(100) null,
+    OPERATION_IP        varchar(50)  null,
+    OPERATION_TIME      timestamp    null,
+    OPERATION_PARAM     varchar(200) null,
+    OPERATION_RESULT    varchar(200) null,
+    ERROR_MSG           varchar(100) null,
+    STATUS              char         null,
+);
 
 
 

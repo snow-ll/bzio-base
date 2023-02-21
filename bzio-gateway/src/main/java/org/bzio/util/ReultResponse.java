@@ -19,15 +19,15 @@ import java.nio.charset.Charset;
  *
  * @author snow
  */
-public class WebfluxResponseUtil {
+public class ReultResponse {
 
     public static Mono<Void> responseWrite(ServerWebExchange exchange, int httpStatus, AjaxResult result) {
 
-        String resultStr = "";
+        String resultStr;
         try {
             resultStr = JsonUtil.toJSONString(result);
         } catch (JsonProcessingException e) {
-
+            throw new RuntimeException(e);
         }
 
         if (httpStatus == 0) {
@@ -40,8 +40,6 @@ public class WebfluxResponseUtil {
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
         DataBuffer buffer = dataBufferFactory.wrap(resultStr.getBytes(Charset.defaultCharset()));
-        return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
-            DataBufferUtils.release(buffer);
-        });
+        return response.writeWith(Mono.just(buffer)).doOnError((error) -> DataBufferUtils.release(buffer));
     }
 }
