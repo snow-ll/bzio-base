@@ -65,7 +65,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
 
         // 判断传入的id是否为空
         if (StringUtil.isEmpty(sysMenu.getMenuId())) {
-            sysMenu.setMenuId(IDUtil.simpleUUID());
+            sysMenu.setMenuId(IdUtil.simpleUUID());
             sysMenu.setCreateBy(userName);
             sysMenu.setCreateName(nickName);
             sysMenu.setCreateDate(DateUtil.getNowDate());

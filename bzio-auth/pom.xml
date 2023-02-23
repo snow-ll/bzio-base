@@ -33,7 +33,7 @@
 
         <dependency>
             <groupId>org.bzio</groupId>
-            <artifactId>bzio-common-security</artifactId>
+            <artifactId>bzio-common-log</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class AesUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(AesUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(AesUtil.class);
 
     private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
     private static final String AES = "AES";
@@ -39,7 +39,7 @@ public class AesUtil {
             // 将加密后的数据转换为字符串返回
             return base64.encode(encodeContent);
         } catch (Exception e) {
-            logger.error("加密异常，异常信息：" + e);
+            log.error("加密异常，异常信息：", e);
             return "";
         }
     }
@@ -62,7 +62,7 @@ public class AesUtil {
             // 将解密后的数据转换为字符串返回
             return new String(byteContent, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            logger.error("解密异常，异常信息：" + e);
+            log.error("解密异常，异常信息：", e);
             return "";
         }
     }

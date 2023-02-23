@@ -3,141 +3,139 @@
 -- 用户表
 create table bzio_base.sys_user
 (
-    USER_ID      varchar(50)  not null primary key ,
-    USER_NAME    varchar(50)  null,
-    PASSWORD     varchar(100) null,
-    NICK_NAME    varchar(100) null,
-    BIRTHDAY     timestamp    null,
-    SEX          tinyint      null,
-    ID_CARD      varchar(50)  null,
-    PHONE_NUMBER varchar(50)  null,
-    EMAIL        varchar(100) null,
-    FAX          varchar(100) null,
-    AVATAR       varchar(10)  null,
-    STATUS       char         null,
-    DEL_FLAG     tinyint      null,
-    LOGIN_IP     varchar(50)  null,
-    LOGIN_DATE   timestamp    null,
-    CREATE_BY    varchar(50)  null,
-    CREATE_NAME  varchar(50)  null,
-    CREATE_DATE  timestamp    null,
-    UPDATE_BY    varchar(50)  null,
-    UPDATE_NAME  varchar(50)  null,
-    UPDATE_DATE  timestamp    null,
-    REMARK       varchar(50)  null
+    user_id      varchar(50)  not null primary key ,
+    user_name    varchar(50)  null,
+    password     varchar(100) null,
+    nick_name    varchar(100) null,
+    birthday     timestamp    null,
+    sex          tinyint      null,
+    id_card      varchar(50)  null,
+    phone_number varchar(50)  null,
+    email        varchar(100) null,
+    fax          varchar(100) null,
+    avatar       varchar(10)  null,
+    status       tinyint      null,
+    del_flag     tinyint      null,
+    login_ip     varchar(50)  null,
+    login_date   timestamp    null,
+    create_by    varchar(50)  null,
+    create_name  varchar(50)  null,
+    create_date  timestamp    null,
+    update_by    varchar(50)  null,
+    update_name  varchar(50)  null,
+    update_date  timestamp    null,
+    remark       varchar(50)  null
 );
 
 -- 角色表
 create table bzio_base.sys_role
 (
-    ROLE_ID             varchar(50)  not null primary key,
-    ROLE_NAME           varchar(100) null,
-    ROLE_KEY            varchar(50)  null,
-    ROLE_SORT           int          null,
-    MENU_CHECK_STRICTLY int          null,
-    DEPT_CHECK_STRICTLY int          null,
-    STATUS              char         null,
-    DEL_FLAG            tinyint      null,
-    CREATE_BY           varchar(50)  null,
-    CREATE_NAME         varchar(50)  null,
-    CREATE_DATE         timestamp    null,
-    UPDATE_BY           varchar(50)  null,
-    UPDATE_NAME         varchar(50)  null,
-    UPDATE_DATE         timestamp    null,
-    REMARK              varchar(50)  null
+    role_id             varchar(50)  not null primary key,
+    role_name           varchar(100) null,
+    role_key            varchar(50)  null,
+    role_sort           int          null,
+    menu_check_strictly int          null,
+    dept_check_strictly int          null,
+    status              tinyint      null,
+    del_flag            tinyint      null,
+    create_by           varchar(50)  null,
+    create_name         varchar(50)  null,
+    create_date         timestamp    null,
+    update_by           varchar(50)  null,
+    update_name         varchar(50)  null,
+    update_date         timestamp    null,
+    remark              varchar(50)  null
 );
 
 -- 部门表
 create table bzio_base.sys_dept
 (
-    DEPT_ID     varchar(50)  not null
-        primary key,
-    DEPT_NAME   varchar(100) null,
-    PARENT_ID   varchar(50)  null,
-    PARENT_NAME varchar(100) null,
-    ANCESTORS   varchar(500) null,
-    ORDER_NUM   int          null,
-    LEADER      varchar(50)  null,
-    PHONE       varchar(50)  null,
-    EMAIL       varchar(100) null,
-    LEVEL       varchar(50)  null,
-    SUB_LEVEL   varchar(50)  null,
-    STATUS      char         null,
-    DEL_FLAG    tinyint      null,
-    CREATE_BY   varchar(50)  null,
-    CREATE_NAME varchar(50)  null,
-    CREATE_DATE timestamp    null,
-    UPDATE_BY   varchar(50)  null,
-    UPDATE_NAME varchar(50)  null,
-    UPDATE_DATE timestamp    null,
-    REMARK      varchar(50)  null
+    dept_id     varchar(50)  not null primary key,
+    dept_name   varchar(100) null,
+    parent_id   varchar(50)  null,
+    parent_name varchar(100) null,
+    ancestors   varchar(500) null,
+    order_num   int          null,
+    leader      varchar(50)  null,
+    phone       varchar(50)  null,
+    email       varchar(100) null,
+    level       varchar(50)  null,
+    sub_level   varchar(50)  null,
+    status      tinyint      null,
+    del_flag    tinyint      null,
+    create_by   varchar(50)  null,
+    create_name varchar(50)  null,
+    create_date timestamp    null,
+    update_by   varchar(50)  null,
+    update_name varchar(50)  null,
+    update_date timestamp    null,
+    remark      varchar(50)  null
 );
 
 -- 菜单表
 create table bzio_base.sys_menu
 (
-    MENU_ID     varchar(50)  not null
-        primary key,
-    MENU_NAME   varchar(100) null,
-    PARENT_ID   varchar(50)  null,
-    ORDER_NUM   int          null,
-    PATH        varchar(50)  null,
-    COMPONENT   varchar(100) null,
-    IS_FRAME    char         null,
-    IS_CACHE    char         null,
-    MENU_TYPE   varchar(50)  null,
-    VISIBLE     char         null,
-    STATUS      char         null,
-    PERMS       varchar(50)  null,
-    ICON        varchar(50)  null,
-    CREATE_BY   varchar(50)  null,
-    CREATE_NAME varchar(50)  null,
-    CREATE_DATE timestamp    null,
-    UPDATE_BY   varchar(50)  null,
-    UPDATE_NAME varchar(50)  null,
-    UPDATE_DATE timestamp    null,
-    REMARK      varchar(50)  null
+    menu_id     varchar(50)  not null primary key,
+    menu_name   varchar(100) null,
+    parent_id   varchar(50)  null,
+    order_num   int          null,
+    path        varchar(50)  null,
+    component   varchar(100) null,
+    is_frame    tinyint      null,
+    is_cache    tinyint      null,
+    menu_type   varchar(50)  null,
+    visible     tinyint      null,
+    status      tinyint      null,
+    perms       varchar(50)  null,
+    icon        varchar(50)  null,
+    create_by   varchar(50)  null,
+    create_name varchar(50)  null,
+    create_date timestamp    null,
+    update_by   varchar(50)  null,
+    update_name varchar(50)  null,
+    update_date timestamp    null,
+    remark      varchar(50)  null
 );
 
 -- 关联表
 create table bzio_base.sys_user_role
 (
-    ID      varchar(50) not null primary key,
-    USER_ID varchar(50) null,
-    ROLE_ID varchar(50) null
+    id      varchar(50) not null primary key,
+    user_id varchar(50) null,
+    role_id varchar(50) null
 );
 
 create table bzio_base.sys_role_menu
 (
-    ID      varchar(50) not null primary key,
-    ROLE_ID varchar(50) null,
-    MENU_ID varchar(50) null
+    id      varchar(50) not null primary key,
+    role_id varchar(50) null,
+    menu_id varchar(50) null
 );
 
 create table bzio_base.sys_user_dept
 (
-    ID      varchar(50) not null primary key,
-    USER_ID varchar(50) null,
-    DEPT_ID varchar(50) null
+    id      varchar(50) not null primary key,
+    user_id varchar(50) null,
+    dept_id varchar(50) null
 );
 
 -- 系统日志表
 create table bzio_base.sys_log
 (
-    LOG_ID     varchar(50)  not null
-        primary key,
-    TITLE               varchar(50)  null,
-    BUSINESS_NAME       varchar(50)  null,
-    REQUEST_METHOD      varchar(50)  null,
-    OPERATION_NAME      varchar(50)  null,
-    OPERATION_DEPT      varchar(50)  null,
-    OPERATION_URL       varchar(100) null,
-    OPERATION_IP        varchar(50)  null,
-    OPERATION_TIME      timestamp    null,
-    OPERATION_PARAM     varchar(200) null,
-    OPERATION_RESULT    varchar(200) null,
-    ERROR_MSG           varchar(100) null,
-    STATUS              char         null,
+    log_id              varchar(50)  not null primary key,
+    title               varchar(50)  null,
+    business_type       tinyint      null,
+    log_desc            varchar(50)  null,
+    operator            varchar(50)  null,
+    operator_dept       varchar(50)  null,
+    operation_url       varchar(100) null,
+    operation_ip        varchar(50)  null,
+    operation_time      timestamp    null,
+    request_method      varchar(50)  null,
+    request_param       varchar(500) null,
+    response_result     varchar(500) null,
+    error_msg           varchar(100) null,
+    status              tinyint      null
 );
 
 

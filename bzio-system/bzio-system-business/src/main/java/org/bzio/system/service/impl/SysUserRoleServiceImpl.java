@@ -1,6 +1,6 @@
 package org.bzio.system.service.impl;
 
-import org.bzio.common.core.util.IDUtil;
+import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.system.entity.SysUserRole;
 import org.bzio.system.mapper.SysUserRoleMapper;
@@ -28,7 +28,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
 
         sysUserRoles.stream()
                 .peek(sysUserRole ->
-                    sysUserRole.setId(IDUtil.simpleUUID())
+                    sysUserRole.setId(IdUtil.simpleUUID())
                 ).collect(Collectors.toList());
 
         return sysUserRoleMapper.insertBatch(sysUserRoles);

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  */
 public class XssUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(XssUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(XssUtil.class);
 
     private static final String BADSTR_REG = "\\b(and|or)\\b.{1,6}?(=|>|<|\\bin\\b|\\blike\\b)|\\/\\*.+?\\*\\/|<\\s*script\\b|\\bEXEC\\b|UNION.+?SELECT|UPDATE.+?SET|INSERT\\s+INTO.+?VALUES|(SELECT|DELETE).+?FROM|(CREATE|ALTER|DROP|TRUNCATE)\\s+(TABLE|DATABASE)";
 
@@ -36,7 +36,7 @@ public class XssUtil {
 
         //获取到请求中所有参数值-取每个key=value组合第一个等号后面的值
         if (SQL_PATTERN.matcher(lowerValue).find()) {
-            logger.error("参数[{}]中包含不允许sql的关键词", lowerValue);
+            log.error("参数[{}]中包含不允许sql的关键词", lowerValue);
             return true;
         }
         return false;

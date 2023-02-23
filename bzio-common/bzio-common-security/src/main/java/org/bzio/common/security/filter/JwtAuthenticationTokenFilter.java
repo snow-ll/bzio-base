@@ -31,7 +31,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationTokenFilter.class);
 
     @Resource
     private JwtUtil jwtUtil;
@@ -50,7 +50,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                logger.info("authenticated user:{}", username);
+                log.info("authenticated user:{}", username);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

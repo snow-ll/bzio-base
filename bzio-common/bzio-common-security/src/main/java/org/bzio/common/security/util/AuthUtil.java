@@ -1,5 +1,6 @@
 package org.bzio.common.security.util;
 
+import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.security.entity.LoginUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -11,17 +12,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class AuthUtil {
 
     public static String getUserName() {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        String userName = auth.getName();
-
-        // 获取登录用户信息
-        LoginUser user = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return user.getUsername();
+        return getLoginUser().getUsername();
     }
 
     public static String getNickName() {
-        LoginUser user = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return user.getNickName();
+        return getLoginUser().getNickName();
+    }
+
+    private static LoginUser getLoginUser() {
+        Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (StringUtil.compareStr("anonymousUser", o)) {
+            return new LoginUser();
+        } else {
+            return (LoginUser) o;
+        }
     }
 }

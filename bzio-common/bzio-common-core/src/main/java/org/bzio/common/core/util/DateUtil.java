@@ -40,6 +40,13 @@ public class DateUtil {
     }
 
     /**
+     * 获取当前时间（精确到秒）
+     */
+    public static Date getNowDateAccurateSecond() {
+        return accurateSecond(getNowDate());
+    }
+
+    /**
      * 获取指定时间
      */
     public static Date getDate(Long time) {
@@ -138,5 +145,13 @@ public class DateUtil {
         before.setTime(end);
 
         return c.after(after) && c.before(before);
+    }
+
+    /**
+     * 时间精确到秒
+     * @return 精确到秒的时间
+     */
+    public static Date accurateSecond(Date date) {
+        return parse(format(date));
     }
 }

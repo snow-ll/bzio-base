@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtil {
 
+    private static final Logger log = LoggerFactory.getLogger(JsonUtil.class);
+
     /**
      * 加载外部类时不加在静态内部类，实现懒加载
      */
@@ -26,16 +28,26 @@ public class JsonUtil {
     /**
      * 简单json转换
      */
-    public static <T> T jsonToObject(String jsonStr, Class c) throws JsonProcessingException {
+    public static <T> T jsonToObject(String jsonStr, Class c) {
         ObjectMapper objectMapper = getInstance();
-        return (T) objectMapper.readValue(jsonStr, c);
+        try {
+            return (T) objectMapper.readValue(jsonStr, c);
+        } catch (JsonProcessingException e) {
+            log.error("解析异常：", e);
+            return null;
+        }
     }
 
     /**
      * 对象转换成json字符串
      */
-    public static String toJSONString(Object o) throws JsonProcessingException {
+    public static String toJSONString(Object o) {
         ObjectMapper objectMapper = getInstance();
-        return objectMapper.writeValueAsString(o);
+        try {
+            return objectMapper.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            log.error("解析异常：", e);
+            return null;
+        }
     }
 }

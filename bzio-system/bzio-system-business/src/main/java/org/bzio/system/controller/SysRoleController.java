@@ -1,5 +1,7 @@
 package org.bzio.system.controller;
 
+import org.bzio.annotation.Log;
+import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.controller.BaseController;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
@@ -28,6 +30,7 @@ public class SysRoleController  extends BaseController {
     /**
      * 角色详情信息
      */
+    @Log(title = "查询角色详情", businessType = BusinessType.QUERY)
     @GetMapping("info")
     public AjaxResult info(String roleId) {
         return AjaxResult.success(sysRoleService.queryInfo(roleId));
@@ -36,6 +39,7 @@ public class SysRoleController  extends BaseController {
     /**
      * 角色列表查询
      */
+    @Log(title = "查询角色列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
     public TableData list(SysRole sysUser) {
         startPage();
@@ -46,6 +50,7 @@ public class SysRoleController  extends BaseController {
     /**
      * 保存角色
      */
+    @Log(title = "新增或修改角色", businessType = BusinessType.INSERT)
     @PostMapping("saveRole")
     public AjaxResult saveRole(SysRole sysRole) {
         return AjaxResult.toAjax(sysRoleService.saveRole(sysRole));
@@ -54,6 +59,7 @@ public class SysRoleController  extends BaseController {
     /**
      * 删除角色
      */
+    @Log(title = "删除角色", businessType = BusinessType.DELETE)
     @PostMapping("delRole")
     public AjaxResult delRole(String userName) {
         return AjaxResult.toAjax(sysRoleService.deleteRole(userName));

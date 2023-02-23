@@ -1,5 +1,7 @@
 package org.bzio.system.controller;
 
+import org.bzio.annotation.Log;
+import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.controller.BaseController;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
@@ -28,6 +30,7 @@ public class SysMemuController extends BaseController {
     /**
      * 菜单详情信息
      */
+    @Log(title = "查询菜单详情", businessType = BusinessType.QUERY)
     @GetMapping("info")
     public AjaxResult info(String menuId) {
         return AjaxResult.success(sysMenuService.queryInfo(menuId));
@@ -36,6 +39,7 @@ public class SysMemuController extends BaseController {
     /**
      * 菜单列表查询
      */
+    @Log(title = "查询菜单列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
     public TableData list(SysMenu sysMenu) {
         startPage();
@@ -54,6 +58,7 @@ public class SysMemuController extends BaseController {
     /**
      * 保存菜单
      */
+    @Log(title = "新增或修改菜单", businessType = BusinessType.INSERT)
     @PostMapping("saveMenu")
     public AjaxResult saveMenu(SysMenu sysMenu) {
         return AjaxResult.toAjax(sysMenuService.saveMenu(sysMenu));
@@ -62,6 +67,7 @@ public class SysMemuController extends BaseController {
     /**
      * 删除菜单
      */
+    @Log(title = "删除菜单", businessType = BusinessType.DELETE)
     @PostMapping("delMenu")
     public AjaxResult delMenu(String menuId) {
         return AjaxResult.toAjax(sysMenuService.deleteMenu(menuId));

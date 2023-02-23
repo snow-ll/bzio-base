@@ -1,7 +1,7 @@
 package org.bzio.common.security.service.impl;
 
 import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.SystemUtil;
+import org.bzio.common.core.util.ServletUtil;
 import org.bzio.common.security.entity.LoginUser;
 import org.bzio.system.entity.SysUser;
 import org.bzio.system.mapper.SysMenuMapper;
@@ -44,8 +44,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                              user.getUserName(),
                              user.getPassword(),
                              user.getNickName(),
-                             DateUtil.getNowDate(),
-                             SystemUtil.getLocalIp(),
+                             DateUtil.getNowDateAccurateSecond(),
+                             ServletUtil.getIpAddr(),
                              getAuthorities(user.getUserId()));
     }
 

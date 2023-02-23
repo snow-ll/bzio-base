@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bzio.system.mapper.SysLogMapper">
+
+    <resultMap type="org.bzio.system.entity.SysLog" id="SysLogMap">
+        <result property="logId" column="log_id" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="businessType" column="business_type" jdbcType="INTEGER"/>
+        <result property="logDesc" column="log_desc" jdbcType="VARCHAR"/>
+        <result property="operator" column="operator" jdbcType="VARCHAR"/>
+        <result property="operationUrl" column="operation_url" jdbcType="VARCHAR"/>
+        <result property="operationIp" column="operation_ip" jdbcType="VARCHAR"/>
+        <result property="operationTime" column="operation_time" jdbcType="TIMESTAMP"/>
+        <result property="requestMethod" column="request_method" jdbcType="VARCHAR"/>
+        <result property="requestParam" column="request_param" jdbcType="VARCHAR"/>
+        <result property="responseResult" column="response_result" jdbcType="VARCHAR"/>
+        <result property="errorMsg" column="error_msg" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="CHAR"/>
+    </resultMap>
+
+    <sql id="selectLog">
+        select
+            l.log_id, l.title, l.business_type, l.log_desc, l.operator, l.operation_url,
+            l.operation_ip, l.operation_time, l.request_method, l.request_param, l.response_result,
+            l.error_msg, l.status
+        from sys_log l
+    </sql>
+
+    <select id="queryById" resultMap="SysLogMap">
+        <include refid="selectLog"/>
+        where l.log_id = #{logId}
+    </select>
+
+    <select id="queryAll" resultMap="SysLogMap">
+        <include refid="selectLog"/>
+        <where>
+            <if test="logId != null and logId != ''">
+                and l.logId = #{logId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" keyProperty="logId" useGeneratedKeys="true">
+        insert into sys_log(log_id, title, business_type, log_desc, operator, operation_url, operation_ip, operation_time, request_method, request_param, response_result, error_msg, status)
+        values (#{logId}, #{title}, #{businessType}, #{logDesc}, #{operator}, #{operationUrl}, #{operationIp}, #{operationTime}, #{requestMethod}, #{requestParam}, #{responseResult}, #{errorMsg}, #{status})
+    </insert>
+</mapper>

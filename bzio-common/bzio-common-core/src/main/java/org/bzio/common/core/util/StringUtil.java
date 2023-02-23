@@ -90,4 +90,16 @@ public class StringUtil {
     public static String convertNullToEmptyStr(String src) {
         return src == null ? "" : src;
     }
+
+    /**
+     * 字符串比较
+     * @return 相同-true
+     */
+    public static boolean compareStr(String src, Object o) {
+        if (src != null)
+            return src.equals(o);
+        else if (src == null && o ==null)
+            return true;
+        return false;
+    }
 }

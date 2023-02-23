@@ -1,5 +1,7 @@
 package org.bzio.system.controller;
 
+import org.bzio.annotation.Log;
+import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.system.entity.SysUserDept;
 import org.bzio.system.service.SysUserDeptService;
@@ -24,6 +26,7 @@ public class SysUserDeptController {
     /**
      * 用户添加到部门
      */
+    @Log(title = "用户添加部门", businessType = BusinessType.INSERT)
     @PostMapping("/saveUserDept")
     public AjaxResult saveUserDept(SysUserDept sysUserDept) {
         return AjaxResult.toAjax(sysUserDeptService.saveUserDept(sysUserDept));

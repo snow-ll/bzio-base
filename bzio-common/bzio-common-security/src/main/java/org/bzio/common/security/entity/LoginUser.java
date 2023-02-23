@@ -3,6 +3,7 @@ package org.bzio.common.security.entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -32,6 +33,10 @@ public class LoginUser extends User {
      * 登录IP地址
      */
     private String ipaddr;
+
+    public LoginUser() {
+        super("anonymousUser", "", new ArrayList<>());
+    }
 
     public LoginUser(String userId, String username, String password, String nickName, Date loginTime, String ipaddr, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);

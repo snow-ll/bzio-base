@@ -7,7 +7,7 @@ import java.util.UUID;
  *
  * @author: snow
  */
-public class IDUtil {
+public class IdUtil {
 
     /**
      * 生成UUID

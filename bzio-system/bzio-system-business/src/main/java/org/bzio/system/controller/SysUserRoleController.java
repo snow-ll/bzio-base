@@ -1,5 +1,7 @@
 package org.bzio.system.controller;
 
+import org.bzio.annotation.Log;
+import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.system.entity.SysUserRole;
 import org.bzio.system.service.SysUserRoleService;
@@ -23,6 +25,7 @@ public class SysUserRoleController {
     /**
      * 用户添加权限
      */
+    @Log(title = "用户添加权限", businessType = BusinessType.INSERT)
     @PostMapping("/saveUserRole")
     public AjaxResult saveUserRole(@RequestBody List<SysUserRole> sysUserRoles) {
         return AjaxResult.toAjax(sysUserRoleService.saveUserRole(sysUserRoles));

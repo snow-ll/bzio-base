@@ -20,7 +20,7 @@ import java.util.Map;
 @Component
 public class JwtUtil {
 
-    private final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
+    private final Logger log = LoggerFactory.getLogger(JwtUtil.class);
 
     private final String USERNAME_KEY = "user_name";
 
@@ -88,7 +88,7 @@ public class JwtUtil {
         try {
             claims = Jwts.parser().setSigningKey(AuthConfig.secret).parseClaimsJws(token).getBody();
         } catch (Exception e) {
-            logger.info("JWT格式验证失败:{}", token);
+            log.info("JWT格式验证失败:{}", token);
         }
         return claims;
     }

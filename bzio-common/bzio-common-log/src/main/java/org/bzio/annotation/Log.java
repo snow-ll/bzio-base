@@ -1,5 +1,7 @@
 package org.bzio.annotation;
 
+import org.bzio.common.core.enums.BusinessType;
+
 import java.lang.annotation.*;
 
 /**
@@ -18,12 +20,12 @@ public @interface Log
     String title() default "";
 
     /**
-     * 操作类型
+     * 操作业务模块
      */
-    String operatorType() default "";
+    BusinessType businessType() default BusinessType.OTHER;
 
     /**
      * 操作说明
      */
-    String operatorDesc() default "";
+    String logDesc() default "";
 }

@@ -1,5 +1,7 @@
 package org.bzio.system.controller;
 
+import org.bzio.annotation.Log;
+import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.controller.BaseController;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
@@ -29,6 +31,7 @@ public class SysDeptController extends BaseController {
     /**
      * 部门详情信息
      */
+    @Log(title = "查询部门详情", businessType = BusinessType.QUERY)
     @GetMapping("info")
     public AjaxResult info(String deptId) {
         return AjaxResult.success(sysDeptService.queryInfo(deptId));
@@ -37,6 +40,7 @@ public class SysDeptController extends BaseController {
     /**
      * 部门列表查询
      */
+    @Log(title = "查询部门列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
     public TableData list(SysDept sysDept) {
         startPage();
@@ -56,6 +60,7 @@ public class SysDeptController extends BaseController {
     /**
      * 保存部门
      */
+    @Log(title = "新增或修改部门", businessType = BusinessType.INSERT)
     @PostMapping("saveDept")
     public AjaxResult saveDept(SysDept sysDept) {
         return AjaxResult.toAjax(sysDeptService.saveDept(sysDept));
@@ -64,6 +69,7 @@ public class SysDeptController extends BaseController {
     /**
      * 删除部门
      */
+    @Log(title = "删除部门", businessType = BusinessType.DELETE)
     @PostMapping("delDept")
     public AjaxResult delDept(String deptId) {
         return AjaxResult.toAjax(sysDeptService.deleteDept(deptId));

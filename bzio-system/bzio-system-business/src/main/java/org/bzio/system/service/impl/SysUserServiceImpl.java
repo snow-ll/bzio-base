@@ -3,7 +3,7 @@ package org.bzio.system.service.impl;
 import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.BeanUtil;
 import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.IDUtil;
+import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
@@ -58,7 +58,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysUser.getUserId())) {
-            sysUser.setUserId(IDUtil.simpleUUID());
+            sysUser.setUserId(IdUtil.simpleUUID());
             sysUser.setCreateBy(userName);
             sysUser.setCreateName(nickName);
             sysUser.setCreateDate(DateUtil.getNowDate());

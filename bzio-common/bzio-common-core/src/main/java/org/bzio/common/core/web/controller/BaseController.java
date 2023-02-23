@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class BaseController {
 
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 分页
@@ -26,7 +26,7 @@ public class BaseController {
         int pageNum = Integer.parseInt((ServletUtil.getParameter("pageNum")));
         int pageSize = Integer.parseInt((ServletUtil.getParameter("pageSize")));
         String orderBy = ServletUtil.getParameter("orderBy");
-        logger.info("分页参数： pageNum={}, pageSize={}", pageNum, pageSize);
+        log.info("分页参数： pageNum={}, pageSize={}", pageNum, pageSize);
         PageHelper.startPage(pageNum, pageSize, orderBy);
     }
 

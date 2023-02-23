@@ -3,7 +3,7 @@ package org.bzio.system.service.impl;
 import org.bzio.common.core.exception.system.dept.DeptException;
 import org.bzio.common.core.util.BeanUtil;
 import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.IDUtil;
+import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
@@ -73,7 +73,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysDept.getDeptId())) {
-            sysDept.setDeptId(IDUtil.simpleUUID());
+            sysDept.setDeptId(IdUtil.simpleUUID());
             sysDept.setCreateBy(userName);
             sysDept.setCreateName(nickName);
             sysDept.setCreateDate(DateUtil.getNowDate());

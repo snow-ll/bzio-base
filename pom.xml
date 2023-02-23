@@ -24,7 +24,8 @@
         <spring-boot.version>2.6.11</spring-boot.version>
         <spring-cloud.version>2021.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
-        <spring-boot.mybatis>2.2.0</spring-boot.mybatis>
+        <mybatis.version>2.2.0</mybatis.version>
+        <mysql.version>8.0.32</mysql.version>
         <bzio.version>1.0-SNAPSHOT</bzio.version>
     </properties>
 
@@ -50,7 +51,7 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2021.1</version>
+                <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -67,19 +68,25 @@
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${spring-boot.mybatis}</version>
+                <version>${mybatis.version}</version>
             </dependency>
 
             <!-- mysql驱动 -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.32</version>
+                <version>${mysql.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.bzio</groupId>
                 <artifactId>bzio-common-core</artifactId>
+                <version>${bzio.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bzio</groupId>
+                <artifactId>bzio-common-log</artifactId>
                 <version>${bzio.version}</version>
             </dependency>
 

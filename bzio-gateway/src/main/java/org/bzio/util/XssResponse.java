@@ -19,16 +19,12 @@ import java.nio.charset.Charset;
  *
  * @author snow
  */
-public class ReultResponse {
+public class XssResponse {
 
     public static Mono<Void> responseWrite(ServerWebExchange exchange, int httpStatus, AjaxResult result) {
 
         String resultStr;
-        try {
-            resultStr = JsonUtil.toJSONString(result);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        resultStr = JsonUtil.toJSONString(result);
 
         if (httpStatus == 0) {
             httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.value();

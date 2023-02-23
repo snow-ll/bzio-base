@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBufAllocator;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.util.XssUtil;
-import org.bzio.util.ReultResponse;
+import org.bzio.util.XssResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -37,11 +37,11 @@ import java.util.Optional;
 @Component
 public class XssFilter implements GlobalFilter, Ordered {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        logger.info("----自定义防XSS攻击网关全局过滤器生效----");
+        log.info("----自定义防XSS攻击网关全局过滤器生效----");
         ServerHttpRequest serverHttpRequest = exchange.getRequest();
         HttpMethod method = serverHttpRequest.getMethod();
         String contentType = serverHttpRequest.getHeaders().getFirst(HttpHeaders.CONTENT_TYPE);
@@ -56,14 +56,14 @@ public class XssFilter implements GlobalFilter, Ordered {
             if (StringUtil.isEmpty(rawQuery)) {
                 return chain.filter(exchange);
             }
-            logger.info("原请求参数为：{}", rawQuery);
+            log.info("原请求参数为：{}", rawQuery);
 
             // 执行sql注入校验清理
             boolean chkRet = XssUtil.requestKeyWordsCheck(rawQuery);
 
             // 如果存在sql注入，直接拦截请求
             if (chkRet) {
-                logger.error("请求【" + uri.getRawPath() + uri.getRawQuery() + "】参数中包含不允许sql的关键词, 请求拒绝");
+                log.error("请求【" + uri.getRawPath() + uri.getRawQuery() + "】参数中包含不允许sql的关键词, 请求拒绝");
                 return setUnauthorizedResponse(exchange);
             }
 
@@ -82,12 +82,12 @@ public class XssFilter implements GlobalFilter, Ordered {
                 HttpHeaders httpHeaders = serverHttpRequest.getHeaders();
 
                 // 执行XSS清理
-                logger.debug("{} - [{}] 请求参数：{}", method, uri.getPath(), bodyString);
+                log.debug("{} - [{}] 请求参数：{}", method, uri.getPath(), bodyString);
                 boolean chkRet = XssUtil.requestKeyWordsCheck(bodyString);
 
                 //  如果存在sql注入,直接拦截请求
                 if (chkRet) {
-                    logger.error("{} - [{}：{}] 参数：{}, 包含不允许sql的关键词，请求拒绝", method, uri.getPath(), bodyString);
+                    log.error("{} - [{}：{}] 参数：{}, 包含不允许sql的关键词，请求拒绝", method, uri.getPath(), bodyString);
                     return setUnauthorizedResponse(exchange);
                 }
 
@@ -138,7 +138,7 @@ public class XssFilter implements GlobalFilter, Ordered {
      * 设置403拦截状态
      */
     private Mono<Void> setUnauthorizedResponse(ServerWebExchange exchange) {
-        return ReultResponse.responseWrite(exchange, HttpStatus.FORBIDDEN.value(), AjaxResult.error("request is forbidden, SQL keywords are not allowed in the parameters."));
+        return XssResponse.responseWrite(exchange, HttpStatus.FORBIDDEN.value(), AjaxResult.error("request is forbidden, SQL keywords are not allowed in the parameters."));
     }
 
     /**

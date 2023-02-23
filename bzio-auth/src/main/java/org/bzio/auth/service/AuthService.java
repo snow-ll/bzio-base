@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AuthService {
 
-    LoginUser login(SysUser sysUser);
+    String login(SysUser sysUser);
 
     int register(SysUser sysUser);
 
     int updatePassword(String userName, String password);
+
+    boolean isLogin(String userName);
+
+    String getToken(String userName);
 }
