@@ -1,11 +1,15 @@
 package org.bzio.system.entity;
 
+import java.io.Serializable;
+
 /**
  * 角色菜单关联表实体
  *
  * @author: snow
  */
-public class SysRoleMenu {
+public class SysRoleMenu implements Serializable {
+
+    private static final long serialVersionUID = -8753494836637008114L;
 
     private String id;
 

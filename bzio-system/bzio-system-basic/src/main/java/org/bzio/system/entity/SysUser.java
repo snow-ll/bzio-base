@@ -2,6 +2,7 @@ package org.bzio.system.entity;
 
 import org.bzio.common.core.web.entity.BaseEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,8 +10,10 @@ import java.util.Date;
  *
  * @author: snow
  */
-public class SysUser extends BaseEntity {
+public class SysUser extends BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = -2916141177184809068L;
+    
     /**
      * 用户id
      */

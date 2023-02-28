@@ -1,11 +1,15 @@
 package org.bzio.system.entity;
 
+import java.io.Serializable;
+
 /**
  * 用户角色关联表实体
  *
  * @author: snow
  */
-public class SysUserRole {
+public class SysUserRole implements Serializable {
+
+    private static final long serialVersionUID = 5497130758141266081L;
 
     private String id;
 

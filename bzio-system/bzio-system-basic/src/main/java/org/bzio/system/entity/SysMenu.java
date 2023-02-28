@@ -2,6 +2,7 @@ package org.bzio.system.entity;
 
 import org.bzio.common.core.web.entity.BaseEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,10 @@ import java.util.List;
  *
  * @author: snow
  */
-public class SysMenu extends BaseEntity {
+public class SysMenu extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 5819360017642487499L;
+
     /**
      * 菜单主键
      */

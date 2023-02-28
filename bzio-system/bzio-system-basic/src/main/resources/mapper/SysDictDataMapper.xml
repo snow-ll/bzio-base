@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bzio.system.mapper.SysDictDataMapper">
+
+    <resultMap type="org.bzio.system.entity.SysDictData" id="SysDictDataMap">
+        <result property="dictCode" column="dict_code" jdbcType="VARCHAR"/>
+        <result property="dictSort" column="dict_sort" jdbcType="VARCHAR"/>
+        <result property="dictLabel" column="dict_label" jdbcType="VARCHAR"/>
+        <result property="dictValue" column="dict_value" jdbcType="VARCHAR"/>
+        <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createName" column="create_name" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateName" column="update_name" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="selectDictData">
+        select
+            dict_code, dict_sort, dict_label, dict_value, dict_type, status, create_by, create_name, create_date, update_by, update_name, update_date
+        from sys_dict_data
+    </sql>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysDictDataMap">
+        <include refid="selectDictData"/>
+        where dict_code = #{dictCode}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryALl" resultMap="SysDictDataMap">
+        <include refid="selectDictData"/>
+        <where>
+            <if test="dictCode != null and dictCode != ''">
+                and dict_code = #{dictCode}
+            </if>
+            <if test="dictSort != null and dictSort != ''">
+                and dict_sort = #{dictSort}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and dict_label = #{dictLabel}
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                and dict_value = #{dictValue}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                and dict_type = #{dictType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createName != null and createName != ''">
+                and create_name = #{createName}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateName != null and updateName != ''">
+                and update_name = #{updateName}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from sys_dict_data
+        <where>
+            <if test="dictCode != null and dictCode != ''">
+                and dict_code = #{dictCode}
+            </if>
+            <if test="dictSort != null and dictSort != ''">
+                and dict_sort = #{dictSort}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and dict_label = #{dictLabel}
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                and dict_value = #{dictValue}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                and dict_type = #{dictType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createName != null and createName != ''">
+                and create_name = #{createName}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateName != null and updateName != ''">
+                and update_name = #{updateName}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="dictCode" useGeneratedKeys="true">
+        insert into sys_dict_data(dict_code, dict_sort, dict_label, dict_value, dict_type, status, create_by, create_name, create_date, update_by, update_name, update_date)
+        values (#{dictCode}, #{dictSort}, #{dictLabel}, #{dictValue}, #{dictType}, #{status}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="dictCode" useGeneratedKeys="true">
+        insert into sys_dict_data(dict_sort, dict_label, dict_value, dict_type, status, create_by, create_name, create_date, update_by, update_name, update_date)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.dictSort}, #{entity.dictLabel}, #{entity.dictValue}, #{entity.dictType}, #{entity.status}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="dictCode" useGeneratedKeys="true">
+        insert into sys_dict_data(dict_sort, dict_label, dict_value, dict_type, status, create_by, create_name, create_date, update_by, update_name, update_date)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.dictSort}, #{entity.dictLabel}, #{entity.dictValue}, #{entity.dictType}, #{entity.status}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate})
+        </foreach>
+        on duplicate key update
+        dict_sort = values(dict_sort),
+        dict_label = values(dict_label),
+        dict_value = values(dict_value),
+        dict_type = values(dict_type),
+        status = values(status),
+        create_by = values(create_by),
+        create_name = values(create_name),
+        create_date = values(create_date),
+        update_by = values(update_by),
+        update_name = values(update_name),
+        update_date = values(update_date)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update sys_dict_data
+        <set>
+            dict_sort = #{dictSort},
+            dict_label = #{dictLabel},
+            dict_value = #{dictValue},
+            dict_type = #{dictType},
+            status = #{status},
+            create_by = #{createBy},
+            create_name = #{createName},
+            create_date = #{createDate},
+            update_by = #{updateBy},
+            update_name = #{updateName},
+            update_date = #{updateDate},
+        </set>
+        where dict_code = #{dictCode}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from sys_dict_data where dict_code = #{dictCode}
+    </delete>
+
+</mapper>
+

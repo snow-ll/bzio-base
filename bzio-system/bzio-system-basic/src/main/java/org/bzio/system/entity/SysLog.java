@@ -1,6 +1,7 @@
 package org.bzio.system.entity;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,9 @@ import java.util.Date;
  *
  * @author: snow
  */
-public class SysLog {
+public class SysLog implements Serializable {
+
+    private static final long serialVersionUID = 1780474228893568179L;
 
     /**
      * 日志主键

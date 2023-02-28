@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
  * @author: snow
  */
 public class TreeSelect implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 8113377291612675763L;
 
     /**
      * 节点ID

@@ -3,6 +3,7 @@ package org.bzio.system.entity;
 
 import org.bzio.common.core.web.entity.BaseEntity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,9 @@ import java.util.List;
  *
  * @author: snow
  */
-public class SysDept extends BaseEntity {
+public class SysDept extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 4502238025214991585L;
 
     /**
      * 部门ID

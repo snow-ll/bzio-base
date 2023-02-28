@@ -2,12 +2,17 @@ package org.bzio.system.entity;
 
 import org.bzio.common.core.web.entity.BaseEntity;
 
+import java.io.Serializable;
+
 /**
  * 角色信息表实体类
  *
  * @author: snow
  */
-public class SysRole extends BaseEntity {
+public class SysRole extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 4080774754247548788L;
+
     /**
      * 角色主键
      */
