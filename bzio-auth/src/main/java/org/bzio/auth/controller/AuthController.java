@@ -71,8 +71,8 @@ public class AuthController extends BaseController {
      */
     @Log(title = "修改用户密码", businessType = BusinessType.AUTH)
     @PostMapping("/updatePassword")
-    public AjaxResult updatePassword(String userName, String password) {
-        int result = authService.updatePassword(userName, password);
+    public AjaxResult updatePassword(String userName, String password, String newPassword) {
+        int result = authService.updatePassword(userName, password, newPassword);
         if (result != 1)
             return AjaxResult.error("修改密码失败！");
 
@@ -90,9 +90,9 @@ public class AuthController extends BaseController {
         boolean f = stringRedisService.delete(AuthConfig.prefix + AesUtil.decrypt(key, AuthConfig.aesKey));
 
         if (f) {
-            return AjaxResult.error("登出成功！");
+            return AjaxResult.success("登出成功！");
         }
-        return AjaxResult.success("登出失败！");
+        return AjaxResult.error("登出失败！");
     }
 
     /**
@@ -100,7 +100,16 @@ public class AuthController extends BaseController {
      */
     @PostMapping("/isLogin")
     public AjaxResult isLogin(String userName) {
-        return AjaxResult.success(authService.isLogin(userName));
+        return AjaxResult.toAjax(authService.isLogin(userName));
+    }
+
+    /**
+     * 强制注销
+     */
+    @Log(title = "强制踢出", businessType = BusinessType.AUTH)
+    @PostMapping("/force")
+    public AjaxResult force(String userName, String password) {
+        return AjaxResult.toAjax(authService.force(userName, password));
     }
 
     /**
@@ -110,7 +119,7 @@ public class AuthController extends BaseController {
     @PostMapping("/refreshToken")
     public AjaxResult refreshToken(String userName) {
         // 获取token
-        String key = authService.getToken(userName);
+        String key = authService.getKey(userName);
         String token = stringRedisService.get(key);
 
         // 判断token是否合法

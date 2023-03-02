@@ -4,10 +4,7 @@ import org.bzio.auth.service.AuthService;
 import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.core.config.BaseConstant;
 import org.bzio.common.core.exception.system.user.UserException;
-import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.IdUtil;
-import org.bzio.common.core.util.JwtUtil;
-import org.bzio.common.core.util.StringUtil;
+import org.bzio.common.core.util.*;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.common.security.entity.LoginUser;
@@ -17,11 +14,9 @@ import org.bzio.system.mapper.SysUserMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -61,8 +56,8 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         LoginUser loginUser = (LoginUser) userDetailsService.loadUserByUsername(sysUser.getUserName());
         // 用户不存在，抛出异常
         if (loginUser == null) {
-            log.error("用户名不存在！");
-            throw new UserException("用户名不存在！");
+            log.error("用户不存在！");
+            throw new UserException("用户不存在！");
         }
         // 密码错误，抛出异常
         if (!bCryptPasswordEncoder.matches(sysUser.getPassword(), loginUser.getPassword())) {
@@ -119,23 +114,63 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     }
 
     @Override
-    public int updatePassword(String userName, String password) {
+    public int updatePassword(String userName, String password, String newPassword) {
+        if (StringUtil.isEmpty(userName)) throw new UserException("用户名不能为空！");
+        if (StringUtil.isEmpty(password)) throw new UserException("原密码不能为空！");
+        if (StringUtil.isEmpty(newPassword)) throw new UserException("新密码不能为空！");
+
         SysUser sysUser = sysUserMapper.queryByUserName(userName);
-        sysUser.setPassword(bCryptPasswordEncoder.encode(password));
+        // 验证用户名密码是否正确
+        if (sysUser == null) throw new UserException("用户不存在！");
+        if (!bCryptPasswordEncoder.matches(password, sysUser.getPassword())) throw new UserException("原密码不正确！");
+
+        // 修改密码
+        sysUser.setPassword(bCryptPasswordEncoder.encode(newPassword));
         return sysUserMapper.update(sysUser);
     }
 
     @Override
     public boolean isLogin(String userName) {
-        String key = getToken(userName);
+        String key = getKey(userName);
         String token = stringRedisService.get(key);
         return StringUtil.isNotEmpty(token);
     }
 
     @Override
-    public String getToken(String userName) {
+    public boolean force(String userName, String password) {
+        // 验证用户名密码是否正确
+        if (verifyUser(userName, password)) {
+            // 验证信息成功删除登录信息
+            String key = getKey(userName);
+            return stringRedisService.delete(key);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String getKey(String userName) {
         SysUser user = sysUserMapper.queryByUserName(userName);
-        String key = AuthConfig.prefix + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
-        return key;
+        return AuthConfig.prefix + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
+    }
+
+    private boolean verifyUser(String userName, String password) {
+        // 用户名为空，抛出异常
+        if (StringUtil.isEmpty(userName)) {
+            log.error("用户名不能为空！");
+            return false;
+        }
+        SysUser sysUser = sysUserMapper.queryByUserName(userName);
+        // 用户不存在，抛出异常
+        if (sysUser == null) {
+            log.error("用户不存在！");
+            return false;
+        }
+        // 密码错误，抛出异常
+        if (!bCryptPasswordEncoder.matches(password, sysUser.getPassword())) {
+            log.error("密码错误！");
+            return false;
+        }
+        return true;
     }
 }
