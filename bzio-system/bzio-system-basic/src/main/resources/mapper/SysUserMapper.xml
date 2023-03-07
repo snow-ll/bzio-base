@@ -4,9 +4,9 @@
 
     <resultMap type="org.bzio.system.entity.SysUser" id="SysUserMap">
         <result property="userId" column="user_id" jdbcType="VARCHAR"/>
-        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
         <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
         <result property="sex" column="sex" jdbcType="INTEGER"/>
         <result property="idCard" column="id_card" jdbcType="VARCHAR"/>
@@ -29,7 +29,7 @@
 
     <sql id="selectUser">
         select
-            u.user_id, u.user_name, u.password, u.nick_name, u.birthday, u.sex, u.id_card, u.phone_number,
+            u.user_id, u.username, u.password, u.nickname, u.birthday, u.sex, u.id_card, u.phone_number,
             u.email, u.fax, u.avatar, u.status, u.del_flag, u.login_ip, u.login_date,
             u.create_by, u.create_name, u.create_date, u.update_by, u.update_name, u.update_date,
             u.remark
@@ -43,7 +43,7 @@
 
     <select id="queryByUserName" resultMap="SysUserMap">
         <include refid="selectUser"/>
-        where u.user_name = #{userName}
+        where u.username = #{username}
     </select>
 
     <!--查询指定行数据-->
@@ -55,11 +55,11 @@
             <if test="userId != null and userId != ''">
                 and u.user_id = #{userId}
             </if>
-            <if test="userName != null and userName != ''">
-                and u.user_name = #{userName}
+            <if test="username != null and username != ''">
+                and u.username = #{username}
             </if>
-            <if test="nickName != null and nickName != ''">
-                and u.nick_name = #{nickName}
+            <if test="nickname != null and nickname != ''">
+                and u.nickname = #{nickname}
             </if>
             <if test="birthday != null">
                 and u.birthday = #{birthday}
@@ -99,28 +99,28 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
-        insert into sys_user(user_id, user_name, password, nick_name, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
-        values (#{userId}, #{userName}, #{password}, #{nickName}, #{birthday}, #{sex}, #{idCard}, #{phoneNumber}, #{email}, #{fax}, #{avatar}, #{status}, #{delFlag}, #{loginIp}, #{loginDate}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
+        insert into sys_user(user_id, username, password, nickname, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values (#{userId}, #{username}, #{password}, #{nickname}, #{birthday}, #{sex}, #{idCard}, #{phoneNumber}, #{email}, #{fax}, #{avatar}, #{status}, #{delFlag}, #{loginIp}, #{loginDate}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
     </insert>
 
     <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into sys_user(user_name, password, nick_name, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        insert into sys_user(username, password, nickname, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.userName}, #{entity.password}, #{entity.nickName}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+        (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into sys_user(user_name, password, nick_name, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        insert into sys_user(username, password, nickname, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.userName}, #{entity.password}, #{entity.nickName}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+            (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
         </foreach>
         on duplicate key update
-        user_name = values(user_name),
+        username = values(username),
         password = values(password),
-        nick_name = values(nick_name),
+        nickname = values(nickname),
         birthday = values(birthday),
         sex = values(sex),
         id_card = values(id_card),
@@ -145,9 +145,9 @@
     <update id="update">
         update sys_user
         <set>
-            user_name = #{userName},
+            username = #{username},
             password = #{password},
-            nick_name = #{nickName},
+            nickname = #{nickname},
             birthday = #{birthday},
             sex = #{sex},
             id_card = #{idCard},
@@ -176,7 +176,7 @@
 
     <!--通过主键删除-->
     <delete id="deleteByUserName">
-        delete from sys_user where user_name = #{userName}
+        delete from sys_user where username = #{username}
     </delete>
 
 </mapper>

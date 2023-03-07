@@ -44,7 +44,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     @Override
     public String login(SysUser sysUser) {
         // 用户名为空，抛出异常
-        if (StringUtil.isEmpty(sysUser.getUserName())) {
+        if (StringUtil.isEmpty(sysUser.getUsername())) {
             log.error("用户名不能为空！");
             throw new UserException("用户名不能为空！");
         }
@@ -53,7 +53,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             log.error("密码不能为空！");
             throw new UserException("密码不能为空！");
         }
-        LoginUser loginUser = (LoginUser) userDetailsService.loadUserByUsername(sysUser.getUserName());
+        LoginUser loginUser = (LoginUser) userDetailsService.loadUserByUsername(sysUser.getUsername());
         // 用户不存在，抛出异常
         if (loginUser == null) {
             log.error("用户不存在！");
@@ -69,7 +69,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         // 生成token
         String key = loginUser.getUserId() + "_" +  DateUtil.format(loginUser.getLoginTime(), BaseConstant.YYYYMMDDHHMMSS);
         log.info("生成key：{}", key);
-        String token = jwtUtil.generateToken(sysUser.getUserName());
+        String token = jwtUtil.generateToken(sysUser.getUsername());
 
         // redis缓存token
         stringRedisService.set(AuthConfig.prefix + key, token, AuthConfig.expiration, TimeUnit.MILLISECONDS);
@@ -91,7 +91,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     @Override
     public int register(SysUser sysUser) {
         // 用户名为空，抛出异常
-        if (StringUtil.isEmpty(sysUser.getUserName())) {
+        if (StringUtil.isEmpty(sysUser.getUsername())) {
             log.error("用户名不能为空！");
             throw new UserException("用户名不能为空！");
         }
@@ -100,9 +100,9 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             log.error("密码不能为空！");
             throw new UserException("密码不能为空！");
         }
-        SysUser user = sysUserMapper.queryByUserName(sysUser.getUserName());
+        SysUser user = sysUserMapper.queryByUserName(sysUser.getUsername());
         // 用户名存在，抛出异常
-        if (user != null && sysUser.getUserName().equals(user.getUserName())) {
+        if (user != null && sysUser.getUsername().equals(user.getUsername())) {
             log.error("用户名已存在！");
             throw new UserException("用户名已存在，不能重复！");
         }
@@ -114,12 +114,12 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     }
 
     @Override
-    public int updatePassword(String userName, String password, String newPassword) {
-        if (StringUtil.isEmpty(userName)) throw new UserException("用户名不能为空！");
+    public int updatePassword(String username, String password, String newPassword) {
+        if (StringUtil.isEmpty(username)) throw new UserException("用户名不能为空！");
         if (StringUtil.isEmpty(password)) throw new UserException("原密码不能为空！");
         if (StringUtil.isEmpty(newPassword)) throw new UserException("新密码不能为空！");
 
-        SysUser sysUser = sysUserMapper.queryByUserName(userName);
+        SysUser sysUser = sysUserMapper.queryByUserName(username);
         // 验证用户名密码是否正确
         if (sysUser == null) throw new UserException("用户不存在！");
         if (!bCryptPasswordEncoder.matches(password, sysUser.getPassword())) throw new UserException("原密码不正确！");
@@ -130,18 +130,18 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     }
 
     @Override
-    public boolean isLogin(String userName) {
-        String key = getKey(userName);
+    public boolean isLogin(String username) {
+        String key = getKey(username);
         String token = stringRedisService.get(key);
         return StringUtil.isNotEmpty(token);
     }
 
     @Override
-    public boolean force(String userName, String password) {
+    public boolean force(String username, String password) {
         // 验证用户名密码是否正确
-        if (verifyUser(userName, password)) {
+        if (verifyUser(username, password)) {
             // 验证信息成功删除登录信息
-            String key = getKey(userName);
+            String key = getKey(username);
             return stringRedisService.delete(key);
         } else {
             return false;
@@ -149,18 +149,18 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     }
 
     @Override
-    public String getKey(String userName) {
-        SysUser user = sysUserMapper.queryByUserName(userName);
+    public String getKey(String username) {
+        SysUser user = sysUserMapper.queryByUserName(username);
         return AuthConfig.prefix + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
     }
 
-    private boolean verifyUser(String userName, String password) {
+    private boolean verifyUser(String username, String password) {
         // 用户名为空，抛出异常
-        if (StringUtil.isEmpty(userName)) {
+        if (StringUtil.isEmpty(username)) {
             log.error("用户名不能为空！");
             return false;
         }
-        SysUser sysUser = sysUserMapper.queryByUserName(userName);
+        SysUser sysUser = sysUserMapper.queryByUserName(username);
         // 用户不存在，抛出异常
         if (sysUser == null) {
             log.error("用户不存在！");

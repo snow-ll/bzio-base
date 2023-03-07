@@ -41,9 +41,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("未查询到相关用户信息！");
         }
         return new LoginUser(user.getUserId(),
-                             user.getUserName(),
+                             user.getUsername(),
                              user.getPassword(),
-                             user.getNickName(),
+                             user.getNickname(),
                              DateUtil.getNowDateAccurateSecond(),
                              ServletUtil.getIpAddr(),
                              getAuthorities(user.getUserId()));

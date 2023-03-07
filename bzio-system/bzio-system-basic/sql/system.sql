@@ -4,9 +4,9 @@
 create table bzio_base.sys_user
 (
     user_id      varchar(50)  not null primary key ,
-    user_name    varchar(50)  null,
+    username     varchar(50)  null,
     password     varchar(100) null,
-    nick_name    varchar(100) null,
+    nickname     varchar(100) null,
     birthday     timestamp    null,
     sex          tinyint      null,
     id_card      varchar(50)  null,

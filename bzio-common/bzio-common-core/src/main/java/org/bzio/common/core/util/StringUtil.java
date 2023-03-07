@@ -102,4 +102,15 @@ public class StringUtil {
             return true;
         return false;
     }
+
+    public static boolean containsAnyIgnoreCase(String str, String ... strings) {
+        if (isEmpty(str)) return false;
+        if (isNull(strings)) return false;
+
+        for (String s : strings) {
+            if (str.toLowerCase().equals(s.toLowerCase()))
+                return true;
+        }
+        return false;
+    }
 }

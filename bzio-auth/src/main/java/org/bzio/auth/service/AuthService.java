@@ -11,11 +11,11 @@ public interface AuthService {
 
     int register(SysUser sysUser);
 
-    int updatePassword(String userName, String password, String newPassword);
+    int updatePassword(String username, String password, String newPassword);
 
-    boolean isLogin(String userName);
+    boolean isLogin(String username);
 
-    boolean force(String userName, String password);
+    boolean force(String username, String password);
 
-    String getKey(String userName);
+    String getKey(String username);
 }

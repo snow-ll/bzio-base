@@ -13,6 +13,7 @@ import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.system.entity.SysUser;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -40,7 +41,7 @@ public class AuthController extends BaseController {
      */
     @Log(title = "登录", businessType = BusinessType.AUTH)
     @PostMapping("/login")
-    public AjaxResult login(SysUser sysUser) {
+    public AjaxResult login(@RequestBody SysUser sysUser) {
         String key = "";
         try {
             // 登录过程
@@ -58,7 +59,7 @@ public class AuthController extends BaseController {
      */
     @Log(title = "注册", businessType = BusinessType.AUTH)
     @PostMapping("/register")
-    public AjaxResult register(SysUser sysUser) {
+    public AjaxResult register(@RequestBody SysUser sysUser) {
         int result = authService.register(sysUser);
         if (result != 1)
             return AjaxResult.error("注册失败！");
@@ -71,8 +72,8 @@ public class AuthController extends BaseController {
      */
     @Log(title = "修改用户密码", businessType = BusinessType.AUTH)
     @PostMapping("/updatePassword")
-    public AjaxResult updatePassword(String userName, String password, String newPassword) {
-        int result = authService.updatePassword(userName, password, newPassword);
+    public AjaxResult updatePassword(String username, String password, String newPassword) {
+        int result = authService.updatePassword(username, password, newPassword);
         if (result != 1)
             return AjaxResult.error("修改密码失败！");
 
@@ -99,8 +100,8 @@ public class AuthController extends BaseController {
      * 判断用户是否已经登录
      */
     @PostMapping("/isLogin")
-    public AjaxResult isLogin(String userName) {
-        return AjaxResult.toAjax(authService.isLogin(userName));
+    public AjaxResult isLogin(String username) {
+        return AjaxResult.toAjax(authService.isLogin(username));
     }
 
     /**
@@ -117,13 +118,13 @@ public class AuthController extends BaseController {
      */
     @Log(title = "刷新token", businessType = BusinessType.AUTH)
     @PostMapping("/refreshToken")
-    public AjaxResult refreshToken(String userName) {
+    public AjaxResult refreshToken(String username) {
         // 获取token
-        String key = authService.getKey(userName);
+        String key = authService.getKey(username);
         String token = stringRedisService.get(key);
 
         // 判断token是否合法
-        if (!jwtUtil.validateToken(token, userName))
+        if (!jwtUtil.validateToken(token, username))
             return AjaxResult.error("token不合法！");
 
         // 判断token是否有必要刷新
@@ -134,7 +135,7 @@ public class AuthController extends BaseController {
             return AjaxResult.error("token在有效期内，无需刷新");
 
          // 生成新的token
-        String newToken = jwtUtil.refreshToken(token, userName);
+        String newToken = jwtUtil.refreshToken(token, username);
         // 新的token存入redis
         stringRedisService.set(key, newToken, AuthConfig.expiration, TimeUnit.MILLISECONDS);
 

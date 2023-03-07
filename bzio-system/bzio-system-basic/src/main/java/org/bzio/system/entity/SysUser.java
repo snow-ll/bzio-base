@@ -13,7 +13,7 @@ import java.util.Date;
 public class SysUser extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -2916141177184809068L;
-    
+
     /**
      * 用户id
      */
@@ -21,7 +21,7 @@ public class SysUser extends BaseEntity implements Serializable {
     /**
      * 用户名
      */
-    private String userName;
+    private String username;
     /**
      * 密码
      */
@@ -29,7 +29,7 @@ public class SysUser extends BaseEntity implements Serializable {
     /**
      * 用户昵称
      */
-    private String nickName;
+    private String nickname;
     /**
      * 出生日期
      */
@@ -83,12 +83,12 @@ public class SysUser extends BaseEntity implements Serializable {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -99,12 +99,12 @@ public class SysUser extends BaseEntity implements Serializable {
         this.password = password;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getBirthday() {
