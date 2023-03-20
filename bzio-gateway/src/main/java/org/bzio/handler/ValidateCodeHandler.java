@@ -2,7 +2,7 @@ package org.bzio.handler;
 
 import org.bzio.common.core.exception.BaseException;
 import org.bzio.common.core.web.entity.AjaxResult;
-import org.bzio.service.ValidateCodeServiceImpl;
+import org.bzio.service.ValidateCodeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 public class ValidateCodeHandler implements HandlerFunction<ServerResponse> {
 
     @Resource
-    private ValidateCodeServiceImpl validateCodeService;
+    private ValidateCodeService validateCodeService;
 
     @Override
     public Mono<ServerResponse> handle(ServerRequest serverRequest) {

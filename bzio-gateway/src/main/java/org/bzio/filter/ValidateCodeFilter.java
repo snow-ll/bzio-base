@@ -3,7 +3,7 @@ package org.bzio.filter;
 import org.bzio.common.core.util.*;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.config.CaptchaProperties;
-import org.bzio.service.ValidateCodeServiceImpl;
+import org.bzio.service.ValidateCodeService;
 import org.bzio.util.XssResponse;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
@@ -33,7 +33,7 @@ public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
     private CaptchaProperties captchaProperties;
 
     @Resource
-    private ValidateCodeServiceImpl validateCodeService;
+    private ValidateCodeService validateCodeService;
 
     private static final String CODE = "code";
 

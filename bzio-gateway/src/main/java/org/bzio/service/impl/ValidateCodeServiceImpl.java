@@ -1,13 +1,14 @@
-package org.bzio.service;
+package org.bzio.service.impl;
 
 import com.google.code.kaptcha.Producer;
-import org.bouncycastle.util.encoders.Base64;
 import org.bzio.common.core.exception.system.user.UserException;
+import org.bzio.common.core.util.Base64Util;
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.config.CaptchaProperties;
+import org.bzio.service.ValidateCodeService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FastByteArrayOutputStream;
 
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  * @author snow
  */
 @Service
-public class ValidateCodeServiceImpl {
+public class ValidateCodeServiceImpl implements ValidateCodeService {
 
     @Resource(name = "captchaProducer")
     private Producer captchaProducer;
@@ -42,6 +43,7 @@ public class ValidateCodeServiceImpl {
     /**
      * 生成验证码
      */
+    @Override
     public AjaxResult createCaptcha() {
         AjaxResult ajax = AjaxResult.success();
         Map<String, Object> result = new HashMap<>();
@@ -49,6 +51,7 @@ public class ValidateCodeServiceImpl {
         boolean captchaEnabled = captchaProperties.getEnabled();
         result.put("captchaEnabled", captchaEnabled);
         if (!captchaEnabled) {
+            ajax.setData(result);
             return ajax;
         }
 
@@ -75,6 +78,7 @@ public class ValidateCodeServiceImpl {
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
+            assert image != null;
             ImageIO.write(image, "jpg", os);
         } catch (IOException e) {
             return AjaxResult.error(e.getMessage());
@@ -82,7 +86,7 @@ public class ValidateCodeServiceImpl {
 
         result.put("uuid", uuid);
         result.put("capStr", capStr);
-        result.put("img", Base64.encode(os.toByteArray()));
+        result.put("img", Base64Util.encode(os.toByteArray()));
 
         ajax.setData(result);
         return ajax;
@@ -91,6 +95,7 @@ public class ValidateCodeServiceImpl {
     /**
      * 校验验证码
      */
+    @Override
     public void checkCaptcha(String code, String uuid) throws UserException {
         if (StringUtil.isEmpty(code)) {
             throw new UserException("验证码不能为空");
@@ -100,10 +105,10 @@ public class ValidateCodeServiceImpl {
         }
         String verifyKey = "captcha_codes:" + uuid;
         String captcha = stringRedisService.get(verifyKey);
+        stringRedisService.delete(verifyKey);
 
         if (!code.equalsIgnoreCase(captcha)) {
             throw new UserException("验证码错误");
         }
-        stringRedisService.delete(verifyKey);
     }
 }

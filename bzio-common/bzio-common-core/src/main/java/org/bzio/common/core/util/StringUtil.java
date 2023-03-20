@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * 字符串相关工具类
@@ -92,6 +93,15 @@ public class StringUtil {
     }
 
     /**
+     * 判断字符串是否为数字类型
+     * @return 是数字类型-true
+     */
+    public static boolean isNumber(String str) {
+        Pattern pattern = Pattern.compile("^(-?\\d+)(\\.\\d+)?$");
+        return pattern.matcher(str).matches();
+    }
+    
+    /**
      * 字符串比较
      * @return 相同-true
      */
@@ -103,7 +113,7 @@ public class StringUtil {
         return false;
     }
 
-    public static boolean containsAnyIgnoreCase(String str, String ... strings) {
+    public static boolean containsAnyIgnoreCase(String str, String... strings) {
         if (isEmpty(str)) return false;
         if (isNull(strings)) return false;
 
