@@ -22,7 +22,7 @@ public class LoginUser extends User {
     /**
      * 用户昵称
      */
-    private String nickName;
+    private String nickname;
 
     /**
      * 登录时间
@@ -38,10 +38,10 @@ public class LoginUser extends User {
         super("anonymousUser", "", new ArrayList<>());
     }
 
-    public LoginUser(String userId, String username, String password, String nickName, Date loginTime, String ipaddr, Collection<? extends GrantedAuthority> authorities) {
+    public LoginUser(String userId, String username, String password, String nickname, Date loginTime, String ipaddr, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.userId = userId;
-        this.nickName = nickName;
+        this.nickname = nickname;
         this.loginTime = loginTime;
         this.ipaddr = ipaddr;
     }
@@ -54,12 +54,12 @@ public class LoginUser extends User {
         this.userId = userId;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public Date getLoginTime() {

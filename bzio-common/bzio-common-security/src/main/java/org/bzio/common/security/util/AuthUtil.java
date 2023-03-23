@@ -11,12 +11,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class AuthUtil {
 
-    public static String getUserName() {
+    public static String getUsername() {
         return getLoginUser().getUsername();
     }
 
-    public static String getNickName() {
-        return getLoginUser().getNickName();
+    public static String getNickname() {
+        return getLoginUser().getNickname();
     }
 
     private static LoginUser getLoginUser() {

@@ -16,7 +16,7 @@ public interface SysUserMapper {
 
     SysUser queryByUserId(String userId);
 
-    SysUser queryByUserName(String username);
+    SysUser queryByUsername(String username);
 
     List<SysUser> queryAll(SysUserQo sysUser);
 
@@ -26,5 +26,5 @@ public interface SysUserMapper {
 
     int updateLoginInfo(@Param("loginIp") String loginIp, @Param("loginDate") Date loginDate, @Param("userId") String userId);
 
-    int deleteByUserName(String username);
+    int deleteByUsername(String username);
 }

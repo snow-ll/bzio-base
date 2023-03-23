@@ -37,16 +37,16 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
     @Override
     public int saveDictType(SysDictType sysDictType) {
         // 获取登录人信息
-        String userName = AuthUtil.getUserName();
-        String nickName = AuthUtil.getNickName();
+        String username = AuthUtil.getUsername();
+        String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysDictType.getDictId())) {
             sysDictType.setDictId(IdUtil.simpleUUID());
-            sysDictType.setCreateBy(userName);
-            sysDictType.setCreateName(nickName);
+            sysDictType.setCreateBy(username);
+            sysDictType.setCreateName(nickname);
             sysDictType.setCreateDate(DateUtil.getNowDate());
-            sysDictType.setUpdateBy(userName);
-            sysDictType.setUpdateName(nickName);
+            sysDictType.setUpdateBy(username);
+            sysDictType.setUpdateName(nickname);
             sysDictType.setUpdateDate(DateUtil.getNowDate());
             return sysDictTypeMapper.insert(sysDictType);
         } else {
@@ -54,8 +54,8 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
             if (newDictType == null) throw new BaseException("未查询到字典数据信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysDictType, newDictType);
-            newDictType.setUpdateBy(userName);
-            newDictType.setUpdateName(nickName);
+            newDictType.setUpdateBy(username);
+            newDictType.setUpdateName(nickname);
             newDictType.setUpdateDate(DateUtil.getNowDate());
             return sysDictTypeMapper.update(newDictType);
         }

@@ -46,7 +46,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader(AuthConfig.header);
         if (StringUtil.isNotEmpty(authHeader)) {
             String authToken = stringRedisService.get(AuthConfig.prefix + AesUtil.decrypt(authHeader, AuthConfig.aesKey));
-            String username = jwtUtil.getUserNameFromToken(authToken);
+            String username = jwtUtil.getUsernameFromToken(authToken);
             if (StringUtil.isNotEmpty(username) && jwtUtil.validateToken(authToken, username)) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

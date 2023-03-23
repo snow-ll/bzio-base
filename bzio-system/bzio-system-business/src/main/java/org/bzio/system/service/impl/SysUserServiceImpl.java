@@ -32,8 +32,8 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
      * 根据用户名查询用户详情
      */
     @Override
-    public SysUser queryInfo(String userName) {
-        return sysUserMapper.queryByUserName(userName);
+    public SysUser queryInfo(String username) {
+        return sysUserMapper.queryByUsername(username);
     }
 
     /**
@@ -50,8 +50,8 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
     @Override
     public int saveUser(SysUser sysUser) {
         // 获取登录人信息
-        String userName = AuthUtil.getUserName();
-        String nickName = AuthUtil.getNickName();
+        String username = AuthUtil.getUsername();
+        String nickname = AuthUtil.getNickname();
 
         // 用户密码加密
         sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
@@ -59,11 +59,11 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         // 为空新增用户
         if (StringUtil.isEmpty(sysUser.getUserId())) {
             sysUser.setUserId(IdUtil.simpleUUID());
-            sysUser.setCreateBy(userName);
-            sysUser.setCreateName(nickName);
+            sysUser.setCreateBy(username);
+            sysUser.setCreateName(nickname);
             sysUser.setCreateDate(DateUtil.getNowDate());
-            sysUser.setUpdateBy(userName);
-            sysUser.setUpdateName(nickName);
+            sysUser.setUpdateBy(username);
+            sysUser.setUpdateName(nickname);
             sysUser.setUpdateDate(DateUtil.getNowDate());
             return sysUserMapper.insert(sysUser);
         }else {
@@ -71,8 +71,8 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
             if (newUser == null) throw new UserException("未查询到部门信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysUser, newUser);
-            newUser.setUpdateBy(userName);
-            newUser.setUpdateName(nickName);
+            newUser.setUpdateBy(username);
+            newUser.setUpdateName(nickname);
             newUser.setUpdateDate(DateUtil.getNowDate());
             return sysUserMapper.update(newUser);
         }
@@ -82,7 +82,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
      * 根据用户名删除用户
      */
     @Override
-    public int deleteUser(String userName) {
-        return sysUserMapper.deleteByUserName(userName);
+    public int deleteUser(String username) {
+        return sysUserMapper.deleteByUsername(username);
     }
 }

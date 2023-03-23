@@ -14,11 +14,11 @@ public class SysUserQo {
     /**
      * 用户名
      */
-    private String userName;
+    private String username;
     /**
      * 用户昵称
      */
-    private String nickName;
+    private String nickname;
     /**
      * 出生日期
      */
@@ -72,20 +72,20 @@ public class SysUserQo {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getBirthday() {

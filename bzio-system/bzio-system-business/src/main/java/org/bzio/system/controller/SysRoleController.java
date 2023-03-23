@@ -61,7 +61,7 @@ public class SysRoleController  extends BaseController {
      */
     @Log(title = "删除角色", businessType = BusinessType.DELETE)
     @PostMapping("delRole")
-    public AjaxResult delRole(String userName) {
-        return AjaxResult.toAjax(sysRoleService.deleteRole(userName));
+    public AjaxResult delRole(String username) {
+        return AjaxResult.toAjax(sysRoleService.deleteRole(username));
     }
 }

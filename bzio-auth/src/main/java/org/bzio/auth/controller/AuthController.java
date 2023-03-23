@@ -109,8 +109,8 @@ public class AuthController extends BaseController {
      */
     @Log(title = "强制踢出", businessType = BusinessType.AUTH)
     @PostMapping("/force")
-    public AjaxResult force(String userName, String password) {
-        return AjaxResult.toAjax(authService.force(userName, password));
+    public AjaxResult force(String username, String password) {
+        return AjaxResult.toAjax(authService.force(username, password));
     }
 
     /**

@@ -58,8 +58,8 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
     @Override
     public int saveDept(SysDept sysDept) {
         // 获取登录人信息
-        String userName = AuthUtil.getUserName();
-        String nickName = AuthUtil.getNickName();
+        String username = AuthUtil.getUsername();
+        String nickname = AuthUtil.getNickname();
 
         // 调整父级单位
         SysDept parentDept = sysDeptMapper.queryById(sysDept.getParentId());
@@ -74,11 +74,11 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
         // 为空新增用户
         if (StringUtil.isEmpty(sysDept.getDeptId())) {
             sysDept.setDeptId(IdUtil.simpleUUID());
-            sysDept.setCreateBy(userName);
-            sysDept.setCreateName(nickName);
+            sysDept.setCreateBy(username);
+            sysDept.setCreateName(nickname);
             sysDept.setCreateDate(DateUtil.getNowDate());
-            sysDept.setUpdateBy(userName);
-            sysDept.setUpdateName(nickName);
+            sysDept.setUpdateBy(username);
+            sysDept.setUpdateName(nickname);
             sysDept.setUpdateDate(DateUtil.getNowDate());
             return sysDeptMapper.insert(sysDept);
         }else {
@@ -86,8 +86,8 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
             if (newDept == null) throw new DeptException("未查询到部门信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysDept, newDept);
-            newDept.setUpdateBy(userName);
-            newDept.setUpdateName(nickName);
+            newDept.setUpdateBy(username);
+            newDept.setUpdateName(nickname);
             newDept.setUpdateDate(DateUtil.getNowDate());
             return sysDeptMapper.update(newDept);
         }

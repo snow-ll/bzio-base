@@ -33,8 +33,8 @@ public class SysUserController extends BaseController {
      */
     @Log(title = "查询用户详情", businessType = BusinessType.QUERY)
     @GetMapping("info")
-    public AjaxResult info(String userName) {
-        return AjaxResult.success(sysUserService.queryInfo(userName));
+    public AjaxResult info(String username) {
+        return AjaxResult.success(sysUserService.queryInfo(username));
     }
 
     /**
@@ -62,7 +62,7 @@ public class SysUserController extends BaseController {
      */
     @Log(title = "删除用户", businessType = BusinessType.DELETE)
     @PostMapping("delUser")
-    public AjaxResult delUser(String userName) {
-        return AjaxResult.toAjax(sysUserService.deleteUser(userName));
+    public AjaxResult delUser(String username) {
+        return AjaxResult.toAjax(sysUserService.deleteUser(username));
     }
 }

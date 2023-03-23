@@ -37,16 +37,16 @@ public class SysConfigServiceImpl extends BaseServiceImpl implements SysConfigSe
     @Override
     public int saveConfig(SysConfig sysConfig) {
         // 获取登录人信息
-        String userName = AuthUtil.getUserName();
-        String nickName = AuthUtil.getNickName();
+        String username = AuthUtil.getUsername();
+        String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysConfig.getConfigId())) {
             sysConfig.setConfigId(IdUtil.simpleUUID());
-            sysConfig.setCreateBy(userName);
-            sysConfig.setCreateName(nickName);
+            sysConfig.setCreateBy(username);
+            sysConfig.setCreateName(nickname);
             sysConfig.setCreateDate(DateUtil.getNowDate());
-            sysConfig.setUpdateBy(userName);
-            sysConfig.setUpdateName(nickName);
+            sysConfig.setUpdateBy(username);
+            sysConfig.setUpdateName(nickname);
             sysConfig.setUpdateDate(DateUtil.getNowDate());
             return sysConfigMapper.insert(sysConfig);
         } else {
@@ -54,8 +54,8 @@ public class SysConfigServiceImpl extends BaseServiceImpl implements SysConfigSe
             if (newConfig == null) throw new BaseException("未查询到系统配置信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysConfig, newConfig);
-            newConfig.setUpdateBy(userName);
-            newConfig.setUpdateName(nickName);
+            newConfig.setUpdateBy(username);
+            newConfig.setUpdateName(nickname);
             newConfig.setUpdateDate(DateUtil.getNowDate());
             return sysConfigMapper.update(newConfig);
         }

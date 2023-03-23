@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface SysUserService {
 
-    SysUser queryInfo(String userName);
+    SysUser queryInfo(String username);
 
     List<SysUser> queryAll(SysUserQo sysUser);
 
     int saveUser(SysUser sysUser);
 
-    int deleteUser(String userName);
+    int deleteUser(String username);
 }

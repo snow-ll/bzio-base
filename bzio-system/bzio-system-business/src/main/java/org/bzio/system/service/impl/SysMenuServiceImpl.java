@@ -60,17 +60,17 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
     @Override
     public int saveMenu(SysMenu sysMenu) {
         // 获取登录人信息
-        String userName = AuthUtil.getUserName();
-        String nickName = AuthUtil.getNickName();
+        String username = AuthUtil.getUsername();
+        String nickname = AuthUtil.getNickname();
 
         // 判断传入的id是否为空
         if (StringUtil.isEmpty(sysMenu.getMenuId())) {
             sysMenu.setMenuId(IdUtil.simpleUUID());
-            sysMenu.setCreateBy(userName);
-            sysMenu.setCreateName(nickName);
+            sysMenu.setCreateBy(username);
+            sysMenu.setCreateName(nickname);
             sysMenu.setCreateDate(DateUtil.getNowDate());
-            sysMenu.setUpdateBy(userName);
-            sysMenu.setUpdateName(nickName);
+            sysMenu.setUpdateBy(username);
+            sysMenu.setUpdateName(nickname);
             sysMenu.setUpdateDate(DateUtil.getNowDate());
             return sysMenuMapper.insert(sysMenu);
         }else {
@@ -78,8 +78,8 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
             if (newMenu == null) throw new UserException("未查询到菜单信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysMenu, newMenu);
-            newMenu.setUpdateBy(userName);
-            newMenu.setUpdateName(nickName);
+            newMenu.setUpdateBy(username);
+            newMenu.setUpdateName(nickname);
             newMenu.setUpdateDate(DateUtil.getNowDate());
             return sysMenuMapper.update(newMenu);
         }

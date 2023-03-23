@@ -46,18 +46,18 @@ public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleServic
     @Override
     public int saveRole(SysRole sysRole) {
         // 获取登录人信息
-        String userName = AuthUtil.getUserName();
-        String nickName = AuthUtil.getNickName();
+        String username = AuthUtil.getUsername();
+        String nickname = AuthUtil.getNickname();
 
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysRole.getRoleId())) {
             sysRole.setRoleId(IdUtil.simpleUUID());
-            sysRole.setCreateBy(userName);
-            sysRole.setCreateName(nickName);
+            sysRole.setCreateBy(username);
+            sysRole.setCreateName(nickname);
             sysRole.setCreateDate(DateUtil.getNowDate());
-            sysRole.setUpdateBy(userName);
-            sysRole.setUpdateName(nickName);
+            sysRole.setUpdateBy(username);
+            sysRole.setUpdateName(nickname);
             sysRole.setUpdateDate(DateUtil.getNowDate());
             return sysRoleMapper.insert(sysRole);
         }else {
@@ -65,8 +65,8 @@ public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleServic
             if (newRole == null) throw new UserException("未查询到角色信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysRole, newRole);
-            newRole.setUpdateBy(userName);
-            newRole.setUpdateName(nickName);
+            newRole.setUpdateBy(username);
+            newRole.setUpdateName(nickname);
             newRole.setUpdateDate(DateUtil.getNowDate());
             return sysRoleMapper.update(newRole);
         }

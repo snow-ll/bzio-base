@@ -37,18 +37,18 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
     @Override
     public int saveDictData(SysDictData sysDictData) {
         // 获取登录人信息
-        String userName = AuthUtil.getUserName();
-        String nickName = AuthUtil.getNickName();
+        String username = AuthUtil.getUsername();
+        String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysDictData.getDictType())) throw new BaseException("字典数据类型不能为空！");
 
         if (StringUtil.isEmpty(sysDictData.getDictCode())) {
             sysDictData.setDictCode(IdUtil.simpleUUID());
-            sysDictData.setCreateBy(userName);
-            sysDictData.setCreateName(nickName);
+            sysDictData.setCreateBy(username);
+            sysDictData.setCreateName(nickname);
             sysDictData.setCreateDate(DateUtil.getNowDate());
-            sysDictData.setUpdateBy(userName);
-            sysDictData.setUpdateName(nickName);
+            sysDictData.setUpdateBy(username);
+            sysDictData.setUpdateName(nickname);
             sysDictData.setUpdateDate(DateUtil.getNowDate());
             return sysDictDataMapper.insert(sysDictData);
         } else {
@@ -56,8 +56,8 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
             if (newData == null) throw new BaseException("未查询到字典数据信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysDictData, newData);
-            newData.setUpdateBy(userName);
-            newData.setUpdateName(nickName);
+            newData.setUpdateBy(username);
+            newData.setUpdateName(nickname);
             newData.setUpdateDate(DateUtil.getNowDate());
             return sysDictDataMapper.update(newData);
         }

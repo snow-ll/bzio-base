@@ -27,16 +27,16 @@ public class JwtUtil {
     /**
      * 根据用户信息生成token
      */
-    public String generateToken(String userName) {
+    public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(USERNAME_KEY, userName);
+        claims.put(USERNAME_KEY, username);
         return generateToken(claims);
     }
 
     /**
      * 从token中获取登录用户名
      */
-    public String getUserNameFromToken(String token) {
+    public String getUsernameFromToken(String token) {
         String username;
         try {
             Claims claims = getClaimsFromToken(token);
@@ -52,14 +52,14 @@ public class JwtUtil {
      *
      * @return true-有效
      */
-    public boolean validateToken(String token, String userName) {
-        return userName.equals(getUserNameFromToken(token)) && !isTokenExpired(token);
+    public boolean validateToken(String token, String username) {
+        return username.equals(getUsernameFromToken(token)) && !isTokenExpired(token);
     }
 
     /**
      * 刷新token
      */
-    public String refreshToken(String token, String userName) {
+    public String refreshToken(String token, String username) {
         Claims claims = getClaimsFromToken(token);
         claims.setExpiration(DateUtil.getNowDate());
         return generateToken(claims);

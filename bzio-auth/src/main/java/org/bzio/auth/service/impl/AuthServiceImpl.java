@@ -100,7 +100,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             log.error("密码不能为空！");
             throw new UserException("密码不能为空！");
         }
-        SysUser user = sysUserMapper.queryByUserName(sysUser.getUsername());
+        SysUser user = sysUserMapper.queryByUsername(sysUser.getUsername());
         // 用户名存在，抛出异常
         if (user != null && sysUser.getUsername().equals(user.getUsername())) {
             log.error("用户名已存在！");
@@ -119,7 +119,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         if (StringUtil.isEmpty(password)) throw new UserException("原密码不能为空！");
         if (StringUtil.isEmpty(newPassword)) throw new UserException("新密码不能为空！");
 
-        SysUser sysUser = sysUserMapper.queryByUserName(username);
+        SysUser sysUser = sysUserMapper.queryByUsername(username);
         // 验证用户名密码是否正确
         if (sysUser == null) throw new UserException("用户不存在！");
         if (!bCryptPasswordEncoder.matches(password, sysUser.getPassword())) throw new UserException("原密码不正确！");
@@ -150,7 +150,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
 
     @Override
     public String getKey(String username) {
-        SysUser user = sysUserMapper.queryByUserName(username);
+        SysUser user = sysUserMapper.queryByUsername(username);
         return AuthConfig.prefix + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
     }
 
@@ -160,7 +160,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             log.error("用户名不能为空！");
             return false;
         }
-        SysUser sysUser = sysUserMapper.queryByUserName(username);
+        SysUser sysUser = sysUserMapper.queryByUsername(username);
         // 用户不存在，抛出异常
         if (sysUser == null) {
             log.error("用户不存在！");

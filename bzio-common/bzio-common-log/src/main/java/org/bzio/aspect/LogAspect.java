@@ -12,7 +12,6 @@ import org.bzio.common.core.enums.BusinessStatus;
 import org.bzio.common.core.util.*;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.entity.SysLog;
-import org.bzio.system.entity.SysUser;
 import org.bzio.system.mapper.SysLogMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +20,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * 日志处理切面
@@ -86,7 +82,7 @@ public class LogAspect {
             sysLog.setTitle(annotationLog.title());
             sysLog.setBusinessType(annotationLog.businessType().ordinal());
             sysLog.setLogDesc(annotationLog.logDesc());
-            sysLog.setOperator(AuthUtil.getUserName());
+            sysLog.setOperator(AuthUtil.getUsername());
             sysLog.setOperationUrl(requestURI);
             sysLog.setOperationIp(ServletUtil.getIpAddr());
             sysLog.setOperationTime(DateUtil.getNowDate());

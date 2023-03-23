@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        SysUser user = sysUserMapper.queryByUserName(username);
+        SysUser user = sysUserMapper.queryByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("未查询到相关用户信息！");
         }
