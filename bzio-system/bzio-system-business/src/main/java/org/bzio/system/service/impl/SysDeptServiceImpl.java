@@ -6,10 +6,10 @@ import org.bzio.common.core.util.DateUtil;
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
+import org.bzio.common.security.entity.SysDept;
+import org.bzio.common.security.entity.TreeSelect;
+import org.bzio.common.security.mapper.SysDeptMapper;
 import org.bzio.common.security.util.AuthUtil;
-import org.bzio.system.entity.SysDept;
-import org.bzio.system.entity.TreeSelect;
-import org.bzio.system.mapper.SysDeptMapper;
 import org.bzio.system.service.SysDeptService;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
-package org.bzio.system.mapper;
+package org.bzio.common.security.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.bzio.system.entity.SysRole;
+import org.bzio.common.security.entity.SysRole;
 
 import java.util.List;
 

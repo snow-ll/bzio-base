@@ -11,7 +11,7 @@ import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.util.JwtUtil;
 import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.redis.service.StringRedisService;
-import org.bzio.system.entity.SysUser;
+import org.bzio.common.security.entity.SysUser;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

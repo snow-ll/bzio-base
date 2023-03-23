@@ -1,8 +1,8 @@
-package org.bzio.system.mapper;
+package org.bzio.common.security.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.bzio.common.core.web.entity.TreeNode;
-import org.bzio.system.entity.SysMenu;
+import org.bzio.common.security.entity.SysMenu;
 
 import java.util.List;
 

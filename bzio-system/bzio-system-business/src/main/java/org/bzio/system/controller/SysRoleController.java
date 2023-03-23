@@ -5,7 +5,7 @@ import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.controller.BaseController;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
-import org.bzio.system.entity.SysRole;
+import org.bzio.common.security.entity.SysRole;
 import org.bzio.system.service.SysRoleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

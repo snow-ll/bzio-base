@@ -1,7 +1,7 @@
 package org.bzio.system.service;
 
 import org.bzio.common.core.web.entity.TreeNode;
-import org.bzio.system.entity.SysMenu;
+import org.bzio.common.security.entity.SysMenu;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.bzio.system.entity;
+package org.bzio.common.security.entity;
 
 
 import java.io.Serializable;

@@ -6,9 +6,9 @@ import org.bzio.common.core.util.DateUtil;
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
+import org.bzio.common.security.entity.SysRole;
+import org.bzio.common.security.mapper.SysRoleMapper;
 import org.bzio.common.security.util.AuthUtil;
-import org.bzio.system.entity.SysRole;
-import org.bzio.system.mapper.SysRoleMapper;
 import org.bzio.system.service.SysRoleService;
 import org.springframework.stereotype.Service;
 

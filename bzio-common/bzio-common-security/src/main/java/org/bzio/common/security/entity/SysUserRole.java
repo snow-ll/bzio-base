@@ -1,21 +1,21 @@
-package org.bzio.system.entity;
+package org.bzio.common.security.entity;
 
 import java.io.Serializable;
 
 /**
- * 系统用户部门关联表
+ * 用户角色关联表实体
  *
  * @author: snow
  */
-public class SysUserDept implements Serializable {
+public class SysUserRole implements Serializable {
 
-    private static final long serialVersionUID = 6859082493603128522L;
+    private static final long serialVersionUID = 5497130758141266081L;
 
     private String id;
 
     private String userId;
 
-    private String deptId;
+    private String roleId;
 
     public String getId() {
         return id;
@@ -33,11 +33,11 @@ public class SysUserDept implements Serializable {
         this.userId = userId;
     }
 
-    public String getDeptId() {
-        return deptId;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setDeptId(String deptId) {
-        this.deptId = deptId;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 }

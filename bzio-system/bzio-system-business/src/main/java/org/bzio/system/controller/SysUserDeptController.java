@@ -3,7 +3,7 @@ package org.bzio.system.controller;
 import org.bzio.common.log.annotation.Log;
 import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.entity.AjaxResult;
-import org.bzio.system.entity.SysUserDept;
+import org.bzio.common.security.entity.SysUserDept;
 import org.bzio.system.service.SysUserDeptService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

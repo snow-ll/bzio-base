@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.bzio.system.mapper.SysMenuMapper">
+<mapper namespace="org.bzio.common.security.mapper.SysMenuMapper">
 
-    <resultMap type="org.bzio.system.entity.SysMenu" id="SysMenuMap">
+    <resultMap type="org.bzio.common.security.entity.SysMenu" id="SysMenuMap">
         <result property="menuId" column="menu_id" jdbcType="VARCHAR"/>
         <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
         <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>

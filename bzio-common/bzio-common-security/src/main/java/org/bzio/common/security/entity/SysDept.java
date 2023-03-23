@@ -1,4 +1,4 @@
-package org.bzio.system.entity;
+package org.bzio.common.security.entity;
 
 
 import org.bzio.common.core.web.entity.BaseEntity;

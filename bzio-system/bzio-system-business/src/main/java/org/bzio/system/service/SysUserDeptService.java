@@ -1,6 +1,6 @@
 package org.bzio.system.service;
 
-import org.bzio.system.entity.SysUserDept;
+import org.bzio.common.security.entity.SysUserDept;
 
 /**
  * @author: snow

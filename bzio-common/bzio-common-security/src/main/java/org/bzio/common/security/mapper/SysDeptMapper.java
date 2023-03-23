@@ -1,8 +1,8 @@
-package org.bzio.system.mapper;
+package org.bzio.common.security.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.bzio.system.entity.SysDept;
-import org.bzio.system.entity.TreeSelect;
+import org.bzio.common.security.entity.SysDept;
+import org.bzio.common.security.entity.TreeSelect;
 
 import java.util.List;
 

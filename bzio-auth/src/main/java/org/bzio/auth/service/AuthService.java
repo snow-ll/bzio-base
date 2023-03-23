@@ -1,6 +1,6 @@
 package org.bzio.auth.service;
 
-import org.bzio.system.entity.SysUser;
+import org.bzio.common.security.entity.SysUser;
 
 /**
  * @author: snow

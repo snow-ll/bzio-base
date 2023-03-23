@@ -1,7 +1,7 @@
 package org.bzio.system.service;
 
-import org.bzio.system.entity.SysUser;
-import org.bzio.system.qo.SysUserQo;
+import org.bzio.common.security.entity.SysUser;
+import org.bzio.common.security.qo.SysUserQo;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.bzio.system.mapper.SysRoleMapper">
+<mapper namespace="org.bzio.common.security.mapper.SysRoleMapper">
 
-    <resultMap type="org.bzio.system.entity.SysRole" id="SysRoleMap">
+    <resultMap type="org.bzio.common.security.entity.SysRole" id="SysRoleMap">
         <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
         <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>

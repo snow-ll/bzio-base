@@ -1,7 +1,7 @@
 package org.bzio.system.service.impl;
 
-import org.bzio.system.entity.SysLog;
-import org.bzio.system.mapper.SysLogMapper;
+import org.bzio.common.security.entity.SysLog;
+import org.bzio.common.security.mapper.SysLogMapper;
 import org.bzio.system.service.SysLogService;
 import org.springframework.stereotype.Service;
 

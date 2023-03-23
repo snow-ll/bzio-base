@@ -4,9 +4,9 @@ import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.*;
 import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.common.core.web.service.BaseServiceImpl;
+import org.bzio.common.security.entity.SysMenu;
+import org.bzio.common.security.mapper.SysMenuMapper;
 import org.bzio.common.security.util.AuthUtil;
-import org.bzio.system.entity.SysMenu;
-import org.bzio.system.mapper.SysMenuMapper;
 import org.bzio.system.service.SysMenuService;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package org.bzio.system.mapper;
+package org.bzio.common.security.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.bzio.system.entity.SysUser;
-import org.bzio.system.qo.SysUserQo;
+import org.bzio.common.security.entity.SysUser;
+import org.bzio.common.security.qo.SysUserQo;
 
 import java.util.Date;
 import java.util.List;

@@ -2,8 +2,8 @@ package org.bzio.system.service.impl;
 
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
-import org.bzio.system.entity.SysUserRole;
-import org.bzio.system.mapper.SysUserRoleMapper;
+import org.bzio.common.security.entity.SysUserRole;
+import org.bzio.common.security.mapper.SysUserRoleMapper;
 import org.bzio.system.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
 

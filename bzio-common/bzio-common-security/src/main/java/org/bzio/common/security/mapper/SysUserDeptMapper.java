@@ -1,8 +1,8 @@
-package org.bzio.system.mapper;
+package org.bzio.common.security.mapper;
 
 
 import org.apache.ibatis.annotations.Mapper;
-import org.bzio.system.entity.SysUserDept;
+import org.bzio.common.security.entity.SysUserDept;
 
 /**
  * @author: snow

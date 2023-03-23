@@ -1,7 +1,7 @@
 package org.bzio.system.service;
 
 
-import org.bzio.system.entity.SysUserRole;
+import org.bzio.common.security.entity.SysUserRole;
 
 import java.util.List;
 

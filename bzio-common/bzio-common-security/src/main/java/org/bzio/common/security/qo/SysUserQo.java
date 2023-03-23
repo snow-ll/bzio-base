@@ -1,18 +1,11 @@
-package org.bzio.system.entity;
+package org.bzio.common.security.qo;
 
-import org.bzio.common.core.web.entity.BaseEntity;
-
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 系统用户实体类
- *
  * @author: snow
  */
-public class SysUser extends BaseEntity implements Serializable {
-
-    private static final long serialVersionUID = -2916141177184809068L;
+public class SysUserQo {
 
     /**
      * 用户id
@@ -22,10 +15,6 @@ public class SysUser extends BaseEntity implements Serializable {
      * 用户名
      */
     private String username;
-    /**
-     * 密码
-     */
-    private String password;
     /**
      * 用户昵称
      */
@@ -55,13 +44,9 @@ public class SysUser extends BaseEntity implements Serializable {
      */
     private String fax;
     /**
-     * 头像路径
-     */
-    private String avatar;
-    /**
      * 帐号状态（0正常 1停用）
      */
-    private Integer status;
+    private String status;
     /**
      * 删除标志（0代表存在 1代表删除）
      */
@@ -74,6 +59,10 @@ public class SysUser extends BaseEntity implements Serializable {
      * 最后登录时间
      */
     private Date loginDate;
+    /**
+     * 所在部门
+     */
+    private String deptId;
 
     public String getUserId() {
         return userId;
@@ -89,14 +78,6 @@ public class SysUser extends BaseEntity implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getNickname() {
@@ -155,19 +136,11 @@ public class SysUser extends BaseEntity implements Serializable {
         this.fax = fax;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -193,5 +166,13 @@ public class SysUser extends BaseEntity implements Serializable {
 
     public void setLoginDate(Date loginDate) {
         this.loginDate = loginDate;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

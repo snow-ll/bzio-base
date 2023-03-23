@@ -27,8 +27,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.bzio</groupId>
-            <artifactId>bzio-system-basic</artifactId>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
         <dependency>
