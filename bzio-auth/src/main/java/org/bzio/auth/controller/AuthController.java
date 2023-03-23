@@ -1,6 +1,6 @@
 package org.bzio.auth.controller;
 
-import org.bzio.annotation.Log;
+import org.bzio.common.log.annotation.Log;
 import org.bzio.auth.service.AuthService;
 import org.bzio.common.core.config.BaseConstant;
 import org.bzio.common.core.enums.BusinessType;

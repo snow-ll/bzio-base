@@ -1,4 +1,4 @@
-package org.bzio.annotation;
+package org.bzio.common.log.annotation;
 
 import org.bzio.common.core.enums.BusinessType;
 

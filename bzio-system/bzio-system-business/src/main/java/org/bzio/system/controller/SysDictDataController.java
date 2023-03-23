@@ -1,6 +1,6 @@
 package org.bzio.system.controller;
 
-import org.bzio.annotation.Log;
+import org.bzio.common.log.annotation.Log;
 import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.system.entity.SysDictData;

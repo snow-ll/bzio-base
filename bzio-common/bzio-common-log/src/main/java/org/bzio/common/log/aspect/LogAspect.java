@@ -1,4 +1,4 @@
-package org.bzio.aspect;
+package org.bzio.common.log.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.bzio.annotation.Log;
+import org.bzio.common.log.annotation.Log;
 import org.bzio.common.core.enums.BusinessStatus;
 import org.bzio.common.core.util.*;
 import org.bzio.common.security.util.AuthUtil;
@@ -38,7 +38,7 @@ public class LogAspect {
     /**
      * 切点
      */
-    @Pointcut("@annotation(org.bzio.annotation.Log)")
+    @Pointcut("@annotation(org.bzio.common.log.annotation.Log)")
     public void logPointcut() {
 
     }
