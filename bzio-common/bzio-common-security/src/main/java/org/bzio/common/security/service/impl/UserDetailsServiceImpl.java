@@ -27,6 +27,8 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final static String ADMIN = "admin";
+    
     @Resource
     SysUserMapper sysUserMapper;
     @Resource
@@ -40,13 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("未查询到相关用户信息！");
         }
-        return new LoginUser(user.getUserId(),
-                             user.getUsername(),
-                             user.getPassword(),
-                             user.getNickname(),
-                             DateUtil.getNowDateAccurateSecond(),
-                             ServletUtil.getIpAddr(),
-                             getAuthorities(user.getUserId()));
+        return new LoginUser(user, getAuthorities(user.getUserId()));
     }
 
     /**
@@ -55,11 +51,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     private List<GrantedAuthority> getAuthorities(String userId) {
         List<String> authorities = new ArrayList<>();
-
+        
         // 根据用户查询角色
         List<String> roles = sysRoleMapper.queryRoleByUserId(userId);
         for (String role : roles) {
             authorities.add("ROLE_" + role);
+        }
+        
+        // 管理员权限
+        if (roles.contains(ADMIN)) {
+            userId = null;
         }
 
         // 根据用户查询菜单权限字符

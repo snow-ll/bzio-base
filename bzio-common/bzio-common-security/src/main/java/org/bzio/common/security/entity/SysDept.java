@@ -61,7 +61,7 @@ public class SysDept extends BaseEntity implements Serializable {
      */
     private String subLevel;
     /**
-     * 部门状态:0正常,1停用
+     * 部门状态（0正常 1停用）
      */
     private Integer status;
     /**

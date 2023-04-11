@@ -62,7 +62,6 @@
                 and update_date = #{updateDate}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--新增所有列-->

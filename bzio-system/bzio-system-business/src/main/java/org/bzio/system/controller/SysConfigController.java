@@ -1,5 +1,7 @@
 package org.bzio.system.controller;
 
+import org.bzio.common.core.web.controller.BaseController;
+import org.bzio.common.core.web.entity.TableData;
 import org.bzio.common.log.annotation.Log;
 import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.entity.AjaxResult;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 系统参数控制层
@@ -19,7 +22,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/config")
-public class SysConfigController {
+public class SysConfigController extends BaseController {
 
     @Resource
     SysConfigService sysConfigService;
@@ -38,8 +41,10 @@ public class SysConfigController {
      */
     @Log(title = "查询系统参数列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
-    public AjaxResult list(SysConfig sysConfig) {
-        return AjaxResult.success(sysConfigService.queryAll(sysConfig));
+    public TableData list(SysConfig sysConfig) {
+        startPage();
+        List<SysConfig> configs = sysConfigService.queryAll(sysConfig);
+        return getTableData(configs);
     }
 
     /**

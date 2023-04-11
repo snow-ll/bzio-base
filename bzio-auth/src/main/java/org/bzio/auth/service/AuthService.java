@@ -1,5 +1,6 @@
 package org.bzio.auth.service;
 
+import org.bzio.common.security.entity.LoginUser;
 import org.bzio.common.security.entity.SysUser;
 
 /**
@@ -7,7 +8,7 @@ import org.bzio.common.security.entity.SysUser;
  */
 public interface AuthService {
 
-    String login(SysUser sysUser);
+    LoginUser login(SysUser sysUser);
 
     int register(SysUser sysUser);
 

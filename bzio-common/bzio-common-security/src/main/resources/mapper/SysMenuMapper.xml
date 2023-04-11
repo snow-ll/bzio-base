@@ -110,14 +110,19 @@
     <select id="queryPermByUserId" resultType="java.lang.String">
         select
             m.perms
-        from sys_menu m
-                 left join sys_role_menu rm on rm.menu_id = m.menu_id
-                 left join sys_user_role ur on ur.role_id = rm.role_id
-        where ur.user_id = #{userId}
+        from sys_menu m 
+        left join sys_role_menu rm on rm.menu_id = m.menu_id
+        left join sys_user_role ur on ur.role_id = rm.role_id
+        <where>
+            <if test="userId != null and userId != ''">
+                and ur.user_id = #{userId}
+            </if>
+            and m.perms is not null
+        </where>
     </select>
 
     <select id="queryTreeNode" resultType="org.bzio.common.core.web.entity.TreeNode">
-        select menu_id "id", menu_name "label", parent_id "pid" from sys_menu
+        select menu_id "id", menu_name "label", parent_id "pid", path, icon, component from sys_menu order by order_num
     </select>
 
     <!--新增所有列-->

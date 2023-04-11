@@ -32,15 +32,15 @@ public class SysMenu extends BaseEntity implements Serializable {
      */
     private Integer orderNum;
     /**
-     * 请求地址
+     * 路由地址
      */
     private String path;
     /**
-     * 路由地址
+     * 组件路径
      */
     private String component;
     /**
-     * 是否为外链（0是 1否）
+     * 是否为外链（0否 1是）
      */
     private Integer isFrame;
     /**

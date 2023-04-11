@@ -42,7 +42,7 @@ public class SysRole extends BaseEntity implements Serializable {
      */
     private Integer status;
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（0代表存在 1代表删除）
      */
     private Integer delFlag;
 

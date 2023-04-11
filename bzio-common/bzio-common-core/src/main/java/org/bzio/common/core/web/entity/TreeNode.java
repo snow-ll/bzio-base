@@ -27,21 +27,20 @@ public class TreeNode {
      */
     private List<TreeNode> children;
 
-    public TreeNode() {
+    /**
+     * 跳转路径
+     */
+    private String path;
 
-    }
+    /**
+     * 组件路径
+     */
+    private String component;
 
-    public TreeNode(String id, String label, String pid) {
-        this.id = id;
-        this.label = label;
-        this.pid = pid;
-    }
-
-    public TreeNode(TreeNode TreeNode) {
-        this.id = TreeNode.getId();
-        this.label = TreeNode.getLabel();
-        this.children = TreeNode.getChildren();
-    }
+    /**
+     * svg图标
+     */
+    private String icon;
 
     public String getId() {
         return id;
@@ -75,13 +74,27 @@ public class TreeNode {
         this.children = children;
     }
 
-    @Override
-    public String toString() {
-        return "TreeNode{" +
-                "id='" + id + '\'' +
-                ", label='" + label + '\'' +
-                ", pid='" + pid + '\'' +
-                ", children=" + children +
-                '}';
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

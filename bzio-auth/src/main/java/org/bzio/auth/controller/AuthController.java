@@ -1,5 +1,6 @@
 package org.bzio.auth.controller;
 
+import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.log.annotation.Log;
 import org.bzio.auth.service.AuthService;
 import org.bzio.common.core.config.BaseConstant;
@@ -11,6 +12,7 @@ import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.util.JwtUtil;
 import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.redis.service.StringRedisService;
+import org.bzio.common.security.entity.LoginUser;
 import org.bzio.common.security.entity.SysUser;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,15 +45,25 @@ public class AuthController extends BaseController {
     @PostMapping("/login")
     public AjaxResult login(@RequestBody SysUser sysUser) {
         String key = "";
+        LoginUser user = null;
         try {
             // 登录过程
-            key = authService.login(sysUser);
-        }catch (Exception e) {
+            user = authService.login(sysUser);
+            key = user.getKey();
+        } catch (UserException e) {
+            stringRedisService.delete(AuthConfig.prefix + key);
+            log.error("登录失败，异常信息：", e);
+            return AjaxResult.error(e.getMessage());
+        } catch (Exception e) {
             stringRedisService.delete(AuthConfig.prefix + key);
             log.error("登录失败，异常信息：", e);
             return AjaxResult.error("登录失败！");
         }
-        return AjaxResult.success("登录成功！", AesUtil.encrypt(key, AuthConfig.aesKey));
+        // 返回前台加密key
+        user.setKey(AesUtil.encrypt(key, AuthConfig.aesKey));
+        // 清空密码信息
+        user.setPassword("");
+        return AjaxResult.success("登录成功！", user);
     }
 
     /**

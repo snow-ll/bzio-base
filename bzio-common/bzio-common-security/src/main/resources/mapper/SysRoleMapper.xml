@@ -90,9 +90,13 @@
     <select id="queryRoleByUserId" resultType="java.lang.String">
         select
             r.role_key
-        from sys_role r
-                 left join sys_user_role ur on ur.role_id = r.role_id
-        where ur.user_id = #{userId}
+        from sys_role r 
+        left join sys_user_role ur on ur.role_id = r.role_id
+        <where>
+            <if test="userId != null and userId != ''">
+                and ur.user_id = #{userId}
+            </if>
+        </where>
     </select>
 
     <!--新增所有列-->

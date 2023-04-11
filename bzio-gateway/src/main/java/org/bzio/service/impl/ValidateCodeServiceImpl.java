@@ -1,7 +1,7 @@
 package org.bzio.service.impl;
 
 import com.google.code.kaptcha.Producer;
-import org.bzio.common.core.exception.system.user.UserException;
+import org.bzio.common.core.exception.system.code.CodeException;
 import org.bzio.common.core.util.Base64Util;
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
@@ -96,19 +96,19 @@ public class ValidateCodeServiceImpl implements ValidateCodeService {
      * 校验验证码
      */
     @Override
-    public void checkCaptcha(String code, String uuid) throws UserException {
+    public void checkCaptcha(String code, String uuid) throws CodeException {
         if (StringUtil.isEmpty(code)) {
-            throw new UserException("验证码不能为空");
+                throw new CodeException("验证码不能为空");
         }
         if (StringUtil.isEmpty(uuid)) {
-            throw new UserException("验证码已失效");
+            throw new CodeException("验证码已失效");
         }
         String verifyKey = "captcha_codes:" + uuid;
         String captcha = stringRedisService.get(verifyKey);
         stringRedisService.delete(verifyKey);
 
         if (!code.equalsIgnoreCase(captcha)) {
-            throw new UserException("验证码错误");
+            throw new CodeException("验证码错误");
         }
     }
 }
