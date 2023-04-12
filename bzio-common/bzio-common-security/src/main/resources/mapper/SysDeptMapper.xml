@@ -107,7 +107,7 @@
         </where>
     </select>
 
-    <select id="queryTreeNode" resultType="org.bzio.common.security.entity.TreeSelect">
+    <select id="queryTreeNode" resultType="org.bzio.common.core.web.entity.TreeNode">
         select dept_id "id", dept_name "label", parent_id "pid" from sys_dept
     </select>
 

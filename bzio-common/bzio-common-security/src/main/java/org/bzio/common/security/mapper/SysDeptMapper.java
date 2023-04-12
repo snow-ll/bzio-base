@@ -1,8 +1,8 @@
 package org.bzio.common.security.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.common.security.entity.SysDept;
-import org.bzio.common.security.entity.TreeSelect;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface SysDeptMapper {
 
     List<SysDept> queryAll(SysDept sysDept);
 
-    List<TreeSelect> queryTreeNode();
+    List<TreeNode> queryTreeNode();
 
     int insert(SysDept sysDept);
 

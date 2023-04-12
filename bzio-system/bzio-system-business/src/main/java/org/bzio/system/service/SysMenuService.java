@@ -1,6 +1,6 @@
 package org.bzio.system.service;
 
-import org.bzio.common.core.web.entity.TreeNode;
+import org.bzio.common.security.entity.MenuTreeNode;
 import org.bzio.common.security.entity.SysMenu;
 
 import java.util.List;
@@ -14,9 +14,9 @@ public interface SysMenuService {
 
     List<SysMenu> queryAll(SysMenu sysMenu);
 
-    List<TreeNode> queryTreeNode();
+    List<MenuTreeNode> queryTreeNode();
 
-    List<TreeNode> treeList(List<TreeNode> treeSelectList);
+    List<MenuTreeNode> treeList(List<MenuTreeNode> treeNodes);
 
     int saveMenu(SysMenu sysMenu);
 

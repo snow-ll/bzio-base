@@ -2,8 +2,8 @@ package org.bzio.system.service.impl;
 
 import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.*;
-import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.common.core.web.service.BaseServiceImpl;
+import org.bzio.common.security.entity.MenuTreeNode;
 import org.bzio.common.security.entity.SysMenu;
 import org.bzio.common.security.mapper.SysMenuMapper;
 import org.bzio.common.security.util.AuthUtil;
@@ -42,7 +42,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * 查询树节点信息
      */
     @Override
-    public List<TreeNode> queryTreeNode() {
+    public List<MenuTreeNode> queryTreeNode() {
         return sysMenuMapper.queryTreeNode();
     }
 
@@ -50,8 +50,8 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * 菜单树结构
      */
     @Override
-    public List<TreeNode> treeList(List<TreeNode> treeNodeList) {
-        return TreeNodeUtil.buildTreeList(treeNodeList);
+    public List<MenuTreeNode> treeList(List<MenuTreeNode> treeNodes) {
+        return TreeNodeUtil.buildTreeList(treeNodes);
     }
 
     /**

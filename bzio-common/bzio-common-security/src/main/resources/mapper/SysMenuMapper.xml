@@ -121,7 +121,7 @@
         </where>
     </select>
 
-    <select id="queryTreeNode" resultType="org.bzio.common.core.web.entity.TreeNode">
+    <select id="queryTreeNode" resultType="org.bzio.common.security.entity.MenuTreeNode">
         select menu_id "id", menu_name "label", parent_id "pid", path, icon, component from sys_menu order by order_num
     </select>
 

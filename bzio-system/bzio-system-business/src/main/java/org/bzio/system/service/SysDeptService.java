@@ -1,7 +1,7 @@
 package org.bzio.system.service;
 
+import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.common.security.entity.SysDept;
-import org.bzio.common.security.entity.TreeSelect;
 
 import java.util.List;
 
@@ -14,7 +14,9 @@ public interface SysDeptService {
 
     List<SysDept> queryAll(SysDept sysDept);
 
-    List<TreeSelect> treeList(List<SysDept> sysDepts);
+    List<TreeNode> queryTreeNode();
+    
+    List<TreeNode> treeList(List<TreeNode> treeNodes);
 
     int saveDept(SysDept sysDept);
 

@@ -1,13 +1,10 @@
 package org.bzio.system.service.impl;
 
 import org.bzio.common.core.exception.system.dept.DeptException;
-import org.bzio.common.core.util.BeanUtil;
-import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.IdUtil;
-import org.bzio.common.core.util.StringUtil;
+import org.bzio.common.core.util.*;
+import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.SysDept;
-import org.bzio.common.security.entity.TreeSelect;
 import org.bzio.common.security.mapper.SysDeptMapper;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.service.SysDeptService;
@@ -44,12 +41,19 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
     }
 
     /**
+     * 查询树节点信息
+     */
+    @Override
+    public List<TreeNode> queryTreeNode() {
+        return sysDeptMapper.queryTreeNode();
+    }
+
+    /**
      * 部门树状下拉列表
      */
     @Override
-    public List<TreeSelect> treeList(List<SysDept> deptList) {
-        List<SysDept> deptTrees = buildDeptTree(deptList);
-        return deptTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
+    public List<TreeNode> treeList(List<TreeNode> treeNodes) {
+        return TreeNodeUtil.buildTreeList3(treeNodes);
     }
 
     /**

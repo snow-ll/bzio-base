@@ -53,8 +53,7 @@ public class SysDeptController extends BaseController {
      */
     @GetMapping("tree")
     public AjaxResult tree() {
-        List<SysDept> depts = sysDeptService.queryAll(new SysDept());
-        return AjaxResult.success(sysDeptService.treeList(depts));
+        return AjaxResult.success(sysDeptService.treeList(sysDeptService.queryTreeNode()));
     }
 
     /**

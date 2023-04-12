@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
  *
  * @author: snow
  */
-public class TreeNodeUtil {
+public class TreeNodeUtil<T> {
 
     /**
      * stream方式构建树结构
      */
-    public static List<TreeNode> buildTreeList(List<TreeNode> treeNodeList) {
+    public static <T extends TreeNode> List<T> buildTreeList(List<T> treeNodeList) {
         // 获取根节点
         // filter过滤StringUtil.isEmpty(m.getPid())的数据，查出根节点
         return treeNodeList.stream().filter(m -> StringUtil.isEmpty(m.getPid())).peek((m) ->
@@ -41,7 +41,7 @@ public class TreeNodeUtil {
      * @param node         根节点
      * @param treeNodeList 所有节点信息
      */
-    public static List<TreeNode> getChildrenList(TreeNode node, List<TreeNode> treeNodeList) {
+    public static <T extends TreeNode> List<T> getChildrenList(T node, List<T> treeNodeList) {
         // 同根节点的操作，过滤出和node节点像
         return treeNodeList.stream().filter(item -> Objects.equals(item.getPid(), node.getId())).peek(item ->
                 item.setChildren(getChildrenList(item, treeNodeList))
@@ -54,13 +54,13 @@ public class TreeNodeUtil {
      * 2.以根节点为key、根节点下的子节点作为value封装为一个map
      * 3.遍历获取下级子节点信息，添加到节点对象
      */
-    public static List<TreeNode> buildDeptTree2(List<TreeNode> treeNodeList) {
+    public static <T extends TreeNode> List<T> buildTreeList2(List<T> treeNodeList) {
         // 获取根节点
-        List<TreeNode> list = treeNodeList.stream().filter(item -> StringUtil.isEmpty(item.getPid())).collect(Collectors.toList());
+        List<T> list = treeNodeList.stream().filter(item -> StringUtil.isEmpty(item.getPid())).collect(Collectors.toList());
         // 根据pid进行分组（相当于根节点分组）
         // key：pid（所有根节点id）
         // value：pid相同的一组节点集合
-        Map<String, List<TreeNode>> map = treeNodeList.stream().collect(Collectors.groupingBy(TreeNode::getPid));
+        Map<String, List<T>> map = treeNodeList.stream().collect(Collectors.groupingBy(TreeNode::getPid));
         recursionFnTree(list, map);
         return list;
     }
@@ -68,11 +68,11 @@ public class TreeNodeUtil {
     /**
      * 递归遍历节点，获取子列表
      */
-    public static void recursionFnTree(List<TreeNode> list, Map<String, List<TreeNode>> map) {
+    public static <T extends TreeNode> void recursionFnTree(List<T> list, Map<String, List<T>> map) {
         // 便利所有根节点
-        for (TreeNode node : list) {
+        for (T node : list) {
             // node节点的id作为pid，获取node所有子节点（pid=node.getId()的一组节点集合）
-            List<TreeNode> childList = map.get(node.getId());
+            List<T> childList = map.get(node.getId());
             // set子节点
             node.setChildren(childList);
 
@@ -86,17 +86,17 @@ public class TreeNodeUtil {
     /**
      * 常规递归方法构建树结构
      */
-    public static List<TreeNode> buildTreeTree3(List<TreeNode> treeNodeList) {
+    public static <T extends TreeNode> List<T> buildTreeList3(List<T> treeNodeList) {
         // 结果集
-        List<TreeNode> returnList = new ArrayList<>();
+        List<T> returnList = new ArrayList<>();
         // 临时集合，暂存节点id
         List<String> tempList = new ArrayList<>();
 
         // 遍历节点集合，id添加进入临时集合
-        for (TreeNode node : treeNodeList) {
+        for (T node : treeNodeList) {
             tempList.add(node.getId());
         }
-        for (TreeNode node : treeNodeList) {
+        for (T node : treeNodeList) {
             // tempList不包含dept父级id时，为根节点
             if (!tempList.contains(node.getPid())) {
                 // 如果是根节点, 遍历该父节点的所有子节点
@@ -117,14 +117,14 @@ public class TreeNodeUtil {
      * 递归列表
      * 子级通过setChildren设置
      */
-    private static void recursionFn(List<TreeNode> list, TreeNode node) {
+    private static <T extends TreeNode> void recursionFn(List<T> list, T node) {
         // 得到子节点列表
-        List<TreeNode> childList = getChildList(list, node);
+        List<T> childList = getChildList(list, node);
         // set节点node的子级集合
         node.setChildren(childList);
 
         // 递归查询节点t每个子孙级
-        for (TreeNode tChild : childList) {
+        for (T tChild : childList) {
             if (hasChild(list, tChild)) {
                 recursionFn(list, tChild);
             }
@@ -134,12 +134,12 @@ public class TreeNodeUtil {
     /**
      * 得到子节点列表
      */
-    private static List<TreeNode> getChildList(List<TreeNode> list, TreeNode node) {
+    private static <T extends TreeNode> List<T> getChildList(List<T> list, T node) {
         // 节点node子级集合
-        List<TreeNode> tlist = new ArrayList<>();
+        List<T> tlist = new ArrayList<>();
 
         // 遍历节点列表
-        for (TreeNode n : list) {
+        for (T n : list) {
             // 当前循环中节点父级id不为空，并且父级id和节点node的id相同则为node的子级
             if (StringUtil.isNotEmpty(n.getPid()) && n.getPid().equals(node.getId())) {
                 tlist.add(n);
@@ -151,7 +151,7 @@ public class TreeNodeUtil {
     /**
      * 判断是否有子节点
      */
-    private static boolean hasChild(List<TreeNode> list, TreeNode node) {
+    private static <T extends TreeNode> boolean hasChild(List<T> list, T node) {
         return getChildList(list, node).size() > 0;
     }
 }

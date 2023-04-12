@@ -1,7 +1,7 @@
 package org.bzio.common.security.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.bzio.common.core.web.entity.TreeNode;
+import org.bzio.common.security.entity.MenuTreeNode;
 import org.bzio.common.security.entity.SysMenu;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface SysMenuMapper {
 
     List<String> queryPermByUserId(String userId);
 
-    List<TreeNode> queryTreeNode();
+    List<MenuTreeNode> queryTreeNode();
 
     int insert(SysMenu sysMenu);
 
