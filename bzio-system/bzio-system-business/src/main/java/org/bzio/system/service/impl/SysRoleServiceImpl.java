@@ -59,6 +59,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleServic
             sysRole.setUpdateBy(username);
             sysRole.setUpdateName(nickname);
             sysRole.setUpdateDate(DateUtil.getNowDate());
+            sysRole.setDelFlag(0);
             return sysRoleMapper.insert(sysRole);
         }else {
             SysRole newRole = sysRoleMapper.queryById(sysRole.getRoleId());

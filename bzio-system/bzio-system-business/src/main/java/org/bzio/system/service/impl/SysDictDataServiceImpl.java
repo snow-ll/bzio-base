@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author snow
@@ -32,6 +33,11 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
     @Override
     public List<SysDictData> queryAll(SysDictData sysDictData) {
         return sysDictDataMapper.queryALl(sysDictData);
+    }
+
+    @Override
+    public List<Map> queryDictData(SysDictData sysDictData) {
+        return sysDictDataMapper.queryDictData(sysDictData);
     }
 
     @Override

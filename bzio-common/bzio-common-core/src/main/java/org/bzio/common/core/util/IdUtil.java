@@ -9,6 +9,10 @@ import java.util.UUID;
  */
 public class IdUtil {
 
+    public static void main(String[] args) {
+        System.out.println(simpleUUID());
+    }
+
     /**
      * 生成UUID
      */

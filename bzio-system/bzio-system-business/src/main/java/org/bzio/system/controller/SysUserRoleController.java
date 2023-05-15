@@ -26,8 +26,8 @@ public class SysUserRoleController {
      * 用户添加权限
      */
     @Log(title = "用户添加权限", businessType = BusinessType.INSERT)
-    @PostMapping("/saveUserRole")
-    public AjaxResult saveUserRole(@RequestBody List<SysUserRole> sysUserRoles) {
+    @PostMapping("/save")
+    public AjaxResult save(@RequestBody List<SysUserRole> sysUserRoles) {
         return AjaxResult.toAjax(sysUserRoleService.saveUserRole(sysUserRoles));
     }
 }

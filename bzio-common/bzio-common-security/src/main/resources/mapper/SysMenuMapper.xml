@@ -122,7 +122,38 @@
     </select>
 
     <select id="queryTreeNode" resultType="org.bzio.common.security.entity.MenuTreeNode">
-        select menu_id "id", menu_name "label", parent_id "pid", path, icon, component from sys_menu order by order_num
+        select menu_id "id", menu_name "label", parent_id "pid", path, icon, component, status, order_num "orderNum", create_date "createDate" 
+        from sys_menu 
+        <where>
+            <if test="menuName != null and menuName != ''">
+                and menu_name like concat('%', #{menuName}, '%')
+            </if>
+        </where>
+        order by order_num
+    </select>
+    
+    <select id="queryChild" resultType="java.util.Map">
+        select p.menu_id "menuId", p.menu_name "menuName", p.parent_id "parentId",
+        if((select count(menu_id) from sys_menu s where s.parent_id = p.menu_id) > 0, false, true) isLeaf
+        from sys_menu p
+        <where>
+            <choose>
+                <when test="parentId != null">
+                    p.parent_id = #{parentId}
+                </when>
+                <otherwise>
+                    p.parent_id is null
+                </otherwise>
+            </choose>
+        </where>
+        order by p.order_num
+    </select>
+    
+    <select id="queryParent" resultType="java.util.Map">
+        select p.menu_id "menuId", p.menu_name "menuName", p.parent_id "parentId"
+        from sys_menu p
+        where p.menu_id = #{menuId}
+        order by p.order_num
     </select>
 
     <!--新增所有列-->
@@ -197,6 +228,13 @@
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from sys_menu where menu_id = #{menuId}
+    </delete>
+    
+    <delete id="deleteBatch">
+        delete from sys_menu where menu_id in
+        <foreach collection="menuIds" item="menuId" open="(" separator="," close=")">
+            #{menuId}
+        </foreach>
     </delete>
 
 </mapper>

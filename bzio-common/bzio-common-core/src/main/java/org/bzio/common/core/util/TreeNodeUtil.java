@@ -4,7 +4,6 @@ import org.bzio.common.core.web.entity.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -27,11 +26,10 @@ public class TreeNodeUtil<T> {
      * stream方式构建树结构
      */
     public static <T extends TreeNode> List<T> buildTreeList(List<T> treeNodeList) {
-        // 获取根节点
-        // filter过滤StringUtil.isEmpty(m.getPid())的数据，查出根节点
-        return treeNodeList.stream().filter(m -> StringUtil.isEmpty(m.getPid())).peek((m) ->
-            // 子级集合添加到根节点对象
-            m.setChildren(getChildrenList(m, treeNodeList))
+        // 获取根节点，过滤掉所有的parentId在id列表中存在的节点，查出根节点
+        return treeNodeList.stream().filter(m -> treeNodeList.stream().noneMatch(n -> n.getId().equals(m.getPid()))).peek((m) ->
+                // 子级集合添加到根节点对象
+                m.setChildren(getChildrenList(m, treeNodeList))
         ).collect(Collectors.toList());
     }
 
@@ -47,46 +45,11 @@ public class TreeNodeUtil<T> {
                 item.setChildren(getChildrenList(item, treeNodeList))
         ).collect(Collectors.toList());
     }
-
-    /**
-     * stream方式构建树结构（第二种）
-     * 1.获取根节点
-     * 2.以根节点为key、根节点下的子节点作为value封装为一个map
-     * 3.遍历获取下级子节点信息，添加到节点对象
-     */
-    public static <T extends TreeNode> List<T> buildTreeList2(List<T> treeNodeList) {
-        // 获取根节点
-        List<T> list = treeNodeList.stream().filter(item -> StringUtil.isEmpty(item.getPid())).collect(Collectors.toList());
-        // 根据pid进行分组（相当于根节点分组）
-        // key：pid（所有根节点id）
-        // value：pid相同的一组节点集合
-        Map<String, List<T>> map = treeNodeList.stream().collect(Collectors.groupingBy(TreeNode::getPid));
-        recursionFnTree(list, map);
-        return list;
-    }
-
-    /**
-     * 递归遍历节点，获取子列表
-     */
-    public static <T extends TreeNode> void recursionFnTree(List<T> list, Map<String, List<T>> map) {
-        // 便利所有根节点
-        for (T node : list) {
-            // node节点的id作为pid，获取node所有子节点（pid=node.getId()的一组节点集合）
-            List<T> childList = map.get(node.getId());
-            // set子节点
-            node.setChildren(childList);
-
-            // 子节点不为空继续递归
-            if (null != childList && 0 < childList.size()) {
-                recursionFnTree(childList, map);
-            }
-        }
-    }
-
+    
     /**
      * 常规递归方法构建树结构
      */
-    public static <T extends TreeNode> List<T> buildTreeList3(List<T> treeNodeList) {
+    public static <T extends TreeNode> List<T> buildTreeList2(List<T> treeNodeList) {
         // 结果集
         List<T> returnList = new ArrayList<>();
         // 临时集合，暂存节点id

@@ -88,11 +88,13 @@ public class LogAspect {
             sysLog.setOperationTime(DateUtil.getNowDate());
             sysLog.setRequestMethod(request.getMethod());
 
-            if (StringUtil.isNotNull(joinPoint.getArgs())) {
+            if (annotationLog.isRequest() && StringUtil.isNotNull(joinPoint.getArgs())) {
                 sysLog.setRequestParam(JsonUtil.toJSONString(joinPoint.getArgs()));
             }
 
-            sysLog.setResponseResult(JsonUtil.toJSONString(jsonResult));
+            if (annotationLog.isResponse()) {
+                sysLog.setResponseResult(JsonUtil.toJSONString(jsonResult));
+            }
             sysLog.setStatus(BusinessStatus.SUCCESS.ordinal());
 
             if (StringUtil.isNotNull(e)) {

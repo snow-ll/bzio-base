@@ -56,15 +56,19 @@ public class AjaxResult {
      *
      * @param f 判断操作数据库是否之操作一条数据 true-只操作一条
      */
-    public static AjaxResult toAjax(int rows, boolean f) {
+    public static AjaxResult toAjax(int rows, boolean f, String msg, String errMsg) {
         if (f)
-            return rows == 1 ? success() : error();
+            return rows == 1 ? success(msg) : error(errMsg);
         else
-            return rows > 0 ? success() : error();
+            return rows > 0 ? success(msg) : error(errMsg);
     }
 
     public static AjaxResult toAjax(int rows) {
-        return toAjax(rows, false);
+        return toAjax(rows, false, null, null);
+    }
+
+    public static AjaxResult toAjax(int rows, String msg, String errMsg) {
+        return toAjax(rows, false, msg, errMsg);
     }
 
     public static AjaxResult toAjax(boolean result) {

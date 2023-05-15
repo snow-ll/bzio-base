@@ -8,6 +8,10 @@
         <result property="menuId" column="menu_id" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="queryMenuIdsByRoleId" resultType="java.lang.String">
+        select menu_id "menuId" from sys_role_menu where role_id = #{roleId}
+    </select>
+    
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into sys_role_menu(id, role_id, menu_id)
         values (#{id}, #{roleId}, #{menuId})
@@ -15,6 +19,10 @@
 
     <delete id="delete">
         delete from sys_role_menu where role_id = #{roleId} and menu_id = #{menuId}
+    </delete>
+    
+    <delete id="deleteByRoleId">
+        delete from sys_role_menu where role_id = #{roleId}
     </delete>
 </mapper>
 

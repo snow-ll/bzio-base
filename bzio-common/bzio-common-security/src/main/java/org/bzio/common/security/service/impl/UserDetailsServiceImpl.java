@@ -2,6 +2,7 @@ package org.bzio.common.security.service.impl;
 
 import org.bzio.common.core.util.DateUtil;
 import org.bzio.common.core.util.ServletUtil;
+import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.security.entity.LoginUser;
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.mapper.SysMenuMapper;
@@ -39,6 +40,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         SysUser user = sysUserMapper.queryByUsername(username);
+        // 第一次登录，时间添加进去
+        if (StringUtil.isNotNull(user) && StringUtil.isNull(user.getLoginDate())) {
+            user.setLoginDate(DateUtil.getNowDate());
+        }
         if (user == null) {
             throw new UsernameNotFoundException("未查询到相关用户信息！");
         }

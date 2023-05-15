@@ -9,7 +9,9 @@
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
         <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
         <result property="sex" column="sex" jdbcType="INTEGER"/>
-        <result property="idCard" column="id_card" jdbcType="VARCHAR"/>
+        <result property="certificateType" column="certificate_type" jdbcType="VARCHAR"/>
+        <result property="certificateNum" column="certificate_num" jdbcType="VARCHAR"/>
+        <result property="mobileNumber" column="mobile_number" jdbcType="VARCHAR"/>
         <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="fax" column="fax" jdbcType="VARCHAR"/>
@@ -29,8 +31,8 @@
 
     <sql id="selectUser">
         select
-            u.user_id, u.username, u.password, u.nickname, u.birthday, u.sex, u.id_card, u.phone_number,
-            u.email, u.fax, u.avatar, u.status, u.del_flag, u.login_ip, u.login_date,
+            u.user_id, u.username, u.password, u.nickname, u.birthday, u.sex, u.certificate_type, u.certificate_num,
+            u.mobile_number, u.phone_number, u.email, u.fax, u.avatar, u.status, u.del_flag, u.login_ip, u.login_date,
             u.create_by, u.create_name, u.create_date, u.update_by, u.update_name, u.update_date,
             u.remark
         from sys_user u
@@ -56,10 +58,10 @@
                 and u.user_id = #{userId}
             </if>
             <if test="username != null and username != ''">
-                and u.username = #{username}
+                and u.username like concat('%', #{username}, '%')
             </if>
             <if test="nickname != null and nickname != ''">
-                and u.nickname = #{nickname}
+                and u.nickname like concat('%', #{nickname}, '%')
             </if>
             <if test="birthday != null">
                 and u.birthday = #{birthday}
@@ -67,8 +69,11 @@
             <if test="sex != null">
                 and u.sex = #{sex}
             </if>
-            <if test="idCard != null and idCard != ''">
-                and u.id_card = #{idCard}
+            <if test="certificateNum != null and certificateNum != ''">
+                and u.certificate_num = #{certificateNum}
+            </if>
+            <if test="mobileNumber != null and mobileNumber != ''">
+                and u.mobile_number = #{mobileNumber}
             </if>
             <if test="phoneNumber != null and phoneNumber != ''">
                 and u.phone_number = #{phoneNumber}
@@ -95,27 +100,28 @@
                 and d.dept_id = #{deptId}
             </if>
         </where>
+        order by u.username
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
-        insert into sys_user(user_id, username, password, nickname, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
-        values (#{userId}, #{username}, #{password}, #{nickname}, #{birthday}, #{sex}, #{idCard}, #{phoneNumber}, #{email}, #{fax}, #{avatar}, #{status}, #{delFlag}, #{loginIp}, #{loginDate}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
+        insert into sys_user(user_id, username, password, nickname, birthday, sex, certificate_type, certificate_num, mobile_number, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        values (#{userId}, #{username}, #{password}, #{nickname}, #{birthday}, #{sex}, #{certificateType}, #{certificateNum}, #{mobileNumber}, #{phoneNumber}, #{email}, #{fax}, #{avatar}, #{status}, #{delFlag}, #{loginIp}, #{loginDate}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate}, #{remark})
     </insert>
 
     <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into sys_user(username, password, nickname, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        insert into sys_user(username, password, nickname, birthday, sex, certificate_type, certificate_num, mobile_number, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+        (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.birthday}, #{entity.sex}, #{entity.certificateType}, #{entity.certificateNum},  #{enetity.mobileNumber}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
-        insert into sys_user(username, password, nickname, birthday, sex, id_card, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
+        insert into sys_user(username, password, nickname, birthday, sex, certificate_type, certificate_num, mobile_number, phone_number, email, fax, avatar, status, del_flag, login_ip, login_date, create_by, create_name, create_date, update_by, update_name, update_date, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.birthday}, #{entity.sex}, #{entity.idCard}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
+            (#{entity.username}, #{entity.password}, #{entity.nickname}, #{entity.birthday}, #{entity.sex}, #{entity.certificateType}, #{entity.certificateNum}, #{enetity.mobileNumber}, #{entity.phoneNumber}, #{entity.email}, #{entity.fax}, #{entity.avatar}, #{entity.status}, #{entity.delFlag}, #{entity.loginIp}, #{entity.loginDate}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate}, #{entity.remark})
         </foreach>
         on duplicate key update
         username = values(username),
@@ -123,7 +129,9 @@
         nickname = values(nickname),
         birthday = values(birthday),
         sex = values(sex),
-        id_card = values(id_card),
+        certificate_type = values(certificate_type),
+        certificate_num = values(certificate_num),
+        mobile_number = values(mobile_number),
         phone_number = values(phone_number),
         email = values(email),
         fax = values(fax),
@@ -146,11 +154,12 @@
         update sys_user
         <set>
             username = #{username},
-            password = #{password},
             nickname = #{nickname},
             birthday = #{birthday},
             sex = #{sex},
-            id_card = #{idCard},
+            certificate_type = #{certificateType},
+            certificate_Num = #{certificateNum},
+            mobile_number = #{mobileNumber},
             phone_number = #{phoneNumber},
             email = #{email},
             fax = #{fax},
@@ -178,6 +187,9 @@
     <delete id="deleteByUsername">
         delete from sys_user where username = #{username}
     </delete>
-
+    
+    <update id="changeStatus">
+        update sys_user set status = #{status} where user_id = #{userId}
+    </update>
 </mapper>
 

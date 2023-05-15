@@ -17,4 +17,6 @@ public interface SysUserService {
     int saveUser(SysUser sysUser);
 
     int deleteUser(String username);
+    
+    int changeStatus(String userId, Integer status);
 }

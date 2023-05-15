@@ -51,8 +51,8 @@ public class SysConfigController extends BaseController {
      * 保存系统参数
      */
     @Log(title = "新增或修改系统参数", businessType = BusinessType.INSERT)
-    @PostMapping("saveConfig")
-    public AjaxResult saveConfig(SysConfig sysConfig) {
+    @PostMapping("save")
+    public AjaxResult save(SysConfig sysConfig) {
         return AjaxResult.toAjax(sysConfigService.saveConfig(sysConfig));
     }
 
@@ -60,8 +60,8 @@ public class SysConfigController extends BaseController {
      * 删除系统参数
      */
     @Log(title = "删除系统参数", businessType = BusinessType.DELETE)
-    @PostMapping("delConfig")
-    public AjaxResult delConfig(String configId) {
+    @PostMapping("del")
+    public AjaxResult del(String configId) {
         return AjaxResult.toAjax(sysConfigService.deleteConfig(configId));
     }
 }

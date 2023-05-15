@@ -26,7 +26,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
     @Resource
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @Resource
-    SysUserMapper sysUserMapper;
+    SysUserMapper sysUserMapper; 
 
     /**
      * 根据用户名查询用户详情
@@ -49,15 +49,19 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
      */
     @Override
     public int saveUser(SysUser sysUser) {
-        // 获取登录人信息
+//        // 获取登录人信息
         String username = AuthUtil.getUsername();
         String nickname = AuthUtil.getNickname();
-
-        // 用户密码加密
-        sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
+        
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysUser.getUserId())) {
+            if (StringUtil.isNotNull(sysUserMapper.queryByUsername(sysUser.getUsername()))) 
+                throw new UserException("用户名不能重复！");
+
+            // 新增用户，密码加密
+            sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
+            
             sysUser.setUserId(IdUtil.simpleUUID());
             sysUser.setCreateBy(username);
             sysUser.setCreateName(nickname);
@@ -65,6 +69,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
             sysUser.setUpdateBy(username);
             sysUser.setUpdateName(nickname);
             sysUser.setUpdateDate(DateUtil.getNowDate());
+            sysUser.setDelFlag(0);
             return sysUserMapper.insert(sysUser);
         }else {
             SysUser newUser = sysUserMapper.queryByUserId(sysUser.getUserId());
@@ -84,5 +89,10 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
     @Override
     public int deleteUser(String username) {
         return sysUserMapper.deleteByUsername(username);
+    }
+
+    @Override
+    public int changeStatus(String userId, Integer status) {
+        return sysUserMapper.changeStatus(userId, status);
     }
 }

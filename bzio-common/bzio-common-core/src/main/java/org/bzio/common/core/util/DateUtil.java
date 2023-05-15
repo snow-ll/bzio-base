@@ -18,18 +18,10 @@ public class DateUtil {
     private static final int MONTHS_IN_A_YEAR = 12;
 
     // 确保SimpleDateFormat线程安全问题
-    private static final ThreadLocal<SimpleDateFormat> THREAD_LOCAL = new ThreadLocal<>();
+    private static final ThreadLocal<SimpleDateFormat> THREAD_LOCAL = ThreadLocal.withInitial(() -> new SimpleDateFormat(BaseConstant.YYYY_MM_DD_HH_MM_SS));
 
-    /**
-     * 获取SimpleDateFormat对象
-     */
     private static SimpleDateFormat getDateFormat() {
-        SimpleDateFormat format = THREAD_LOCAL.get();
-        if (format == null) {
-            format = new SimpleDateFormat(BaseConstant.YYYY_MM_DD_HH_MM_SS);
-            THREAD_LOCAL.set(format);
-        }
-        return format;
+        return THREAD_LOCAL.get();
     }
 
     /**

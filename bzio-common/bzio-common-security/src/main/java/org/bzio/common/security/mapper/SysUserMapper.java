@@ -27,4 +27,6 @@ public interface SysUserMapper {
     int updateLoginInfo(@Param("loginIp") String loginIp, @Param("loginDate") Date loginDate, @Param("userId") String userId);
 
     int deleteByUsername(String username);
+
+    int changeStatus(@Param("userId") String userId, @Param("status") Integer status);
 }

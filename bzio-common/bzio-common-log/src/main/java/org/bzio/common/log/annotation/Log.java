@@ -28,4 +28,14 @@ public @interface Log
      * 操作说明
      */
     String logDesc() default "";
+
+    /**
+     * 是否保存请求
+     */
+    boolean isRequest() default false;
+    
+    /**
+     * 是否保存响应
+     */
+    boolean isResponse() default false;
 }

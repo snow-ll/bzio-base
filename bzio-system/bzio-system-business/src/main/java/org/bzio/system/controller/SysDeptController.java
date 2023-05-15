@@ -60,8 +60,8 @@ public class SysDeptController extends BaseController {
      * 保存部门
      */
     @Log(title = "新增或修改部门", businessType = BusinessType.INSERT)
-    @PostMapping("saveDept")
-    public AjaxResult saveDept(SysDept sysDept) {
+    @PostMapping("save")
+    public AjaxResult save(SysDept sysDept) {
         return AjaxResult.toAjax(sysDeptService.saveDept(sysDept));
     }
 
@@ -69,8 +69,8 @@ public class SysDeptController extends BaseController {
      * 删除部门
      */
     @Log(title = "删除部门", businessType = BusinessType.DELETE)
-    @PostMapping("delDept")
-    public AjaxResult delDept(String deptId) {
+    @PostMapping("del")
+    public AjaxResult del(String deptId) {
         return AjaxResult.toAjax(sysDeptService.deleteDept(deptId));
     }
 }

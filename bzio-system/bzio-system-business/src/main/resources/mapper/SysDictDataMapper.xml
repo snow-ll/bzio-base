@@ -70,9 +70,51 @@
                 and update_date = #{updateDate}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
+    <select id="queryDictData" resultType="java.util.Map">
+        select dict_value "dictValue", dict_label "dictLabel" from sys_dict_data
+        <where>
+            <if test="dictCode != null and dictCode != ''">
+                and dict_code = #{dictCode}
+            </if>
+            <if test="dictSort != null and dictSort != ''">
+                and dict_sort = #{dictSort}
+            </if>
+            <if test="dictLabel != null and dictLabel != ''">
+                and dict_label = #{dictLabel}
+            </if>
+            <if test="dictValue != null and dictValue != ''">
+                and dict_value = #{dictValue}
+            </if>
+            <if test="dictType != null and dictType != ''">
+                and dict_type = #{dictType}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createName != null and createName != ''">
+                and create_name = #{createName}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="updateName != null and updateName != ''">
+                and update_name = #{updateName}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where> 
+        order by dict_sort
+    </select>
+    
     <!--统计总行数-->
     <select id="count" resultType="java.lang.Long">
         select count(1)

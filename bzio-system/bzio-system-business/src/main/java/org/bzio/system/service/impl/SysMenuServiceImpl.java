@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: snow
@@ -42,8 +43,8 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * 查询树节点信息
      */
     @Override
-    public List<MenuTreeNode> queryTreeNode() {
-        return sysMenuMapper.queryTreeNode();
+    public List<MenuTreeNode> queryTreeNode(SysMenu sysMenu) {
+        return sysMenuMapper.queryTreeNode(sysMenu);
     }
 
     /**
@@ -52,6 +53,22 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
     @Override
     public List<MenuTreeNode> treeList(List<MenuTreeNode> treeNodes) {
         return TreeNodeUtil.buildTreeList(treeNodes);
+    }
+
+    /**
+     * 查询子级菜单
+     */
+    @Override
+    public List<Map> queryChild(String parentId) {
+        return sysMenuMapper.queryChild(parentId);
+    }
+    
+    /**
+     * 查询父级菜单
+     */
+    @Override
+    public List<Map> queryParent(String menuId) {
+        return sysMenuMapper.queryParent(menuId);
     }
 
     /**
@@ -89,7 +106,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * 删除菜单
      */
     @Override
-    public int deleteMenu(String menuId) {
-        return sysMenuMapper.deleteById(menuId);
+    public int deleteMenu(String[] menuIds) {
+        return sysMenuMapper.deleteBatch(menuIds);
     }
 }

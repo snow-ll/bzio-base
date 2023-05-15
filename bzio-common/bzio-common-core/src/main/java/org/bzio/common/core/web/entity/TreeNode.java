@@ -1,12 +1,15 @@
 package org.bzio.common.core.web.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author: snow
  */
-public class TreeNode<T> {
+public class TreeNode<T> implements Serializable {
 
+    private static final long serialVersionUID = -8136014146878363040L;
+    
     /**
      * 节点ID
      */

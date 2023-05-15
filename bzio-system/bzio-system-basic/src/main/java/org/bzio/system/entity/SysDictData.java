@@ -2,14 +2,12 @@ package org.bzio.system.entity;
 
 import org.bzio.common.core.web.entity.BaseEntity;
 
-import java.io.Serializable;
-
 /**
  * 系统字典数据表实体类
  *
  * @author snow
  */
-public class SysDictData extends BaseEntity implements Serializable {
+public class SysDictData extends BaseEntity {
 
     private static final long serialVersionUID = 495282597677111616L;
 
@@ -24,7 +22,6 @@ public class SysDictData extends BaseEntity implements Serializable {
     private String dictType;
 
     private Integer status;
-
 
     public String getDictCode() {
         return dictCode;

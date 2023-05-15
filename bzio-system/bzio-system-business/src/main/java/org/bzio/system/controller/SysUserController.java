@@ -8,10 +8,7 @@ import org.bzio.common.core.web.entity.TableData;
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.qo.SysUserQo;
 import org.bzio.system.service.SysUserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -52,8 +49,8 @@ public class SysUserController extends BaseController {
      * 保存用户
      */
     @Log(title = "新增或修改用户", businessType = BusinessType.INSERT)
-    @PostMapping("saveUser")
-    public AjaxResult saveUser(SysUser sysUser) {
+    @PostMapping("save")
+    public AjaxResult save(@RequestBody SysUser sysUser) {
         return AjaxResult.toAjax(sysUserService.saveUser(sysUser));
     }
 
@@ -61,8 +58,17 @@ public class SysUserController extends BaseController {
      * 删除用户
      */
     @Log(title = "删除用户", businessType = BusinessType.DELETE)
-    @PostMapping("delUser")
-    public AjaxResult delUser(String username) {
+    @PostMapping("del")
+    public AjaxResult del(@RequestBody String username) {
         return AjaxResult.toAjax(sysUserService.deleteUser(username));
+    }
+
+    /**
+     * 修改用户状态
+     */
+    @Log(title = "修改用户状态", businessType = BusinessType.DELETE)
+    @PostMapping("changeStatus")
+    public AjaxResult changeStatus(@RequestBody SysUser sysUser) {
+        return AjaxResult.toAjax(sysUserService.changeStatus(sysUser.getUserId(), sysUser.getStatus()));
     }
 }

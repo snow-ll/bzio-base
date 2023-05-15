@@ -3,13 +3,14 @@ package org.bzio.common.security.entity;
 import org.bzio.common.core.web.entity.BaseEntity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 角色信息表实体类
  *
  * @author: snow
  */
-public class SysRole extends BaseEntity implements Serializable {
+public class SysRole extends BaseEntity {
 
     private static final long serialVersionUID = 4080774754247548788L;
 
@@ -28,15 +29,15 @@ public class SysRole extends BaseEntity implements Serializable {
     /**
      * 显示顺序
      */
-    private Integer roleSort;
+    private Integer orderNum;
     /**
      * 菜单树选择项是否关联显示
      */
-    private Integer menuCheckStrictly;
+    private Boolean menuCheckStrictly;
     /**
      * 部门树选择项是否关联显示
      */
-    private Integer deptCheckStrictly;
+    private Boolean deptCheckStrictly;
     /**
      * 角色状态（0正常 1停用）
      */
@@ -45,6 +46,8 @@ public class SysRole extends BaseEntity implements Serializable {
      * 删除标志（0代表存在 1代表删除）
      */
     private Integer delFlag;
+    
+    private List<String> menuIds;
 
     public String getRoleId() {
         return roleId;
@@ -70,27 +73,27 @@ public class SysRole extends BaseEntity implements Serializable {
         this.roleKey = roleKey;
     }
 
-    public Integer getRoleSort() {
-        return roleSort;
+    public Integer getOrderNum() {
+        return orderNum;
     }
 
-    public void setRoleSort(Integer roleSort) {
-        this.roleSort = roleSort;
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
     }
 
-    public Integer getMenuCheckStrictly() {
+    public Boolean getMenuCheckStrictly() {
         return menuCheckStrictly;
     }
 
-    public void setMenuCheckStrictly(Integer menuCheckStrictly) {
+    public void setMenuCheckStrictly(Boolean menuCheckStrictly) {
         this.menuCheckStrictly = menuCheckStrictly;
     }
 
-    public Integer getDeptCheckStrictly() {
+    public Boolean getDeptCheckStrictly() {
         return deptCheckStrictly;
     }
 
-    public void setDeptCheckStrictly(Integer deptCheckStrictly) {
+    public void setDeptCheckStrictly(Boolean deptCheckStrictly) {
         this.deptCheckStrictly = deptCheckStrictly;
     }
 
@@ -108,6 +111,14 @@ public class SysRole extends BaseEntity implements Serializable {
 
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public List<String> getMenuIds() {
+        return menuIds;
+    }
+
+    public void setMenuIds(List<String> menuIds) {
+        this.menuIds = menuIds;
     }
 }
 

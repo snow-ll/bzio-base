@@ -3,28 +3,30 @@
 -- 用户表
 create table bzio_base.sys_user
 (
-    user_id      varchar(50)  not null primary key ,
-    username     varchar(50)  null,
-    password     varchar(100) null,
-    nickname     varchar(100) null,
-    birthday     timestamp    null,
-    sex          tinyint      null,
-    id_card      varchar(50)  null,
-    phone_number varchar(50)  null,
-    email        varchar(100) null,
-    fax          varchar(100) null,
-    avatar       varchar(10)  null,
-    status       tinyint      null,
-    del_flag     tinyint      null,
-    login_ip     varchar(50)  null,
-    login_date   timestamp    null,
-    create_by    varchar(50)  null,
-    create_name  varchar(50)  null,
-    create_date  timestamp    null,
-    update_by    varchar(50)  null,
-    update_name  varchar(50)  null,
-    update_date  timestamp    null,
-    remark       varchar(50)  null
+    user_id                 varchar(50)  not null primary key comment '用户id',
+    username                varchar(50)  null comment '用户名',
+    password                varchar(100) null comment '密码',
+    nickname                varchar(100) null comment '用户昵称',
+    birthday                timestamp    null comment '生日',
+    sex                     tinyint      null comment '性别',
+    certificate_type        varchar(50)  null comment '证件类型', 
+    certificate_num         varchar(50)  null comment '证件号',
+    mobile_number           varchar(50)  null comment '手机号码',
+    phone_number            varchar(50)  null comment '电话号码',
+    email                   varchar(100) null comment '邮箱',
+    fax                     varchar(100) null comment '传真',
+    avatar                  varchar(10)  null comment '头像',
+    status                  tinyint      default 0 comment '状态',
+    del_flag                tinyint      default 0 comment '删除状态',
+    login_ip                varchar(50)  null comment '最近一次登录ip',
+    login_date              timestamp    null comment '最近一次登录日期',
+    create_by               varchar(50)  null,
+    create_name             varchar(50)  null,
+    create_date             timestamp    null,
+    update_by               varchar(50)  null,
+    update_name             varchar(50)  null,
+    update_date             timestamp    null,
+    remark                  varchar(50)  null comment '备注'
 );
 
 -- 角色表
@@ -33,11 +35,11 @@ create table bzio_base.sys_role
     role_id             varchar(50)  not null primary key,
     role_name           varchar(100) null,
     role_key            varchar(50)  null,
-    role_sort           int          null,
+    order_num           int          null,
     menu_check_strictly int          null,
     dept_check_strictly int          null,
-    status              tinyint      null,
-    del_flag            tinyint      null,
+    status              tinyint      default 0,
+    del_flag            tinyint      default 0,
     create_by           varchar(50)  null,
     create_name         varchar(50)  null,
     create_date         timestamp    null,
@@ -122,21 +124,23 @@ create table bzio_base.sys_user_dept
 -- 系统日志表
 create table bzio_base.sys_log
 (
-    log_id              varchar(50)  not null primary key,
-    title               varchar(50)  null,
-    business_type       tinyint      null,
-    log_desc            varchar(50)  null,
-    operator            varchar(50)  null,
-    operator_dept       varchar(50)  null,
-    operation_url       varchar(100) null,
-    operation_ip        varchar(50)  null,
-    operation_time      timestamp    null,
-    request_method      varchar(50)  null,
-    request_param       varchar(500) null,
-    response_result     varchar(500) null,
-    error_msg           varchar(100) null,
-    status              tinyint      null
+    log_id              varchar(50)  not null primary key comment '日志id',
+    title               varchar(50)  null comment '日志标题',
+    business_type       tinyint      default 0 comment '业务类型',
+    log_desc            varchar(50)  null comment '日志描述',
+    operator            varchar(50)  null comment '操作人',
+    operator_dept       varchar(50)  null comment '操作部门',
+    operation_url       varchar(100) null comment '操作请求的url',
+    operation_ip        varchar(50)  null comment '操作所在ip地址',
+    operation_time      timestamp    null comment '操作时间',
+    request_method      varchar(50)  null comment '请求方法',
+    request_param       varchar(500) null comment '请求参数',
+    response_result     varchar(500) null comment '响应结果',
+    error_msg           varchar(100) null comment '错误信息',
+    status              tinyint      default 0 comment '状态'
 );
+
+
 
 -- 系统字典表（类型）
 create table bzio_base.sys_dict_type

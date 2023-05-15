@@ -64,8 +64,12 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             log.error("密码错误！");
             throw new UserException("密码错误！");
         }
+        if (loginUser.getStatus() != 0) {
+            log.error("用户被停用！");
+            throw new UserException("用户被停用！");
+        }
 
-        log.info("登录时间：{}", loginUser.getLoginDate());
+        log.info("登录时间：{}", DateUtil.format(loginUser.getLoginDate()));
         // 生成token
         String key = loginUser.getUserId() + "_" +  DateUtil.format(loginUser.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
         log.info("生成key：{}", key);
@@ -76,7 +80,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         stringRedisService.set(AuthConfig.prefix + key, token, AuthConfig.expiration, TimeUnit.MILLISECONDS);
 
         // 修改最后登录的信息
-        sysUserMapper.updateLoginInfo(loginUser.getIpaddr(), loginUser.getLoginDate(), loginUser.getUserId());
+        sysUserMapper.updateLoginInfo(ServletUtil.getIpAddr(), DateUtil.getNowDate(), loginUser.getUserId());
 
         // 添加用户登录信息
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
@@ -111,6 +115,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         // 新增用户
         sysUser.setUserId(IdUtil.simpleUUID());
         sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
+        sysUser.setStatus(0);
         return sysUserMapper.insert(sysUser);
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author: snow
  */
-public class SysDept extends BaseEntity implements Serializable {
+public class SysDept extends BaseEntity {
 
     private static final long serialVersionUID = 4502238025214991585L;
 

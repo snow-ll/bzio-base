@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.bzio.system.entity.SysDictData;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author snow
@@ -14,6 +15,8 @@ public interface SysDictDataMapper {
     SysDictData queryById(String dictCode);
 
     List<SysDictData> queryALl(SysDictData sysDictData);
+    
+    List<Map> queryDictData(SysDictData sysDictData);
 
     int insert(SysDictData sysDictData);
 

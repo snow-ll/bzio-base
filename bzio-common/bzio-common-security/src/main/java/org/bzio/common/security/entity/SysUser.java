@@ -1,6 +1,8 @@
 package org.bzio.common.security.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.bzio.common.core.web.entity.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,7 +12,7 @@ import java.util.Date;
  *
  * @author: snow
  */
-public class SysUser extends BaseEntity implements Serializable {
+public class SysUser extends BaseEntity {
 
     private static final long serialVersionUID = -2916141177184809068L;
 
@@ -33,17 +35,27 @@ public class SysUser extends BaseEntity implements Serializable {
     /**
      * 出生日期
      */
-    private String birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date birthday;
     /**
      * 用户性别（0男 1女）
      */
     private Integer sex;
     /**
-     * 身份证号
+     * 证件类型
      */
-    private String idCard;
+    private String certificateType;
+    /**
+     * 证件号
+     */
+    private String certificateNum;
     /**
      * 手机号码
+     */
+    private String mobileNumber;
+    /**
+     * 电话号码
      */
     private String phoneNumber;
     /**
@@ -73,6 +85,8 @@ public class SysUser extends BaseEntity implements Serializable {
     /**
      * 最后登录时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date loginDate;
 
     public String getUserId() {
@@ -107,11 +121,11 @@ public class SysUser extends BaseEntity implements Serializable {
         this.nickname = nickname;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -123,12 +137,28 @@ public class SysUser extends BaseEntity implements Serializable {
         this.sex = sex;
     }
 
-    public String getIdCard() {
-        return idCard;
+    public String getCertificateType() {
+        return certificateType;
     }
 
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
+    public void setCertificateType(String certificateType) {
+        this.certificateType = certificateType;
+    }
+
+    public String getCertificateNum() {
+        return certificateNum;
+    }
+
+    public void setCertificateNum(String certificateNum) {
+        this.certificateNum = certificateNum;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getPhoneNumber() {
@@ -193,5 +223,28 @@ public class SysUser extends BaseEntity implements Serializable {
 
     public void setLoginDate(Date loginDate) {
         this.loginDate = loginDate;
+    }
+
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", birthday=" + birthday +
+                ", sex=" + sex +
+                ", certificateType='" + certificateType + '\'' +
+                ", certificateNum='" + certificateNum + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", fax='" + fax + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", status=" + status +
+                ", delFlag=" + delFlag +
+                ", loginIp='" + loginIp + '\'' +
+                ", loginDate=" + loginDate +
+                "} " + super.toString();
     }
 }

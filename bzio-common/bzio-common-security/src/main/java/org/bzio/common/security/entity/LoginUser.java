@@ -1,6 +1,8 @@
 package org.bzio.common.security.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.bzio.common.core.util.BeanUtil;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -40,11 +42,19 @@ public class LoginUser extends User {
      */
     private Integer sex;
     /**
-     * 身份证号
+     * 证件类型
      */
-    private String idCard;
+    private String certificateType;
+    /**
+     * 证件号
+     */
+    private String certificateNum;
     /**
      * 手机号码
+     */
+    private String mobileNumber;
+    /**
+     * 电话号码
      */
     private String phoneNumber;
     /**
@@ -70,6 +80,8 @@ public class LoginUser extends User {
     /**
      * 登录时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date loginDate;
     /**
      * 登录IP地址
@@ -139,12 +151,28 @@ public class LoginUser extends User {
         this.sex = sex;
     }
 
-    public String getIdCard() {
-        return idCard;
+    public String getCertificateType() {
+        return certificateType;
     }
 
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
+    public void setCertificateType(String certificateType) {
+        this.certificateType = certificateType;
+    }
+
+    public String getCertificateNum() {
+        return certificateNum;
+    }
+
+    public void setCertificateNum(String certificateNum) {
+        this.certificateNum = certificateNum;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
     }
 
     public String getPhoneNumber() {

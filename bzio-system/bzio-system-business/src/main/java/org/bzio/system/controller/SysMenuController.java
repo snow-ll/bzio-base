@@ -7,10 +7,7 @@ import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
 import org.bzio.common.security.entity.SysMenu;
 import org.bzio.system.service.SysMenuService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,7 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/menu")
-public class SysMemuController extends BaseController {
+public class SysMenuController extends BaseController {
 
     @Resource
     SysMenuService sysMenuService;
@@ -51,16 +48,32 @@ public class SysMemuController extends BaseController {
      * 菜单树状下拉列表
      */
     @GetMapping("tree")
-    public AjaxResult tree() {
-        return AjaxResult.success(sysMenuService.treeList(sysMenuService.queryTreeNode()));
+    public AjaxResult tree(SysMenu sysMenu) {
+        return AjaxResult.success(sysMenuService.treeList(sysMenuService.queryTreeNode(sysMenu)));
+    }
+
+    /**
+     * 查询子级菜单
+     */
+    @GetMapping("child")
+    public AjaxResult child(String parentId) {
+        return AjaxResult.success(sysMenuService.queryChild(parentId));
+    }
+    
+    /**
+     * 查询父级菜单
+     */
+    @GetMapping("parent")
+    public AjaxResult parent(String menuId) {
+        return AjaxResult.success(sysMenuService.queryParent(menuId));
     }
 
     /**
      * 保存菜单
      */
     @Log(title = "新增或修改菜单", businessType = BusinessType.INSERT)
-    @PostMapping("saveMenu")
-    public AjaxResult saveMenu(SysMenu sysMenu) {
+    @PostMapping("save")
+    public AjaxResult save(@RequestBody SysMenu sysMenu) {
         return AjaxResult.toAjax(sysMenuService.saveMenu(sysMenu));
     }
 
@@ -68,8 +81,8 @@ public class SysMemuController extends BaseController {
      * 删除菜单
      */
     @Log(title = "删除菜单", businessType = BusinessType.DELETE)
-    @PostMapping("delMenu")
-    public AjaxResult delMenu(String menuId) {
-        return AjaxResult.toAjax(sysMenuService.deleteMenu(menuId));
+    @PostMapping("del")
+    public AjaxResult del(@RequestBody String[] menuIds) {
+        return AjaxResult.toAjax(sysMenuService.deleteMenu(menuIds));
     }
 }

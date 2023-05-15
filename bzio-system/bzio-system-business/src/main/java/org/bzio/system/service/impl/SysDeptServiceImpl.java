@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author: snow
@@ -53,7 +52,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      */
     @Override
     public List<TreeNode> treeList(List<TreeNode> treeNodes) {
-        return TreeNodeUtil.buildTreeList3(treeNodes);
+        return TreeNodeUtil.buildTreeList(treeNodes);
     }
 
     /**
