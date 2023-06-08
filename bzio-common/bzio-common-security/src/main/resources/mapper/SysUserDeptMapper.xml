@@ -2,15 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.bzio.common.security.mapper.SysUserDeptMapper">
 
-    <resultMap type="org.bzio.common.security.entity.SysUserDept" id="SysUserMap">
+    <resultMap type="org.bzio.common.security.entity.SysUserDept" id="SysUserDeptMap">
         <result property="id" column="id" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" jdbcType="VARCHAR"/>
-        <result property="deptId" column="role_id" jdbcType="VARCHAR"/>
+        <result property="deptId" column="dept_id" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <select id="queryByUserId" resultMap="SysUserDeptMap">
+        select id, user_id, dept_id  
+        from sys_user_dept
+        where user_id = #{userId}
+    </select>
+    
     <insert id="insert" keyProperty="id" useGeneratedKeys="true">
         insert into sys_user_dept(id, user_id, dept_id)
         values (#{id}, #{userId}, #{deptId})
     </insert>
+    
+    <delete id="delete">
+        delete from sys_user_dept where user_id=#{userId} and dept_id=#{deptId}
+    </delete>
 </mapper>
 

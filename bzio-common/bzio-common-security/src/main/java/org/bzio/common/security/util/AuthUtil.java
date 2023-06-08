@@ -18,6 +18,10 @@ public class AuthUtil {
     public static String getNickname() {
         return getLoginUser().getNickname();
     }
+    
+    public static String getUserId() {
+        return getLoginUser().getUserId();
+    }
 
     private static LoginUser getLoginUser() {
         Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -64,7 +64,7 @@ public class AjaxResult {
     }
 
     public static AjaxResult toAjax(int rows) {
-        return toAjax(rows, false, null, null);
+        return toAjax(rows, false, "操作成功！", "操作失败！");
     }
 
     public static AjaxResult toAjax(int rows, String msg, String errMsg) {

@@ -29,6 +29,11 @@ public class MenuTreeNode extends TreeNode {
     private String icon;
 
     /**
+     * 权限字符
+     */
+    private String perms;
+
+    /**
      * 状态
      */
     private Integer status;
@@ -67,6 +72,14 @@ public class MenuTreeNode extends TreeNode {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
     }
 
     public Integer getStatus() {

@@ -2,7 +2,9 @@ package org.bzio.common.security.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.entity.SysUserRole;
+import org.bzio.common.security.qo.SysUserQo;
 
 import java.util.List;
 
@@ -21,4 +23,6 @@ public interface SysUserRoleMapper {
     int delete(SysUserRole sysUserRole);
 
     int deleteByUserId(String userId);
+    
+    List<SysUser> queryUserByRole(SysUserQo sysUserQo);
 }

@@ -49,8 +49,17 @@
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAll" resultMap="SysUserMap">
-        <include refid="selectUser"/>
+    <select id="queryAll" resultType="org.bzio.common.security.vo.SysUserVo">
+        select
+        u.user_id "userId", u.username, u.password, u.nickname, u.birthday, u.sex, 
+        u.certificate_type "certificateType", u.certificate_num "certificateNum",
+        u.mobile_number "mobileNumber", u.phone_number "phoneNumber", u.email, u.fax, 
+        u.avatar, u.status, u.del_flag "delFlag", u.login_ip "loginIp", u.login_date "loginDate",
+        u.create_by "createBy", u.create_name "createName", u.create_date "createDate", 
+        u.update_by "updateBy", u.update_name "updateName", u.update_date "updateDate",
+        u.remark, 
+        d.dept_id "deptId", d.dept_name "deptName"
+        from sys_user u
         left join sys_user_dept ud on ud.user_id=u.user_id
         left join sys_dept d on d.dept_id=ud.dept_id
         <where>

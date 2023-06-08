@@ -11,6 +11,7 @@ import org.bzio.common.security.entity.SysRoleMenu;
 import org.bzio.common.security.mapper.SysRoleMenuMapper;
 import org.bzio.system.service.SysRoleMenuService;
 import org.bzio.system.service.SysRoleService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,6 +37,7 @@ public class SysRoleController  extends BaseController {
      */
     @Log(title = "查询角色详情", businessType = BusinessType.QUERY)
     @GetMapping("info")
+    @PreAuthorize("hasAnyAuthority('sys:role:search')")
     public AjaxResult info(String roleId) {
         return AjaxResult.success(sysRoleService.queryInfo(roleId));
     }
@@ -45,6 +47,7 @@ public class SysRoleController  extends BaseController {
      */
     @Log(title = "查询角色列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
+    @PreAuthorize("hasAnyAuthority('sys:role:search')")
     public TableData list(SysRole sysUser) {
         startPage();
         List<SysRole> users = sysRoleService.queryAll(sysUser);
@@ -56,12 +59,17 @@ public class SysRoleController  extends BaseController {
      */
     @Log(title = "新增或修改角色", businessType = BusinessType.INSERT)
     @PostMapping("save")
+    @PreAuthorize("hasAnyAuthority('sys:role:edit')")
     public AjaxResult save(@RequestBody SysRole sysRole) {
         // 保存角色信息
         int result = sysRoleService.saveRole(sysRole);
-        if (result == 1 && StringUtil.isNotNull(sysRole.getMenuIds())) {
+        if (result == 1) {
+            // 重新添加角色有权限的菜单前清空原有的菜单
+            sysRoleMenuService.clearMenu(sysRole.getRoleId());
             // 保存角色关联的菜单
-            result = sysRoleMenuService.insertBatch(sysRole.getRoleId(), sysRole.getMenuIds());
+            if (StringUtil.isNotNull(sysRole.getMenuIds())) {
+                result = sysRoleMenuService.insertBatch(sysRole.getRoleId(), sysRole.getMenuIds());
+            }
             return AjaxResult.toAjax(result, false, "保存角色信息成功！", "保存当前角色关联菜单异常！");
         }
         return AjaxResult.success( "保存角色信息成功！");
@@ -72,6 +80,7 @@ public class SysRoleController  extends BaseController {
      */
     @Log(title = "删除角色", businessType = BusinessType.DELETE)
     @PostMapping("del")
+    @PreAuthorize("hasAnyAuthority('sys:role:delete')")
     public AjaxResult del(@RequestBody String roleId) {
         return AjaxResult.toAjax(sysRoleService.deleteRole(roleId));
     }

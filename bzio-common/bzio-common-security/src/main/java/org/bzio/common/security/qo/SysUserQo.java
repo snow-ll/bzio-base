@@ -68,9 +68,19 @@ public class SysUserQo {
      */
     private Date loginDate;
     /**
-     * 所在部门
+     * 部门id
      */
     private String deptId;
+
+    /**
+     * 角色id
+     */
+    private String roleId;
+
+    /**
+     * 判断是否拥有该权限的标识
+     */
+    private String isRoleId;
 
     public String getUserId() {
         return userId;
@@ -198,5 +208,21 @@ public class SysUserQo {
 
     public void setDeptId(String deptId) {
         this.deptId = deptId;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getIsRoleId() {
+        return isRoleId;
+    }
+
+    public void setIsRoleId(String isRoleId) {
+        this.isRoleId = isRoleId;
     }
 }

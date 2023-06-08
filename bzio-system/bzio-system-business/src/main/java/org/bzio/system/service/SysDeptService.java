@@ -1,6 +1,6 @@
 package org.bzio.system.service;
 
-import org.bzio.common.core.web.entity.TreeNode;
+import org.bzio.common.security.entity.DeptTreeNode;
 import org.bzio.common.security.entity.SysDept;
 
 import java.util.List;
@@ -14,11 +14,11 @@ public interface SysDeptService {
 
     List<SysDept> queryAll(SysDept sysDept);
 
-    List<TreeNode> queryTreeNode();
+    List<DeptTreeNode> queryTreeNode();
     
-    List<TreeNode> treeList(List<TreeNode> treeNodes);
+    List<DeptTreeNode> treeList(List<DeptTreeNode> treeNodes);
 
     int saveDept(SysDept sysDept);
 
-    int deleteDept(String deptId);
+    int delBatch(String[] deptIds);
 }

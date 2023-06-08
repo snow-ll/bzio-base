@@ -11,5 +11,5 @@ public interface SysLogService {
 
     List<SysLog> queryAll(SysLog sySLog);
 
-    SysLog queryLogInfo(String logId);
+    SysLog queryInfo(String logId);
 }

@@ -14,6 +14,8 @@ import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.common.security.entity.LoginUser;
 import org.bzio.common.security.entity.SysUser;
+import org.bzio.common.security.util.AuthUtil;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,11 +61,7 @@ public class AuthController extends BaseController {
             log.error("登录失败，异常信息：", e);
             return AjaxResult.error("登录失败！");
         }
-        // 返回前台加密key
-        user.setKey(AesUtil.encrypt(key, AuthConfig.aesKey));
-        // 清空密码信息
-        user.setPassword("");
-        return AjaxResult.success("登录成功！", user);
+        return AjaxResult.success("登录成功！", AesUtil.encrypt(key, AuthConfig.aesKey));
     }
 
     /**
@@ -113,7 +111,7 @@ public class AuthController extends BaseController {
      */
     @PostMapping("/isLogin")
     public AjaxResult isLogin(String username) {
-        return AjaxResult.toAjax(authService.isLogin(username));
+        return AjaxResult.success(authService.isLogin(username));
     }
 
     /**
@@ -130,9 +128,11 @@ public class AuthController extends BaseController {
      */
     @Log(title = "刷新token", businessType = BusinessType.AUTH)
     @PostMapping("/refreshToken")
-    public AjaxResult refreshToken(String username) {
+    public AjaxResult refreshToken() {
+        String username = AuthUtil.getUsername();
         // 获取token
         String key = authService.getKey(username);
+        log.info("生成key：" + key);
         String token = stringRedisService.get(key);
 
         // 判断token是否合法
@@ -143,7 +143,8 @@ public class AuthController extends BaseController {
         Date expiredDate = jwtUtil.getExpiredDateFromToken(token);
         Date now = DateUtil.getNowDate();
         log.info("token有效期至：{}", DateUtil.format(expiredDate, BaseConstant.YYYY_MM_DD_HH_MM_SS));
-        if (!DateUtil.belongCalendar(now, new Date(expiredDate.getTime() - 1000 * 60), expiredDate))
+        // 有效时间段内刷新
+        if (!DateUtil.belongCalendar(now, new Date(expiredDate.getTime() - 1000 * 20), expiredDate))
             return AjaxResult.error("token在有效期内，无需刷新");
 
          // 生成新的token
@@ -152,5 +153,23 @@ public class AuthController extends BaseController {
         stringRedisService.set(key, newToken, AuthConfig.expiration, TimeUnit.MILLISECONDS);
 
         return AjaxResult.success("刷新成功");
+    }
+
+    /**
+     * 获取登录用户信息
+     */
+    @Log(title = "获取登录用户信息", businessType = BusinessType.AUTH)
+    @GetMapping("/getInfo")
+    public AjaxResult getInfo() {
+        return AjaxResult.success(authService.getInfo(AuthUtil.getUserId()));
+    }
+    
+    /**
+     * 获取路由信息
+     */
+    @Log(title = "获取路由信息", businessType = BusinessType.AUTH)
+    @GetMapping("/getRouter")
+    public AjaxResult getRouter() {
+        return AjaxResult.success(authService.getRouter());
     }
 }

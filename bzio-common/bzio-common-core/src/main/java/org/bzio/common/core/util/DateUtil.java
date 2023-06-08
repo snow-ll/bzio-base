@@ -5,8 +5,11 @@ import org.bzio.common.core.config.BaseConstant;
 import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 日期工具类
@@ -29,6 +32,22 @@ public class DateUtil {
      */
     public static Date getNowDate() {
         return new Date();
+    }
+
+    /**
+     * 获取当前时间
+     *  去除秒后面的时间戳
+     */
+    public static Date getNowDateToSeconds() {
+        // 获取当前时间
+        LocalDateTime now = LocalDateTime.now();
+
+        // 清除毫秒部分
+        LocalDateTime truncatedDateTime = now.withNano(0);
+        
+        // 转换为Date
+        Date date = Date.from(truncatedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        return date;
     }
 
     /**
@@ -145,5 +164,37 @@ public class DateUtil {
      */
     public static Date accurateSecond(Date date) {
         return parse(format(date));
+    }
+
+    public static void getCurrentDateComponents(Date date) {
+        // 获取当前时间
+
+        // 创建 Calendar 对象，并设置为当前时间
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        // 获取年份
+        int year = calendar.get(Calendar.YEAR);
+        // 获取月份（注意：月份从 0 开始计数，所以需要加 1）
+        int month = calendar.get(Calendar.MONTH) + 1;
+        // 获取日期
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        // 获取小时
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        // 获取分钟
+        int minute = calendar.get(Calendar.MINUTE);
+        // 获取秒钟
+        int second = calendar.get(Calendar.SECOND);
+        // 获取毫秒
+        int milliSecond = calendar.get(Calendar.MILLISECOND);
+
+        // 输出结果
+        System.out.println("年：" + year);
+        System.out.println("月：" + month);
+        System.out.println("日：" + day);
+        System.out.println("时：" + hour);
+        System.out.println("分：" + minute);
+        System.out.println("秒：" + second);
+        System.out.println("毫秒：" + milliSecond);
     }
 }

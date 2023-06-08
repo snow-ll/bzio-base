@@ -89,6 +89,11 @@ public class SysUser extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date loginDate;
 
+    /**
+     * 部门id
+     */
+    private String deptId;
+
     public String getUserId() {
         return userId;
     }
@@ -225,26 +230,11 @@ public class SysUser extends BaseEntity {
         this.loginDate = loginDate;
     }
 
-    @Override
-    public String toString() {
-        return "SysUser{" +
-                "userId='" + userId + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", birthday=" + birthday +
-                ", sex=" + sex +
-                ", certificateType='" + certificateType + '\'' +
-                ", certificateNum='" + certificateNum + '\'' +
-                ", mobileNumber='" + mobileNumber + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                ", fax='" + fax + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", status=" + status +
-                ", delFlag=" + delFlag +
-                ", loginIp='" + loginIp + '\'' +
-                ", loginDate=" + loginDate +
-                "} " + super.toString();
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

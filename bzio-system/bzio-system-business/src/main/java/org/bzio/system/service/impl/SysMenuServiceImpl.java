@@ -6,6 +6,7 @@ import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.MenuTreeNode;
 import org.bzio.common.security.entity.SysMenu;
 import org.bzio.common.security.mapper.SysMenuMapper;
+import org.bzio.common.security.qo.SysMenuQo;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.service.SysMenuService;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * 查询树节点信息
      */
     @Override
-    public List<MenuTreeNode> queryTreeNode(SysMenu sysMenu) {
+    public List<MenuTreeNode> queryTreeNode(SysMenuQo sysMenu) {
         return sysMenuMapper.queryTreeNode(sysMenu);
     }
 
@@ -103,10 +104,31 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
     }
 
     /**
-     * 删除菜单
+     * 批量删除菜单
      */
     @Override
-    public int deleteMenu(String[] menuIds) {
+    public int delBatch(String[] menuIds) {
+        for (String menuId: menuIds) {
+            deleteChild(menuId);
+        }
         return sysMenuMapper.deleteBatch(menuIds);
     }
+
+    /**
+     * 递归删除子级 
+     * @param parentId 当前父级id
+     * @return
+     */
+    public void deleteChild(String parentId) {
+        List<Map> menus = sysMenuMapper.queryChild(parentId);
+
+        for (Map menu: menus) {
+            long isLeaf = (long) menu.get("isLeaf");
+            String menuId = (String) menu.get("menuId");
+            if (isLeaf != 1) {
+                deleteChild(menuId);
+            }
+            sysMenuMapper.deleteById(menuId);
+        }
+    } 
 }

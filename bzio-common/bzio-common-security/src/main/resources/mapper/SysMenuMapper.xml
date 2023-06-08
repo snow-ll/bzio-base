@@ -120,16 +120,19 @@
             and m.perms is not null
         </where>
     </select>
-
+    
     <select id="queryTreeNode" resultType="org.bzio.common.security.entity.MenuTreeNode">
-        select menu_id "id", menu_name "label", parent_id "pid", path, icon, component, status, order_num "orderNum", create_date "createDate" 
-        from sys_menu 
+        select 
+            distinct m.menu_id "id", m.menu_name "label", m.parent_id "pid", m.path, m.icon, m.perms, m.component, m.status, m.order_num "orderNum", m.create_date "createDate"
+        from sys_menu m
+        left join sys_role_menu srm on m.menu_id = srm.menu_id
+        left join sys_role r on srm.role_id = r.role_id
         <where>
             <if test="menuName != null and menuName != ''">
                 and menu_name like concat('%', #{menuName}, '%')
             </if>
         </where>
-        order by order_num
+        order by m.order_num
     </select>
     
     <select id="queryChild" resultType="java.util.Map">
@@ -237,5 +240,15 @@
         </foreach>
     </delete>
 
+    <select id="queryRouter" resultType="org.bzio.common.security.entity.MenuTreeNode">
+        select m.menu_id "id", m.menu_name "label", m.parent_id "pid", m.path, m.icon, m.component, m.status, m.order_num "orderNum", m.create_date "createDate"
+        from sys_menu m
+        left join sys_role_menu srm on m.menu_id = srm.menu_id
+        left join sys_role r on srm.role_id = r.role_id
+        left join sys_user_role ur on ur.role_id = r.role_id
+        where m.status != 1 and m.visible != 1 and m.menu_type != 'button' 
+        and ur.user_id = #{userId} 
+        order by m.order_num
+    </select>
 </mapper>
 

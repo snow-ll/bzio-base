@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.qo.SysUserQo;
+import org.bzio.common.security.vo.SysUserVo;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ public interface SysUserMapper {
 
     SysUser queryByUsername(String username);
 
-    List<SysUser> queryAll(SysUserQo sysUser);
+    List<SysUserVo> queryAll(SysUserQo sysUser);
 
     int insert(SysUser sysUser);
 

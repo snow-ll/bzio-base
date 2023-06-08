@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * UserDetailsService实现类
@@ -72,6 +73,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<String> perms = sysMenuMapper.queryPermByUserId(userId);
         authorities.addAll(perms);
 
+        authorities = authorities.stream().filter(item -> StringUtil.isNotEmpty(item)).collect(Collectors.toList());
+        
         return AuthorityUtils.createAuthorityList(authorities.toArray(new String[0]));
     }
 }

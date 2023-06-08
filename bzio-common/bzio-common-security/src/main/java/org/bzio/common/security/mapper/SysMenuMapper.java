@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.bzio.common.security.entity.MenuTreeNode;
 import org.bzio.common.security.entity.SysMenu;
+import org.bzio.common.security.qo.SysMenuQo;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface SysMenuMapper {
 
     List<String> queryPermByUserId(String userId);
 
-    List<MenuTreeNode> queryTreeNode(SysMenu sysMenu);
+    List<MenuTreeNode> queryTreeNode(SysMenuQo sysMenu);
     
     List<Map> queryChild(@Param("parentId") String parentId);
     
@@ -33,4 +34,6 @@ public interface SysMenuMapper {
     int deleteById(String menuId);
     
     int deleteBatch(@Param("menuIds") String[] menuIds);
+
+    List<MenuTreeNode> queryRouter(String userId);
 }

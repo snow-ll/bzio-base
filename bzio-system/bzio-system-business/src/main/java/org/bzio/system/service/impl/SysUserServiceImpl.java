@@ -7,9 +7,12 @@ import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.SysUser;
+import org.bzio.common.security.entity.SysUserDept;
+import org.bzio.common.security.mapper.SysUserDeptMapper;
 import org.bzio.common.security.mapper.SysUserMapper;
 import org.bzio.common.security.qo.SysUserQo;
 import org.bzio.common.security.util.AuthUtil;
+import org.bzio.common.security.vo.SysUserVo;
 import org.bzio.system.service.SysUserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,21 +29,28 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
     @Resource
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @Resource
-    SysUserMapper sysUserMapper; 
+    SysUserMapper sysUserMapper;
+    @Resource
+    SysUserDeptMapper sysUserDeptMapper;
 
     /**
      * 根据用户名查询用户详情
      */
     @Override
-    public SysUser queryInfo(String username) {
-        return sysUserMapper.queryByUsername(username);
+    public SysUser queryInfo(String userId) {
+        SysUser sysUser = sysUserMapper.queryByUserId(userId);
+        SysUserDept sysUserDept = sysUserDeptMapper.queryByUserId(userId);
+        if (StringUtil.isNotNull(sysUserDept)) {
+            sysUser.setDeptId(sysUserDept.getDeptId());
+        }
+        return sysUser;
     }
 
     /**
      * 根据条件查询用户列表
      */
     @Override
-    public List<SysUser> queryAll(SysUserQo sysUser) {
+    public List<SysUserVo> queryAll(SysUserQo sysUser) {
         return sysUserMapper.queryAll(sysUser);
     }
 
@@ -49,10 +59,12 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
      */
     @Override
     public int saveUser(SysUser sysUser) {
-//        // 获取登录人信息
+        int result = 0;
+        // 获取登录人信息
         String username = AuthUtil.getUsername();
         String nickname = AuthUtil.getNickname();
-        
+
+        SysUser newUser = sysUserMapper.queryByUserId(sysUser.getUserId());
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysUser.getUserId())) {
@@ -70,17 +82,29 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
             sysUser.setUpdateName(nickname);
             sysUser.setUpdateDate(DateUtil.getNowDate());
             sysUser.setDelFlag(0);
-            return sysUserMapper.insert(sysUser);
+            result = sysUserMapper.insert(sysUser);
         }else {
-            SysUser newUser = sysUserMapper.queryByUserId(sysUser.getUserId());
             if (newUser == null) throw new UserException("未查询到部门信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysUser, newUser);
             newUser.setUpdateBy(username);
             newUser.setUpdateName(nickname);
             newUser.setUpdateDate(DateUtil.getNowDate());
-            return sysUserMapper.update(newUser);
+            result = sysUserMapper.update(newUser);
         }
+        
+        if (result == 1) {
+            // 用户部门处理
+            SysUserDept sysUserDept = new SysUserDept();
+            sysUserDept.setId(IdUtil.simpleUUID());
+            sysUserDept.setUserId(sysUser.getUserId());
+            sysUserDept.setDeptId(sysUser.getDeptId());
+            if (StringUtil.isNotNull(sysUser.getDeptId())) {
+                sysUserDeptMapper.delete(sysUserDept);
+                result = sysUserDeptMapper.insert(sysUserDept);
+            }
+        }
+        return result;
     }
 
     /**

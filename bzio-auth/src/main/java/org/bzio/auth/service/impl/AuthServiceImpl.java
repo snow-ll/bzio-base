@@ -8,16 +8,27 @@ import org.bzio.common.core.util.*;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.common.security.entity.LoginUser;
+import org.bzio.common.security.entity.MenuTreeNode;
+import org.bzio.common.security.entity.SysMenu;
 import org.bzio.common.security.entity.SysUser;
+import org.bzio.common.security.mapper.SysMenuMapper;
+import org.bzio.common.security.mapper.SysRoleMapper;
 import org.bzio.common.security.mapper.SysUserMapper;
+import org.bzio.common.security.qo.SysMenuQo;
 import org.bzio.common.security.service.impl.UserDetailsServiceImpl;
+import org.bzio.common.security.util.AuthUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * 认证业务服务层
@@ -37,6 +48,10 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     UserDetailsServiceImpl userDetailsService;
     @Resource
     SysUserMapper sysUserMapper;
+    @Resource
+    SysRoleMapper sysRoleMapper;
+    @Resource
+    SysMenuMapper sysMenuMapper;
 
     /**
      * 用户登录
@@ -69,9 +84,10 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             throw new UserException("用户被停用！");
         }
 
-        log.info("登录时间：{}", DateUtil.format(loginUser.getLoginDate()));
+        Date loginTime = DateUtil.getNowDateToSeconds();
+        log.info("登录时间：{}", DateUtil.format(loginTime, BaseConstant.YYYY_MM_DD_HH_MM_SS));
         // 生成token
-        String key = loginUser.getUserId() + "_" +  DateUtil.format(loginUser.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
+        String key = loginUser.getUserId() + "_" +  DateUtil.format(loginTime, BaseConstant.YYYYMMDDHHMMSS);
         log.info("生成key：{}", key);
         String token = jwtUtil.generateToken(sysUser.getUsername());
         loginUser.setKey(key);
@@ -80,7 +96,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         stringRedisService.set(AuthConfig.prefix + key, token, AuthConfig.expiration, TimeUnit.MILLISECONDS);
 
         // 修改最后登录的信息
-        sysUserMapper.updateLoginInfo(ServletUtil.getIpAddr(), DateUtil.getNowDate(), loginUser.getUserId());
+        sysUserMapper.updateLoginInfo(ServletUtil.getIpAddr(), loginTime, loginUser.getUserId());
 
         // 添加用户登录信息
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
@@ -178,5 +194,22 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 获取登录用户信息（用户信息、角色、权限）
+     */
+    @Override
+    public Map<String, Object> getInfo(String userId) {
+        Map<String, Object> userInfo = new HashMap();
+        userInfo.put("user", sysUserMapper.queryByUserId(userId));
+        userInfo.put("roles", sysRoleMapper.queryRoleByUserId(userId));
+        userInfo.put("perms", sysMenuMapper.queryPermByUserId(userId).stream().filter(item -> StringUtil.isNotEmpty(item)).collect(Collectors.toList()));
+        return userInfo;
+    }
+
+    @Override
+    public List<MenuTreeNode> getRouter() {
+        return TreeNodeUtil.buildTreeList((sysMenuMapper.queryRouter(AuthUtil.getUserId())));
     }
 }

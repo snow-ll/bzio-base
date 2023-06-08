@@ -2,6 +2,7 @@ package org.bzio.system.service;
 
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.qo.SysUserQo;
+import org.bzio.common.security.vo.SysUserVo;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ import java.util.List;
  */
 public interface SysUserService {
 
-    SysUser queryInfo(String username);
+    SysUser queryInfo(String userId);
 
-    List<SysUser> queryAll(SysUserQo sysUser);
+    List<SysUserVo> queryAll(SysUserQo sysUser);
 
     int saveUser(SysUser sysUser);
 

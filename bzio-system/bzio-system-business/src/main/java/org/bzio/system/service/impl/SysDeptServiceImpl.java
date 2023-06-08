@@ -4,6 +4,7 @@ import org.bzio.common.core.exception.system.dept.DeptException;
 import org.bzio.common.core.util.*;
 import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.common.core.web.service.BaseServiceImpl;
+import org.bzio.common.security.entity.DeptTreeNode;
 import org.bzio.common.security.entity.SysDept;
 import org.bzio.common.security.mapper.SysDeptMapper;
 import org.bzio.common.security.util.AuthUtil;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: snow
@@ -43,7 +45,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      * 查询树节点信息
      */
     @Override
-    public List<TreeNode> queryTreeNode() {
+    public List<DeptTreeNode> queryTreeNode() {
         return sysDeptMapper.queryTreeNode();
     }
 
@@ -51,7 +53,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      * 部门树状下拉列表
      */
     @Override
-    public List<TreeNode> treeList(List<TreeNode> treeNodes) {
+    public List<DeptTreeNode> treeList(List<DeptTreeNode> treeNodes) {
         return TreeNodeUtil.buildTreeList(treeNodes);
     }
 
@@ -100,85 +102,32 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      * 删除部门
      */
     @Override
-    public int deleteDept(String deptId) {
-        return sysDeptMapper.deleteById(deptId);
+    public int delBatch(String[] deptIds) {
+        for (String deptId: deptIds) {
+            deleteChild(deptId);
+        }
+        return sysDeptMapper.deleteBatch(deptIds);
     }
 
     /**
-     * 构建前端所需要树结构
-     * 递归方式
+     * 递归删除子级 
+     * @param parentId 当前父级id
+     * @return
      */
-    private List<SysDept> buildDeptTree(List<SysDept> deptList) {
-        // 结果集
-        List<SysDept> returnList = new ArrayList<>();
-        // 临时集合，暂存部门id
-        List<String> tempList = new ArrayList<>();
+    public void deleteChild(String parentId) {
+        // 查询当前节点所有子节点
+        List<Map> depts = sysDeptMapper.queryChild(parentId);
 
-        // 遍历部门集合，部门id添加进入临时集合
-        for (SysDept dept : deptList) {
-            tempList.add(dept.getDeptId());
-        }
-
-        for (SysDept dept : deptList) {
-            // tempList不包含dept父级id时，为顶级节点
-            if (!tempList.contains(dept.getParentId())) {
-                // 如果是顶级节点, 遍历该父节点的所有子节点
-                // set部门t的子级部门集合
-                recursionFn(deptList, dept);
-                // 将set子级集合children的部门返回
-                returnList.add(dept);
+        // 遍历子节点处理
+        for (Map dept: depts) {
+            long isLeaf = (long) dept.get("isLeaf");
+            String menuId = (String) dept.get("deptId");
+            if (isLeaf != 1) {
+                // 有子节点继续处理
+                deleteChild(menuId);
             }
+            // 无子节点直接删除
+            sysDeptMapper.deleteById(menuId);
         }
-
-        // 空部门直接返回
-        if (returnList.isEmpty()) {
-            returnList = deptList;
-        }
-        return returnList;
-    }
-
-    /**
-     * 递归列表
-     */
-    private void recursionFn(List<SysDept> list, SysDept t) {
-        // 得到子节点列表
-        List<SysDept> childList = getChildList(list, t);
-        // set部门t的子级部门集合
-        t.setChildren(childList);
-
-        // 递归查询部门t每个子孙级部门的子级
-        for (SysDept tChild : childList) {
-            // 判断有子级递归
-            if (hasChild(list, tChild)) {
-                recursionFn(list, tChild);
-            }
-        }
-    }
-
-    /**
-     * 得到子节点列表
-     * @param list 所有部门集合
-     * @param t 父级id
-     * @return 部门t的子级集合
-     */
-    private List<SysDept> getChildList(List<SysDept> list, SysDept t) {
-        // 部门t子级集合
-        List<SysDept> tlist = new ArrayList<>();
-
-        // 遍历部门列表
-        for (SysDept n : list) {
-            // 当前循环中部门父级id不为空，并且父级id和部门t的id相同则为t的子级
-            if (StringUtil.isNotEmpty(n.getParentId()) && n.getParentId().equals(t.getDeptId())) {
-                tlist.add(n);
-            }
-        }
-        return tlist;
-    }
-
-    /**
-     * 判断是否有子节点
-     */
-    private boolean hasChild(List<SysDept> list, SysDept t) {
-        return getChildList(list, t).size() > 0;
     }
 }

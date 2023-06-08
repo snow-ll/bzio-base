@@ -7,10 +7,8 @@ import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
 import org.bzio.common.security.entity.SysDept;
 import org.bzio.system.service.SysDeptService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -33,6 +31,7 @@ public class SysDeptController extends BaseController {
      */
     @Log(title = "查询部门详情", businessType = BusinessType.QUERY)
     @GetMapping("info")
+    @PreAuthorize("hasAnyAuthority('sys:dept:search')")
     public AjaxResult info(String deptId) {
         return AjaxResult.success(sysDeptService.queryInfo(deptId));
     }
@@ -42,6 +41,7 @@ public class SysDeptController extends BaseController {
      */
     @Log(title = "查询部门列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
+    @PreAuthorize("hasAnyAuthority('sys:dept:search')")
     public TableData list(SysDept sysDept) {
         startPage();
         List<SysDept> depts = sysDeptService.queryAll(sysDept);
@@ -52,6 +52,7 @@ public class SysDeptController extends BaseController {
      * 部门树状下拉列表
      */
     @GetMapping("tree")
+    @PreAuthorize("hasAnyAuthority('sys:dept:search')")
     public AjaxResult tree() {
         return AjaxResult.success(sysDeptService.treeList(sysDeptService.queryTreeNode()));
     }
@@ -61,16 +62,18 @@ public class SysDeptController extends BaseController {
      */
     @Log(title = "新增或修改部门", businessType = BusinessType.INSERT)
     @PostMapping("save")
-    public AjaxResult save(SysDept sysDept) {
+    @PreAuthorize("hasAnyAuthority('sys:dept:edit')")
+    public AjaxResult save(@RequestBody SysDept sysDept) {
         return AjaxResult.toAjax(sysDeptService.saveDept(sysDept));
     }
 
     /**
-     * 删除部门
+     * 批量删除部门
      */
-    @Log(title = "删除部门", businessType = BusinessType.DELETE)
-    @PostMapping("del")
-    public AjaxResult del(String deptId) {
-        return AjaxResult.toAjax(sysDeptService.deleteDept(deptId));
+    @Log(title = "批量删除部门", businessType = BusinessType.DELETE)
+    @PostMapping("delBatch")
+    @PreAuthorize("hasAnyAuthority('sys:dept:delete')")
+    public AjaxResult delBatch(@RequestBody String[] deptIds) {
+        return AjaxResult.toAjax(sysDeptService.delBatch(deptIds));
     }
 }

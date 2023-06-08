@@ -41,6 +41,17 @@
     </select>
 
     <!--查询指定行数据-->
+    <select id="queryTreeNode" resultType="org.bzio.common.security.entity.DeptTreeNode">
+        select dept_id "id", dept_name "label", parent_id "pid", status, order_num "orderNum"
+        from sys_dept
+        <where>
+            <if test="deptName != null and deptName != ''">
+                and d.dept_name like concat('%', #{deptName}, '%')
+            </if>
+        </where>
+        order by order_num
+    </select>
+
     <select id="queryAll" resultMap="SysDeptMap">
         <include refid="selectDept"/>
         <where>
@@ -107,8 +118,21 @@
         </where>
     </select>
 
-    <select id="queryTreeNode" resultType="org.bzio.common.core.web.entity.TreeNode">
-        select dept_id "id", dept_name "label", parent_id "pid" from sys_dept
+    <select id="queryChild" resultType="java.util.Map">
+        select p.dept_id "deptId", p.dept_name "deptName", p.parent_id "parentId",
+        if((select count(dept_id) from sys_dept s where s.parent_id = p.dept_id) > 0, false, true) isLeaf
+        from sys_dept p
+        <where>
+            <choose>
+                <when test="parentId != null">
+                    p.parent_id = #{parentId}
+                </when>
+                <otherwise>
+                    p.parent_id is null
+                </otherwise>
+            </choose>
+        </where>
+        order by p.order_num
     </select>
 
     <!--新增所有列-->
@@ -184,6 +208,13 @@
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from sys_dept where dept_id = #{deptId}
+    </delete>
+    
+    <delete id="deleteBatch">
+        delete from sys_dept where dept_id in 
+        <foreach collection="deptIds" item="deptId" open="(" separator="," close=")">
+            #{deptId}
+        </foreach>
     </delete>
 </mapper>
 

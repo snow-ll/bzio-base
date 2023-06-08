@@ -2,12 +2,11 @@ package org.bzio.common.core.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
  * @author: snow
@@ -35,9 +34,9 @@ public class AesUtil {
             byte[] byteContent = content.getBytes(StandardCharsets.UTF_8);
             // 密码器加密数据
             byte[] encodeContent = cipher.doFinal(byteContent);
-            BASE64Encoder base64 = new BASE64Encoder();
+            Base64.Encoder encoder = Base64.getEncoder();
             // 将加密后的数据转换为字符串返回
-            return base64.encode(encodeContent);
+            return new String(encoder.encode(encodeContent));
         } catch (Exception e) {
             log.error("加密异常，异常信息：", e);
             return "";
@@ -54,9 +53,9 @@ public class AesUtil {
             Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
             // 初始化密码器，第一个参数为加密(ENCRYPT_MODE)或者解密(DECRYPT_MODE)操作，第二个参数为生成的AES密钥
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            BASE64Decoder base64 = new BASE64Decoder();
+            Base64.Decoder base64 = Base64.getDecoder();
             // 把密文字符串转回密文字节数组
-            byte[] encodeContent = base64.decodeBuffer(encryptStr);
+            byte[] encodeContent = base64.decode(encryptStr);
             // 密码器解密数据
             byte[] byteContent = cipher.doFinal(encodeContent);
             // 将解密后的数据转换为字符串返回

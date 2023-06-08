@@ -2,8 +2,11 @@ package org.bzio.system.service.impl;
 
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
+import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.entity.SysUserRole;
 import org.bzio.common.security.mapper.SysUserRoleMapper;
+import org.bzio.common.security.qo.SysUserQo;
+import org.bzio.common.security.vo.SysUserRoleVo;
 import org.bzio.system.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,11 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
     @Resource
     SysUserRoleMapper sysUserRoleMapper;
 
+    /**
+     * 批量保存用户角色关联信息
+     * @param sysUserRoles
+     * @return
+     */
     @Override
     public int saveUserRole(List<SysUserRole> sysUserRoles) {
 
@@ -32,5 +40,41 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
                 ).collect(Collectors.toList());
 
         return sysUserRoleMapper.insertBatch(sysUserRoles);
+    }
+
+    /**
+     * 授权用户权限
+     */
+    @Override
+    public int authUser(SysUserRoleVo sysUserRoleVo) {
+        int result = 0;
+        List<String> userIds = sysUserRoleVo.getUserIds();
+        SysUserRole sysUserRole = new SysUserRole();
+
+        for (String userId: userIds) {
+            sysUserRole.setId(IdUtil.simpleUUID());
+            sysUserRole.setUserId(userId);
+            sysUserRole.setRoleId(sysUserRoleVo.getRoleId());
+            result += sysUserRoleMapper.insert(sysUserRole);
+        }
+        return result;
+    }
+
+    /**
+     * 根绝角色id查询用户信息
+     * @return
+     */
+    @Override
+    public List<SysUser> queryUserByRole(SysUserQo sysUserQo) {
+        return sysUserRoleMapper.queryUserByRole(sysUserQo);
+    }
+
+    /**
+     * 取消用户授权
+     * @return
+     */
+    @Override
+    public int cancel(SysUserRole sysUserRole) {
+        return sysUserRoleMapper.delete(sysUserRole);
     }
 }
