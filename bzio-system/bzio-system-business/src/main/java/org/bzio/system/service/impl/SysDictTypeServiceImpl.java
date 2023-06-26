@@ -7,10 +7,13 @@ import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
+import org.bzio.system.entity.SysDictData;
 import org.bzio.system.entity.SysDictType;
+import org.bzio.system.mapper.SysDictDataMapper;
 import org.bzio.system.mapper.SysDictTypeMapper;
 import org.bzio.system.service.SysDictTypeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,6 +26,8 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
 
     @Resource
     SysDictTypeMapper sysDictTypeMapper;
+    @Resource
+    SysDictDataMapper sysDictDataMapper;
 
     @Override
     public SysDictType queryInfo(String dictId) {
@@ -62,7 +67,9 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
     }
 
     @Override
-    public int deleteDictType(String dictId) {
-        return sysDictTypeMapper.deleteById(dictId);
+    @Transactional
+    public int deleteDictType(String dictType) {
+        sysDictDataMapper.deleteByType(dictType);
+        return sysDictTypeMapper.deleteByType(dictType);
     }
 }

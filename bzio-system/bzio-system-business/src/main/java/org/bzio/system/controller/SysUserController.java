@@ -54,7 +54,7 @@ public class SysUserController extends BaseController {
      */
     @Log(title = "新增或修改用户", businessType = BusinessType.INSERT)
     @PostMapping("save")
-    @PreAuthorize("hasAnyAuthority('sys:user:edit')")
+    @PreAuthorize("hasAnyAuthority('sys:user:add', 'sys:user:edit')")
     public AjaxResult save(@RequestBody SysUser sysUser) {
         return AjaxResult.toAjax(sysUserService.saveUser(sysUser));
     }

@@ -144,7 +144,7 @@ public class AuthController extends BaseController {
         Date now = DateUtil.getNowDate();
         log.info("token有效期至：{}", DateUtil.format(expiredDate, BaseConstant.YYYY_MM_DD_HH_MM_SS));
         // 有效时间段内刷新
-        if (!DateUtil.belongCalendar(now, new Date(expiredDate.getTime() - 1000 * 20), expiredDate))
+        if (!DateUtil.belongCalendar(now, new Date(expiredDate.getTime() - 1000 * 30), expiredDate))
             return AjaxResult.error("token在有效期内，无需刷新");
 
          // 生成新的token

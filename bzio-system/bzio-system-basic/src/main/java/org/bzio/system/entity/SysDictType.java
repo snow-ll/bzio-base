@@ -16,8 +16,12 @@ public class SysDictType extends BaseEntity {
     private String dictName;
 
     private String dictType;
+    
+    private Integer orderNum;
 
     private Integer status;
+    
+    private String note;
 
     public String getDictId() {
         return dictId;
@@ -43,12 +47,28 @@ public class SysDictType extends BaseEntity {
         this.dictType = dictType;
     }
 
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
+
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
 

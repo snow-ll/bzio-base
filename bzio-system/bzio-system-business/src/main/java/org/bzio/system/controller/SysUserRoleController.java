@@ -33,6 +33,7 @@ public class SysUserRoleController extends BaseController {
      */
     @Log(title = "用户添加权限", businessType = BusinessType.INSERT)
     @PostMapping("/save")
+    @PreAuthorize("hasAnyAuthority('sys:role:auth')")
     public AjaxResult save(@RequestBody List<SysUserRole> sysUserRoles) {
         return AjaxResult.toAjax(sysUserRoleService.saveUserRole(sysUserRoles));
     }

@@ -11,7 +11,9 @@ import java.util.List;
 @Mapper
 public interface SysDictTypeMapper {
 
-    SysDictType queryById(String dictCode);
+    SysDictType queryById(String dictId);
+    
+    SysDictType queryByType(String dictType);
 
     List<SysDictType> queryALl(SysDictType sysDictType);
 
@@ -19,5 +21,7 @@ public interface SysDictTypeMapper {
 
     int update(SysDictType sysDictType);
 
-    int deleteById(String dictCode);
+    int deleteById(String dictId);
+    
+    int deleteByType(String dictType);
 }

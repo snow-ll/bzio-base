@@ -59,7 +59,7 @@ public class SysRoleController  extends BaseController {
      */
     @Log(title = "新增或修改角色", businessType = BusinessType.INSERT)
     @PostMapping("save")
-    @PreAuthorize("hasAnyAuthority('sys:role:edit')")
+    @PreAuthorize("hasAnyAuthority('sys:role:add', 'sys:role:edit')")
     public AjaxResult save(@RequestBody SysRole sysRole) {
         // 保存角色信息
         int result = sysRoleService.saveRole(sysRole);

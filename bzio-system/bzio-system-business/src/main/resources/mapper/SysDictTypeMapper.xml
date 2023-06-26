@@ -6,7 +6,9 @@
         <result property="dictId" column="dict_id" jdbcType="VARCHAR"/>
         <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
         <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="note" column="note" jdbcType="VARCHAR"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createName" column="create_name" jdbcType="VARCHAR"/>
         <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
@@ -17,7 +19,7 @@
 
     <sql id="selectDictType">
         select
-            dict_id, dict_name, dict_type, status, create_by, create_name, create_date, update_by, update_name, update_date
+            dict_id, dict_name, dict_type, order_num, status, note, create_by, create_name, create_date, update_by, update_name, update_date
         from sys_dict_type
     </sql>
 
@@ -25,6 +27,11 @@
     <select id="queryById" resultMap="SysDictTypeMap">
         <include refid="selectDictType"/>
         where dict_id = #{dictId}
+    </select>
+    
+    <select id="queryByType" resultMap="SysDictTypeMap">
+        <include refid="selectDictType"/>
+        where dict_type = #{dictType}
     </select>
 
     <!--查询指定行数据-->
@@ -62,7 +69,6 @@
                 and update_date = #{updateDate}
             </if>
         </where>
-        limit #{pageable.offset}, #{pageable.pageSize}
     </select>
 
     <!--统计总行数-->
@@ -105,8 +111,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="dictId" useGeneratedKeys="true">
-        insert into sys_dict_type(dict_id, dict_name, dict_type, status, create_by, create_name, create_date, update_by, update_name, update_date)
-        values (#{dictId}, #{dictName}, #{dictType}, #{status}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate})
+        insert into sys_dict_type(dict_id, dict_name, dict_type, status, note, create_by, create_name, create_date, update_by, update_name, update_date)
+        values (#{dictId}, #{dictName}, #{dictType}, #{status}, #{note}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate})
     </insert>
 
     <insert id="insertBatch" keyProperty="dictId" useGeneratedKeys="true">
@@ -139,33 +145,16 @@
     <update id="update">
         update sys_dict_type
         <set>
-            <if test="dictName != null and dictName != ''">
-                dict_name = #{dictName},
-            </if>
-            <if test="dictType != null and dictType != ''">
-                dict_type = #{dictType},
-            </if>
-            <if test="status != null">
-                status = #{status},
-            </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
-            <if test="createName != null and createName != ''">
-                create_name = #{createName},
-            </if>
-            <if test="createDate != null">
-                create_date = #{createDate},
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
-            </if>
-            <if test="updateName != null and updateName != ''">
-                update_name = #{updateName},
-            </if>
-            <if test="updateDate != null">
-                update_date = #{updateDate},
-            </if>
+            dict_name = #{dictName},
+            dict_type = #{dictType},
+            status = #{status},
+            note = #{note},
+            create_by = #{createBy},
+            create_name = #{createName},
+            create_date = #{createDate},
+            update_by = #{updateBy},
+            update_name = #{updateName},
+            update_date = #{updateDate},
         </set>
         where dict_id = #{dictId}
     </update>
@@ -174,6 +163,9 @@
     <delete id="deleteById">
         delete from sys_dict_type where dict_id = #{dictId}
     </delete>
-
+    
+    <delete id="deleteByType">
+        delete from sys_dict_type where dict_type = #{dictType}
+    </delete>
 </mapper>
 

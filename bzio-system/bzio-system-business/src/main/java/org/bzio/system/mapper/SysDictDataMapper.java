@@ -15,7 +15,7 @@ public interface SysDictDataMapper {
     SysDictData queryById(String dictCode);
 
     List<SysDictData> queryALl(SysDictData sysDictData);
-    
+
     List<Map> queryDictData(SysDictData sysDictData);
 
     int insert(SysDictData sysDictData);
@@ -23,4 +23,6 @@ public interface SysDictDataMapper {
     int update(SysDictData sysDictData);
 
     int deleteById(String dictCode);
+    
+    int deleteByType(String dictType);
 }

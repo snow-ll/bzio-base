@@ -16,5 +16,5 @@ public interface SysDictTypeService {
 
     int saveDictType(SysDictType sysDictType);
 
-    int deleteDictType(String dictId);
+    int deleteDictType(String dictType);
 }

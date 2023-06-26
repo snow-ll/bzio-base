@@ -7,6 +7,7 @@ import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.system.entity.SysDictData;
 import org.bzio.system.service.SysDictDataService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,7 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/dict/data")
 public class SysDictDataController extends BaseController {
-
+    
     @Resource
     SysDictDataService sysDictDataService;
 
@@ -29,8 +30,9 @@ public class SysDictDataController extends BaseController {
      */
     @Log(title = "查询系统字典数据详情信息", businessType = BusinessType.QUERY)
     @GetMapping("info")
-    public AjaxResult info(String configId) {
-        return AjaxResult.success(sysDictDataService.queryInfo(configId));
+    @PreAuthorize("hasAnyAuthority('sys:dict:search')")
+    public AjaxResult info(String dictCode) {
+        return AjaxResult.success(sysDictDataService.queryInfo(dictCode));
     }
 
     /**
@@ -38,6 +40,7 @@ public class SysDictDataController extends BaseController {
      */
     @Log(title = "查询系统字典数据列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
+    @PreAuthorize("hasAnyAuthority('sys:dict:search')")
     public TableData list(SysDictData sysDictData) {
         startPage();
         List<SysDictData> dataList = sysDictDataService.queryAll(sysDictData);
@@ -50,8 +53,7 @@ public class SysDictDataController extends BaseController {
     @Log(title = "根据条件查询字典数据", businessType = BusinessType.QUERY)
     @GetMapping("type")
     public AjaxResult type(SysDictData sysDictData) {
-        sysDictData.setStatus(0);
-        return AjaxResult.success(sysDictDataService.queryDictData(sysDictData));
+        return AjaxResult.success(sysDictDataService.queryByType(sysDictData));
     }
     
     /**
@@ -59,7 +61,8 @@ public class SysDictDataController extends BaseController {
      */
     @Log(title = "新增或修改系统字典数据", businessType = BusinessType.INSERT)
     @PostMapping("save")
-    public AjaxResult save(SysDictData sysDictData) {
+    @PreAuthorize("hasAnyAuthority('sys:dict:add', 'sys:dict:edit')")
+    public AjaxResult save(@RequestBody SysDictData sysDictData) {
         return AjaxResult.toAjax(sysDictDataService.saveDictData(sysDictData));
     }
 
@@ -68,7 +71,8 @@ public class SysDictDataController extends BaseController {
      */
     @Log(title = "删除系统字典数据", businessType = BusinessType.DELETE)
     @PostMapping("del")
-    public AjaxResult del(String configId) {
-        return AjaxResult.toAjax(sysDictDataService.deleteDictData(configId));
+    @PreAuthorize("hasAnyAuthority('sys:dict:delete')")
+    public AjaxResult del(@RequestBody String dictCode) {
+        return AjaxResult.toAjax(sysDictDataService.deleteDictData(dictCode));
     }
 }

@@ -13,15 +13,17 @@ public class SysDictData extends BaseEntity {
 
     private String dictCode;
 
-    private String dictSort;
-
     private String dictLabel;
 
     private String dictValue;
 
     private String dictType;
 
+    private Integer orderNum;
+
     private Integer status;
+    
+    private String note;
 
     public String getDictCode() {
         return dictCode;
@@ -29,14 +31,6 @@ public class SysDictData extends BaseEntity {
 
     public void setDictCode(String dictCode) {
         this.dictCode = dictCode;
-    }
-
-    public String getDictSort() {
-        return dictSort;
-    }
-
-    public void setDictSort(String dictSort) {
-        this.dictSort = dictSort;
     }
 
     public String getDictLabel() {
@@ -63,11 +57,27 @@ public class SysDictData extends BaseEntity {
         this.dictType = dictType;
     }
 
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
+    }
+
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

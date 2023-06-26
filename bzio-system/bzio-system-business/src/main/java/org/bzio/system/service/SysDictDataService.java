@@ -14,8 +14,8 @@ public interface SysDictDataService {
 
     List<SysDictData> queryAll(SysDictData sysDictData);
     
-    List<Map> queryDictData(SysDictData sysDictData);
-
+    List<Map> queryByType(SysDictData sysDictData);
+    
     int saveDictData(SysDictData sysDictData);
 
     int deleteDictData(String dictCode);

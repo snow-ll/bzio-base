@@ -3,6 +3,7 @@ package org.bzio.common.core.util;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -113,6 +114,9 @@ public class StringUtil {
         return false;
     }
 
+    /**
+     * 字符串包含忽略大小写
+     */
     public static boolean containsAnyIgnoreCase(String str, String... strings) {
         if (isEmpty(str)) return false;
         if (isNull(strings)) return false;

@@ -56,7 +56,7 @@ public class ValidateCodeFilter extends AbstractGatewayFilterFactory<Object> {
                 validateCodeService.checkCaptcha(map.get(CODE), map.get(UUID));
             } catch (Exception e) {
                 // 异常处理
-                return XssResponse.responseWrite(exchange, HttpStatus.FORBIDDEN.value(), AjaxResult.error(e.getMessage()));
+                return XssResponse.responseWrite(exchange, HttpStatus.INTERNAL_SERVER_ERROR.value(), AjaxResult.error(e.getMessage()));
             }
             return chain.filter(exchange);
         };

@@ -5,16 +5,18 @@ import org.bzio.common.core.util.BeanUtil;
 import org.bzio.common.core.util.DateUtil;
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
+import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.entity.SysDictData;
+import org.bzio.system.entity.SysDictType;
 import org.bzio.system.mapper.SysDictDataMapper;
+import org.bzio.system.mapper.SysDictTypeMapper;
 import org.bzio.system.service.SysDictDataService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author snow
@@ -24,6 +26,8 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
 
     @Resource
     SysDictDataMapper sysDictDataMapper;
+    @Resource
+    SysDictTypeMapper sysDictTypeMapper;
 
     @Override
     public SysDictData queryInfo(String dictCode) {
@@ -36,8 +40,14 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
     }
 
     @Override
-    public List<Map> queryDictData(SysDictData sysDictData) {
-        return sysDictDataMapper.queryDictData(sysDictData);
+    public List<Map> queryByType(SysDictData sysDictData) {
+        // 判断字典是否有效，过滤无效字典
+        SysDictType type = sysDictTypeMapper.queryByType(sysDictData.getDictType());
+        if (StringUtil.isNotNull(type) && type.getStatus() == 0) {
+            sysDictData.setStatus(0);
+            return sysDictDataMapper.queryDictData(sysDictData);
+        }
+        return null;
     }
 
     @Override
