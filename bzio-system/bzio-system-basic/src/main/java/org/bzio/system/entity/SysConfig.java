@@ -20,6 +20,8 @@ public class SysConfig extends BaseEntity implements Serializable {
     private String configKey;
 
     private String configValue;
+    
+    private String note;
 
     public String getConfigId() {
         return configId;
@@ -51,5 +53,13 @@ public class SysConfig extends BaseEntity implements Serializable {
 
     public void setConfigValue(String configValue) {
         this.configValue = configValue;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

@@ -7,6 +7,7 @@
         <result property="configName" column="config_name" jdbcType="VARCHAR"/>
         <result property="configKey" column="config_key" jdbcType="VARCHAR"/>
         <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
+        <result property="note" column="note" jdbcType="VARCHAR"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createName" column="create_name" jdbcType="VARCHAR"/>
         <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
@@ -17,7 +18,7 @@
 
     <sql id="selectConfig">
         select
-            config_id, config_name, config_key, config_value, create_by, create_name, create_date, update_by, update_name, update_date
+            config_id, config_name, config_key, config_value, note, create_by, create_name, create_date, update_by, update_name, update_date
         from sys_config
     </sql>
 
@@ -66,34 +67,8 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="configId" useGeneratedKeys="true">
-        insert into sys_config(config_id, config_name, config_key, config_value, create_by, create_name, create_date, update_by, update_name, update_date)
-        values (#{configId}, #{configName}, #{configKey}, #{configValue}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate})
-    </insert>
-
-    <insert id="insertBatch" keyProperty="configId" useGeneratedKeys="true">
-        insert into sys_config(config_id, config_name, config_key, config_value, create_by, create_name, create_date, update_by, update_name, update_date)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-        (#{entity.configId}, #{entity.configName}, #{entity.configKey}, #{entity.configValue}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate})
-        </foreach>
-    </insert>
-
-    <insert id="insertOrUpdateBatch" keyProperty="configId" useGeneratedKeys="true">
-        insert into sys_config(config_id, config_name, config_key, config_value, create_by, create_name, create_date, update_by, update_name, update_date)
-        values
-        <foreach collection="entities" item="entity" separator=",">
-            (#{entity.configId}, #{entity.configName}, #{entity.configKey}, #{entity.configValue}, #{entity.createBy}, #{entity.createName}, #{entity.createDate}, #{entity.updateBy}, #{entity.updateName}, #{entity.updateDate})
-        </foreach>
-        on duplicate key update
-        config_name = values(config_name),
-        config_key = values(config_key),
-        config_value = values(config_value),
-        create_by = values(create_by),
-        create_name = values(create_name),
-        create_date = values(create_date),
-        update_by = values(update_by),
-        update_name = values(update_name),
-        update_date = values(update_date)
+        insert into sys_config(config_id, config_name, config_key, config_value, note, create_by, create_name, create_date, update_by, update_name, update_date)
+        values (#{configId}, #{configName}, #{configKey}, #{configValue}, #{note}, #{createBy}, #{createName}, #{createDate}, #{updateBy}, #{updateName}, #{updateDate})
     </insert>
 
     <!--通过主键修改数据-->
@@ -103,6 +78,7 @@
             config_name = #{configName},
             config_key = #{configKey},
             config_value = #{configValue},
+            note = #{note},
             create_by = #{createBy},
             create_name = #{createName},
             create_date = #{createDate},

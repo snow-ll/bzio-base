@@ -184,6 +184,7 @@ create table bzio_base.sys_config
     config_name     varchar(50)  null,
     config_key      varchar(50)  null,
     config_value    varchar(50)  null,
+    note            varchar(500) null,
     create_by       varchar(50)  null,
     create_name     varchar(50)  null,
     create_date     timestamp    null,

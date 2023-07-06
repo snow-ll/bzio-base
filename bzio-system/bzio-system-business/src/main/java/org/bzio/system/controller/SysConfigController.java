@@ -7,10 +7,8 @@ import org.bzio.common.core.enums.BusinessType;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.system.entity.SysConfig;
 import org.bzio.system.service.SysConfigService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +30,7 @@ public class SysConfigController extends BaseController {
      */
     @Log(title = "查询系统参数详情信息", businessType = BusinessType.QUERY)
     @GetMapping("info")
+    @PreAuthorize("hasAnyAuthority('sys:config:search')")
     public AjaxResult info(String configId) {
         return AjaxResult.success(sysConfigService.queryInfo(configId));
     }
@@ -41,6 +40,7 @@ public class SysConfigController extends BaseController {
      */
     @Log(title = "查询系统参数列表", businessType = BusinessType.QUERY)
     @GetMapping("list")
+    @PreAuthorize("hasAnyAuthority('sys:config:search')")
     public TableData list(SysConfig sysConfig) {
         startPage();
         List<SysConfig> configs = sysConfigService.queryAll(sysConfig);
@@ -52,7 +52,8 @@ public class SysConfigController extends BaseController {
      */
     @Log(title = "新增或修改系统参数", businessType = BusinessType.INSERT)
     @PostMapping("save")
-    public AjaxResult save(SysConfig sysConfig) {
+    @PreAuthorize("hasAnyAuthority('sys:config:add', 'sys:config:edit')")
+    public AjaxResult save(@RequestBody SysConfig sysConfig) {
         return AjaxResult.toAjax(sysConfigService.saveConfig(sysConfig));
     }
 
@@ -61,7 +62,8 @@ public class SysConfigController extends BaseController {
      */
     @Log(title = "删除系统参数", businessType = BusinessType.DELETE)
     @PostMapping("del")
-    public AjaxResult del(String configId) {
+    @PreAuthorize("hasAnyAuthority('sys:config:delete')")
+    public AjaxResult del(@RequestBody String configId) {
         return AjaxResult.toAjax(sysConfigService.deleteConfig(configId));
     }
 }
