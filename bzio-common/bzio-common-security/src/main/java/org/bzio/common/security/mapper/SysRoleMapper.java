@@ -6,7 +6,7 @@ import org.bzio.common.security.entity.SysRole;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Mapper
 public interface SysRoleMapper {

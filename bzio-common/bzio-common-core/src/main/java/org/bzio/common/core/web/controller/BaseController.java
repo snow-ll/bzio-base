@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * web层通用数据处理
  *
- * @author: snow
+ * @author snow
  */
 public class BaseController {
 

@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 /**
  * 认证业务服务层
  *
- * @author: snow
+ * @author snow
  */
 @Service
 public class AuthServiceImpl extends BaseServiceImpl implements AuthService {

@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 系统用户权限管理控制层
  *
- * @author: snow
+ * @author snow
  */
 @RestController
 @RequestMapping("/userRole")

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 统一异常处理
  *
- * @author: snow
+ * @author snow
  */
 @RestControllerAdvice
 public class ExceptionHandlerResolver {

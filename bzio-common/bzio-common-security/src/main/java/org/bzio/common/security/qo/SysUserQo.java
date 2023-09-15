@@ -3,7 +3,7 @@ package org.bzio.common.security.qo;
 import java.util.Date;
 
 /**
- * @author: snow
+ * @author snow
  */
 public class SysUserQo {
 

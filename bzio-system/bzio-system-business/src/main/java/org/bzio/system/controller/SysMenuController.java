@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 菜单模块控制层
  *
- * @author: snow
+ * @author snow
  */
 @RestController
 @RequestMapping("/menu")

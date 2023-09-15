@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 角色菜单关联表实体
  *
- * @author: snow
+ * @author snow
  */
 public class SysRoleMenu implements Serializable {
 

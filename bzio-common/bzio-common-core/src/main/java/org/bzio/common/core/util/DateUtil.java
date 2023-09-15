@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * 日期工具类
  *
- * @author: snow
+ * @author snow
  */
 public class DateUtil {
 

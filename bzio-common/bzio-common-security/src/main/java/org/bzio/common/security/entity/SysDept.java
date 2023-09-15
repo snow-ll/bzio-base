@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 部门实体类
  *
- * @author: snow
+ * @author snow
  */
 public class SysDept extends BaseEntity {
 

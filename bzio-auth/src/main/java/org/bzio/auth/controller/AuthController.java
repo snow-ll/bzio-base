@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 认证业务控制层
  *
- * @author: snow
+ * @author snow
  */
 @RestController
 public class AuthController extends BaseController {

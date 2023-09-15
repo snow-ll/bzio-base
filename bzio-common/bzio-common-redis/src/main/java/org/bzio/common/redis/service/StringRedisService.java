@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis String操作实现
  *
- * @author: snow
+ * @author snow
  */
 @Component
 public class StringRedisService {

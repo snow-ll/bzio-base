@@ -3,7 +3,7 @@ package org.bzio.common.core.exception.system.dept;
 import org.bzio.common.core.exception.BaseException;
 
 /**
- * @author: snow
+ * @author snow
  */
 public class DeptException extends BaseException {
 

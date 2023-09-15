@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Service
 public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptService {

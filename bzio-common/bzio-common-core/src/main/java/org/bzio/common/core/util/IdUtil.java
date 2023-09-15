@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * 主键工具类
  *
- * @author: snow
+ * @author snow
  */
 public class IdUtil {
 

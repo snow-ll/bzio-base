@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * redis Hash操作实现
  *
- * @author: snow
+ * @author snow
  */
 @Component
 public class HashRedisService {

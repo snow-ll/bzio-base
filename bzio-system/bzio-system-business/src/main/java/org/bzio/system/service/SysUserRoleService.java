@@ -9,7 +9,7 @@ import org.bzio.common.security.vo.SysUserRoleVo;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 public interface SysUserRoleService {
 

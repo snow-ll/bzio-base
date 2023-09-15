@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 系统用户实体类
  *
- * @author: snow
+ * @author snow
  */
 public class SysUser extends BaseEntity {
 

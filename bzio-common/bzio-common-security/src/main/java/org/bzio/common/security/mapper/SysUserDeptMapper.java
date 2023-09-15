@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.bzio.common.security.entity.SysUserDept;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Mapper
 public interface SysUserDeptMapper {

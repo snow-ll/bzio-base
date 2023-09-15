@@ -3,7 +3,7 @@ package org.bzio.common.core.exception.system.user;
 import org.bzio.common.core.exception.BaseException;
 
 /**
- * @author: snow
+ * @author snow
  */
 public class UserException extends BaseException {
 

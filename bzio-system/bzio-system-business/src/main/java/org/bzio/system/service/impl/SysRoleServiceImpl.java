@@ -8,21 +8,25 @@ import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.SysRole;
 import org.bzio.common.security.mapper.SysRoleMapper;
+import org.bzio.common.security.mapper.SysRoleMenuMapper;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.service.SysRoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Service
 public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleService {
 
     @Resource
     SysRoleMapper sysRoleMapper;
+    @Resource
+    SysRoleMenuMapper sysRoleMenuMapper;
 
     /**
      * 角色详情信息
@@ -77,7 +81,9 @@ public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleServic
      * 删除角色
      */
     @Override
+    @Transactional
     public int deleteRole(String roleId) {
+        sysRoleMenuMapper.deleteByRoleId(roleId);
         return sysRoleMapper.deleteById(roleId);
     }
 }

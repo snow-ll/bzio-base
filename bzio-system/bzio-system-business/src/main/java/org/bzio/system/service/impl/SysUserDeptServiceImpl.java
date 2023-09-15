@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Service
 public class SysUserDeptServiceImpl extends BaseServiceImpl implements SysUserDeptService {

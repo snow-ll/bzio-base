@@ -3,7 +3,7 @@ package org.bzio.common.core.exception;
 /**
  * 自定义异常
  *
- * @author: snow
+ * @author snow
  */
 public class BaseException extends RuntimeException {
 

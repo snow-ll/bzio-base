@@ -20,7 +20,7 @@ import java.io.PrintWriter;
 /**
  * Spring Security配置中心
  *
- * @author: snow
+ * @author snow
  */
 @Configuration
 @EnableWebSecurity

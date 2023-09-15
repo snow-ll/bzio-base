@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 公共实体类
  *
- * @author: snow
+ * @author snow
  */
 public class BaseEntity implements Serializable {
 

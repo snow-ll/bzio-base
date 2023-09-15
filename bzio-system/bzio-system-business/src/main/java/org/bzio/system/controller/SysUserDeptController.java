@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 /**
  * 系统用户部门管理控制层
  *
- * @author: snow
+ * @author snow
  */
 @RestController
 @RequestMapping("/userDept")

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 角色信息表实体类
  *
- * @author: snow
+ * @author snow
  */
 public class SysRole extends BaseEntity {
 

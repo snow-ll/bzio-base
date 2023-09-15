@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * 对象工具类
  *
- * @author: snow
+ * @author snow
  */
 public class BeanUtil extends BeanUtils {
 

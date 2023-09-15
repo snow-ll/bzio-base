@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * 字符串相关工具类
  *
- * @author: snow
+ * @author snow
  */
 public class StringUtil {
 

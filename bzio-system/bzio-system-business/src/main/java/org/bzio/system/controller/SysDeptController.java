@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 部门模块控制层
  *
- * @author: snow
+ * @author snow
  */
 @RestController
 @RequestMapping("/dept")

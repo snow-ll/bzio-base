@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * 登录用户信息
  *
- * @author: snow
+ * @author snow
  */
 public class LoginUser extends User {
 

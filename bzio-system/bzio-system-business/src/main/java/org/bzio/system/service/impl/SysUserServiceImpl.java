@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl implements SysUserService {

@@ -9,7 +9,7 @@ import org.bzio.common.security.qo.SysUserQo;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Mapper
 public interface SysUserRoleMapper {

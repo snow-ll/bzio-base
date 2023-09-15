@@ -3,7 +3,7 @@ package org.bzio.common.core.web.entity;
 /**
  * 响应结果
  *
- * @author: snow
+ * @author snow
  */
 public class AjaxResult {
 

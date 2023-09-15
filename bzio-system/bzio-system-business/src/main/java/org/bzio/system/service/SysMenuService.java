@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: snow
+ * @author snow
  */
 public interface SysMenuService {
 

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 列表响应
  *
- * @author: snow
+ * @author snow
  */
 public class TableData {
 

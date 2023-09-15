@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 系统用户部门关联表
  *
- * @author: snow
+ * @author snow
  */
 public class SysUserDept implements Serializable {
 

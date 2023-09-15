@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuService {

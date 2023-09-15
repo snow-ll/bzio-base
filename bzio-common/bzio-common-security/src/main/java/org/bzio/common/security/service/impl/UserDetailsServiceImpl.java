@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * UserDetailsService实现类
  * 自定义用户加载
  *
- * @author: snow
+ * @author snow
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

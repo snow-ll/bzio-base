@@ -7,7 +7,7 @@ import org.bzio.common.security.vo.SysUserVo;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 public interface SysUserService {
 

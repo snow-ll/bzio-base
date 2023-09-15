@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 用户角色关联表实体
  *
- * @author: snow
+ * @author snow
  */
 public class SysUserRole implements Serializable {
 

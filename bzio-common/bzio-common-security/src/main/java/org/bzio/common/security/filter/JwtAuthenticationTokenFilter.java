@@ -27,7 +27,7 @@ import static org.springframework.security.core.context.SecurityContextHolder.*;
 /**
  * token认证过滤器
  *
- * @author: snow
+ * @author snow
  */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {

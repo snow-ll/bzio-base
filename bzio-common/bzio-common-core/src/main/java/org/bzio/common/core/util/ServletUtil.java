@@ -11,7 +11,7 @@ import java.net.URLDecoder;
 /**
  * 请求工具类
  *
- * @author: snow
+ * @author snow
  */
 public class ServletUtil {
 

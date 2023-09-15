@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 /**
  * 服务器系统环境工具类
  *
- * @author: snow
+ * @author snow
  */
 public class SystemUtil {
 

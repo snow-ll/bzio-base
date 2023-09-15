@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * 4.返回根节点（根节点中children属性包含其子级）
  * 5.递归完成每一级节点根据children关联起来
  *
- * @author: snow
+ * @author snow
  */
 public class TreeNodeUtil<T> {
 

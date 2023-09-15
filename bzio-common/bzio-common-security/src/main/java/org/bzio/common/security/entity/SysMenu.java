@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 菜单权限表实体类
  *
- * @author: snow
+ * @author snow
  */
 public class SysMenu extends BaseEntity {
 

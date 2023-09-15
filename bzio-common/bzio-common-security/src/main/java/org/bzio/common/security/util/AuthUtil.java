@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 /**
  * 认证、权限工具类
  *
- * @author: snow
+ * @author snow
  */
 public class AuthUtil {
 

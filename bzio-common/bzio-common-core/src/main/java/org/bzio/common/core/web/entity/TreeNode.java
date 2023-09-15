@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 public class TreeNode<T> implements Serializable {
 

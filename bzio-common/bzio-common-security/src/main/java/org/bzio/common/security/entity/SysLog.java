@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 系统日志实体类
  *
- * @author: snow
+ * @author snow
  */
 public class SysLog implements Serializable {
 

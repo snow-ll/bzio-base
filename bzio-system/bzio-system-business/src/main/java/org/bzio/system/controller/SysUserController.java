@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 系统用户模块控制层
  *
- * @author: snow
+ * @author snow
  */
 @RestController
 @RequestMapping("/user")

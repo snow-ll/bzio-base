@@ -6,7 +6,7 @@ import org.bzio.common.security.entity.SysDept;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 public interface SysDeptService {
 

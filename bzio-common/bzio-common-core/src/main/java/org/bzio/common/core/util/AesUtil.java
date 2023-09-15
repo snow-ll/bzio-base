@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
- * @author: snow
+ * @author snow
  */
 public class AesUtil {
 

@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * jwt Token工具类
  *
- * @author: snow
+ * @author snow
  */
 @Component
 public class JwtUtil {

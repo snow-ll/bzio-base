@@ -7,7 +7,7 @@ import org.bzio.common.security.entity.SysRoleMenu;
 import java.util.List;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Mapper
 public interface SysRoleMenuMapper {

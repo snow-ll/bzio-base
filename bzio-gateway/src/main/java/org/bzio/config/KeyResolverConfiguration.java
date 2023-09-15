@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * 限流规则配置类
  *
- * @author: snow
+ * @author snow
  */
 @Configuration
 public class KeyResolverConfiguration {

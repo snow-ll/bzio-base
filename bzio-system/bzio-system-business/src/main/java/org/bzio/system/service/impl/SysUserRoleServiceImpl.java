@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author: snow
+ * @author snow
  */
 @Service
 public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRoleService {
