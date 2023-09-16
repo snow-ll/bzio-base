@@ -9,12 +9,10 @@ import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.common.security.entity.LoginUser;
 import org.bzio.common.security.entity.MenuTreeNode;
-import org.bzio.common.security.entity.SysMenu;
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.mapper.SysMenuMapper;
 import org.bzio.common.security.mapper.SysRoleMapper;
 import org.bzio.common.security.mapper.SysUserMapper;
-import org.bzio.common.security.qo.SysMenuQo;
 import org.bzio.common.security.service.impl.UserDetailsServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -129,7 +127,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         }
 
         // 新增用户
-        sysUser.setUserId(IdUtil.simpleUUID());
+        sysUser.setUserId(IdUtil.snowflakeId());
         sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
         sysUser.setStatus(0);
         return sysUserMapper.insert(sysUser);

@@ -23,7 +23,7 @@ public class SysUserDeptServiceImpl extends BaseServiceImpl implements SysUserDe
      */
     @Override
     public int saveUserDept(SysUserDept sysUserDept) {
-        sysUserDept.setId(IdUtil.simpleUUID());
+        sysUserDept.setId(IdUtil.snowflakeId());
         return sysUserDeptMapper.insert(sysUserDept);
     }
 }

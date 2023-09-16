@@ -39,7 +39,7 @@ public class SysRoleMenuServiceImpl extends BaseServiceImpl implements SysRoleMe
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         // 添加菜单权限
         for (String menuId : menuIds) {
-            sysRoleMenu.setId(IdUtil.simpleUUID());
+            sysRoleMenu.setId(IdUtil.snowflakeId());
             sysRoleMenu.setRoleId(roleId);
             sysRoleMenu.setMenuId(menuId);
             result += sysRoleMenuMapper.insert(sysRoleMenu);

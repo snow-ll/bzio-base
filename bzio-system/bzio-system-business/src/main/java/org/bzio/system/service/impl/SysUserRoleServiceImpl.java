@@ -36,7 +36,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
 
         sysUserRoles.stream()
                 .peek(sysUserRole ->
-                    sysUserRole.setId(IdUtil.simpleUUID())
+                    sysUserRole.setId(IdUtil.snowflakeId())
                 ).collect(Collectors.toList());
 
         return sysUserRoleMapper.insertBatch(sysUserRoles);
@@ -52,7 +52,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
         SysUserRole sysUserRole = new SysUserRole();
 
         for (String userId: userIds) {
-            sysUserRole.setId(IdUtil.simpleUUID());
+            sysUserRole.setId(IdUtil.snowflakeId());
             sysUserRole.setUserId(userId);
             sysUserRole.setRoleId(sysUserRoleVo.getRoleId());
             result += sysUserRoleMapper.insert(sysUserRole);

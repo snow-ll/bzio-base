@@ -2,7 +2,6 @@ package org.bzio.system.service.impl;
 
 import org.bzio.common.core.exception.system.dept.DeptException;
 import org.bzio.common.core.util.*;
-import org.bzio.common.core.web.entity.TreeNode;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.DeptTreeNode;
 import org.bzio.common.security.entity.SysDept;
@@ -12,7 +11,6 @@ import org.bzio.system.service.SysDeptService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -78,7 +76,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysDept.getDeptId())) {
-            sysDept.setDeptId(IdUtil.simpleUUID());
+            sysDept.setDeptId(IdUtil.snowflakeId());
             sysDept.setCreateBy(username);
             sysDept.setCreateName(nickname);
             sysDept.setCreateDate(DateUtil.getNowDate());

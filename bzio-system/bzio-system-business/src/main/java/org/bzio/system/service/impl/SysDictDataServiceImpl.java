@@ -5,7 +5,6 @@ import org.bzio.common.core.util.BeanUtil;
 import org.bzio.common.core.util.DateUtil;
 import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
-import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.entity.SysDictData;
@@ -59,7 +58,7 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
         if (StringUtil.isEmpty(sysDictData.getDictType())) throw new BaseException("字典数据类型不能为空！");
 
         if (StringUtil.isEmpty(sysDictData.getDictCode())) {
-            sysDictData.setDictCode(IdUtil.simpleUUID());
+            sysDictData.setDictCode(IdUtil.snowflakeId());
             sysDictData.setCreateBy(username);
             sysDictData.setCreateName(nickname);
             sysDictData.setCreateDate(DateUtil.getNowDate());

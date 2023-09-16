@@ -7,7 +7,6 @@ import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
-import org.bzio.system.entity.SysDictData;
 import org.bzio.system.entity.SysDictType;
 import org.bzio.system.mapper.SysDictDataMapper;
 import org.bzio.system.mapper.SysDictTypeMapper;
@@ -46,7 +45,7 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
         String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysDictType.getDictId())) {
-            sysDictType.setDictId(IdUtil.simpleUUID());
+            sysDictType.setDictId(IdUtil.snowflakeId());
             sysDictType.setCreateBy(username);
             sysDictType.setCreateName(nickname);
             sysDictType.setCreateDate(DateUtil.getNowDate());

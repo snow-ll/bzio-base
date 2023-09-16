@@ -74,7 +74,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
             // 新增用户，密码加密
             sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
             
-            sysUser.setUserId(IdUtil.simpleUUID());
+            sysUser.setUserId(IdUtil.snowflakeId());
             sysUser.setCreateBy(username);
             sysUser.setCreateName(nickname);
             sysUser.setCreateDate(DateUtil.getNowDate());
@@ -96,7 +96,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         if (result == 1) {
             // 用户部门处理
             SysUserDept sysUserDept = new SysUserDept();
-            sysUserDept.setId(IdUtil.simpleUUID());
+            sysUserDept.setId(IdUtil.snowflakeId());
             sysUserDept.setUserId(sysUser.getUserId());
             sysUserDept.setDeptId(sysUser.getDeptId());
             if (StringUtil.isNotNull(sysUser.getDeptId())) {

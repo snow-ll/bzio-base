@@ -83,7 +83,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
 
         // 判断传入的id是否为空
         if (StringUtil.isEmpty(sysMenu.getMenuId())) {
-            sysMenu.setMenuId(IdUtil.simpleUUID());
+            sysMenu.setMenuId(IdUtil.snowflakeId());
             sysMenu.setCreateBy(username);
             sysMenu.setCreateName(nickname);
             sysMenu.setCreateDate(DateUtil.getNowDate());

@@ -78,7 +78,7 @@ public class LogAspect {
             String requestURI = request.getRequestURI();
 
             SysLog sysLog = new SysLog();
-            sysLog.setLogId(IdUtil.simpleUUID());
+            sysLog.setLogId(IdUtil.snowflakeId());
             sysLog.setTitle(annotationLog.title());
             sysLog.setBusinessType(annotationLog.businessType().ordinal());
             sysLog.setLogDesc(annotationLog.logDesc());

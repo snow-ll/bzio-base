@@ -41,7 +41,7 @@ public class SysConfigServiceImpl extends BaseServiceImpl implements SysConfigSe
         String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysConfig.getConfigId())) {
-            sysConfig.setConfigId(IdUtil.simpleUUID());
+            sysConfig.setConfigId(IdUtil.snowflakeId());
             sysConfig.setCreateBy(username);
             sysConfig.setCreateName(nickname);
             sysConfig.setCreateDate(DateUtil.getNowDate());

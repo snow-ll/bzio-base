@@ -56,7 +56,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleServic
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysRole.getRoleId())) {
-            sysRole.setRoleId(IdUtil.simpleUUID());
+            sysRole.setRoleId(IdUtil.snowflakeId());
             sysRole.setCreateBy(username);
             sysRole.setCreateName(nickname);
             sysRole.setCreateDate(DateUtil.getNowDate());

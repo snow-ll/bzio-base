@@ -3,13 +3,13 @@
 -- 用户表
 create table bzio_base.sys_user
 (
-    user_id                 varchar(50)  not null primary key comment '用户id',
+    user_id                 bigint not null primary key comment '用户id',
     username                varchar(50)  null comment '用户名',
     password                varchar(100) null comment '密码',
     nickname                varchar(100) null comment '用户昵称',
     birthday                timestamp    null comment '生日',
     sex                     tinyint      default 0 comment '性别',
-    certificate_type        varchar(50)  null comment '证件类型', 
+    certificate_type        varchar(50)  null comment '证件类型',
     certificate_num         varchar(50)  null comment '证件号',
     mobile_number           varchar(50)  null comment '手机号码',
     phone_number            varchar(50)  null comment '电话号码',
@@ -32,7 +32,7 @@ create table bzio_base.sys_user
 -- 角色表
 create table bzio_base.sys_role
 (
-    role_id             varchar(50)  not null primary key,
+    role_id             bigint not null primary key,
     role_name           varchar(100) null,
     role_key            varchar(50)  null,
     order_num           int          null,
@@ -52,7 +52,7 @@ create table bzio_base.sys_role
 -- 部门表
 create table bzio_base.sys_dept
 (
-    dept_id     varchar(50)  not null primary key,
+    dept_id     bigint not null primary key,
     dept_name   varchar(100) null,
     parent_id   varchar(50)  null,
     parent_name varchar(100) null,
@@ -77,7 +77,7 @@ create table bzio_base.sys_dept
 -- 菜单表
 create table bzio_base.sys_menu
 (
-    menu_id     varchar(50)  not null primary key,
+    menu_id     bigint not null primary key,
     menu_name   varchar(100) null,
     parent_id   varchar(50)  null,
     order_num   int          null,
@@ -102,29 +102,29 @@ create table bzio_base.sys_menu
 -- 关联表
 create table bzio_base.sys_user_role
 (
-    id      varchar(50) not null primary key,
-    user_id varchar(50) null,
-    role_id varchar(50) null
+    id      bigint not null primary key,
+    user_id bigint null,
+    role_id bigint null
 );
 
 create table bzio_base.sys_role_menu
 (
-    id      varchar(50) not null primary key,
-    role_id varchar(50) null,
-    menu_id varchar(50) null
+    id      bigint not null primary key,
+    role_id bigint null,
+    menu_id bigint null
 );
 
 create table bzio_base.sys_user_dept
 (
-    id      varchar(50) not null primary key,
-    user_id varchar(50) null,
-    dept_id varchar(50) null
+    id      bigint not null primary key,
+    user_id bigint null,
+    dept_id bigint null
 );
 
 -- 系统日志表
 create table bzio_base.sys_log
 (
-    log_id              varchar(50)  not null primary key comment '日志id',
+    log_id              bigint not null primary key comment '日志id',
     title               varchar(50)  null comment '日志标题',
     business_type       tinyint      default 0 comment '业务类型',
     log_desc            varchar(50)  null comment '日志描述',
@@ -145,7 +145,7 @@ create table bzio_base.sys_log
 -- 系统字典表（类型）
 create table bzio_base.sys_dict_type
 (
-    dict_id     varchar(50)  not null primary key,
+    dict_id     bigint not null primary key,
     dict_name   varchar(50)  null,
     dict_type   varchar(50)  null,
     order_num   tinyint      default 0,
@@ -162,7 +162,7 @@ create table bzio_base.sys_dict_type
 -- 系统字典表（数据）
 create table bzio_base.sys_dict_data
 (
-    dict_code   varchar(50)  not null primary key,
+    dict_code   bigint not null primary key,
     dict_label  varchar(50)  null,
     dict_value  varchar(50)  null,
     dict_type   varchar(50)  null,
@@ -180,7 +180,7 @@ create table bzio_base.sys_dict_data
 -- 系统配置信息表
 create table bzio_base.sys_config
 (
-    config_id       varchar(50)  not null primary key,
+    config_id       bigint not null primary key,
     config_name     varchar(50)  null,
     config_key      varchar(50)  null,
     config_value    varchar(50)  null,
