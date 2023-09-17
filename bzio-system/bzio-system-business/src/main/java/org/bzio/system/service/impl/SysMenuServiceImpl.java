@@ -2,6 +2,7 @@ package org.bzio.system.service.impl;
 
 import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.*;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.MenuTreeNode;
 import org.bzio.common.security.entity.SysMenu;
@@ -21,6 +22,8 @@ import java.util.Map;
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuService {
 
+    @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     SysMenuMapper sysMenuMapper;
 
@@ -83,7 +86,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
 
         // 判断传入的id是否为空
         if (StringUtil.isEmpty(sysMenu.getMenuId())) {
-            sysMenu.setMenuId(IdUtil.snowflakeId());
+            sysMenu.setMenuId(snowflakeIdGenerator.snowflakeId());
             sysMenu.setCreateBy(username);
             sysMenu.setCreateName(nickname);
             sysMenu.setCreateDate(DateUtil.getNowDate());

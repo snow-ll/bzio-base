@@ -2,6 +2,7 @@ package org.bzio.common.core.util;
 
 import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 
+import javax.annotation.Resource;
 import java.util.UUID;
 
 /**
@@ -10,13 +11,6 @@ import java.util.UUID;
  * @author snow
  */
 public class IdUtil {
-
-    /**
-     * 雪花id
-     */
-    public static String snowflakeId() {
-        return Long.toString(SnowflakeIdGenerator.getInstance(1,1).nextId());
-    }
 
     /**
      * 生成UUID
@@ -30,9 +24,5 @@ public class IdUtil {
      */
     public static String simpleUUID() {
         return randomUUID().replace("-", "");
-    }
-
-    public static void main(String[] args) {
-        System.out.println(snowflakeId());
     }
 }

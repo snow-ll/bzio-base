@@ -1,6 +1,6 @@
 package org.bzio.system.service.impl;
 
-import org.bzio.common.core.util.IdUtil;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.SysRoleMenu;
 import org.bzio.common.security.mapper.SysRoleMenuMapper;
@@ -16,6 +16,8 @@ import java.util.List;
 @Service
 public class SysRoleMenuServiceImpl extends BaseServiceImpl implements SysRoleMenuService {
 
+    @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     SysRoleMenuMapper sysRoleMenuMapper;
 
@@ -39,7 +41,7 @@ public class SysRoleMenuServiceImpl extends BaseServiceImpl implements SysRoleMe
         SysRoleMenu sysRoleMenu = new SysRoleMenu();
         // 添加菜单权限
         for (String menuId : menuIds) {
-            sysRoleMenu.setId(IdUtil.snowflakeId());
+            sysRoleMenu.setId(snowflakeIdGenerator.snowflakeId());
             sysRoleMenu.setRoleId(roleId);
             sysRoleMenu.setMenuId(menuId);
             result += sysRoleMenuMapper.insert(sysRoleMenu);

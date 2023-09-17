@@ -5,6 +5,7 @@ import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.core.config.BaseConstant;
 import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.*;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.common.security.entity.LoginUser;
@@ -38,6 +39,10 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
 
     @Resource
     JwtUtil jwtUtil;
+    @Resource
+    AuthConfig authConfig;
+    @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @Resource
@@ -91,7 +96,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         loginUser.setKey(key);
 
         // redis缓存token
-        stringRedisService.set(AuthConfig.prefix + key, token, AuthConfig.expiration, TimeUnit.MILLISECONDS);
+        stringRedisService.set(authConfig.getPrefix() + key, token, authConfig.getExpiration(), TimeUnit.MILLISECONDS);
 
         // 修改最后登录的信息
         sysUserMapper.updateLoginInfo(ServletUtil.getIpAddr(), loginTime, loginUser.getUserId());
@@ -127,7 +132,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         }
 
         // 新增用户
-        sysUser.setUserId(IdUtil.snowflakeId());
+        sysUser.setUserId(snowflakeIdGenerator.snowflakeId());
         sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
         sysUser.setStatus(0);
         return sysUserMapper.insert(sysUser);
@@ -171,7 +176,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     @Override
     public String getKey(String username) {
         SysUser user = sysUserMapper.queryByUsername(username);
-        return AuthConfig.prefix + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
+        return authConfig.getPrefix() + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
     }
 
     private boolean verifyUser(String username, String password) {

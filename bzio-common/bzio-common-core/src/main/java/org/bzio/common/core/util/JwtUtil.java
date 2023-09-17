@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,9 @@ import java.util.Map;
  */
 @Component
 public class JwtUtil {
+
+    @Resource
+    AuthConfig authConfig;
 
     private final Logger log = LoggerFactory.getLogger(JwtUtil.class);
 
@@ -59,7 +63,7 @@ public class JwtUtil {
     /**
      * 刷新token
      */
-    public String refreshToken(String token, String username) {
+    public String refreshToken(String token) {
         Claims claims = getClaimsFromToken(token);
         claims.setExpiration(DateUtil.getNowDate());
         return generateToken(claims);
@@ -77,7 +81,7 @@ public class JwtUtil {
      * 根据负责生成JWT的token
      */
     private String generateToken(Map<String, Object> claims) {
-        return Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate()).signWith(SignatureAlgorithm.HS512, AuthConfig.secret).compact();
+        return Jwts.builder().setClaims(claims).setExpiration(generateExpirationDate()).signWith(SignatureAlgorithm.HS512, authConfig.getSecret()).compact();
     }
 
     /**
@@ -86,7 +90,7 @@ public class JwtUtil {
     private Claims getClaimsFromToken(String token) {
         Claims claims = null;
         try {
-            claims = Jwts.parser().setSigningKey(AuthConfig.secret).parseClaimsJws(token).getBody();
+            claims = Jwts.parser().setSigningKey(authConfig.getSecret()).parseClaimsJws(token).getBody();
         } catch (Exception e) {
             log.info("JWT格式验证失败:{}", token);
         }
@@ -97,7 +101,7 @@ public class JwtUtil {
      * 生成token的过期时间
      */
     private Date generateExpirationDate() {
-        return DateUtil.getDate(System.currentTimeMillis() + AuthConfig.expiration);
+        return DateUtil.getDate(System.currentTimeMillis() + authConfig.getExpiration());
     }
 
     /**

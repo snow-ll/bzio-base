@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.log.annotation.Log;
 import org.bzio.common.core.enums.BusinessStatus;
 import org.bzio.common.core.util.*;
@@ -32,6 +33,8 @@ public class LogAspect {
 
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
+    @Resource
+    private SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     private SysLogMapper sysLogMapper;
 
@@ -78,7 +81,7 @@ public class LogAspect {
             String requestURI = request.getRequestURI();
 
             SysLog sysLog = new SysLog();
-            sysLog.setLogId(IdUtil.snowflakeId());
+            sysLog.setLogId(snowflakeIdGenerator.snowflakeId());
             sysLog.setTitle(annotationLog.title());
             sysLog.setBusinessType(annotationLog.businessType().ordinal());
             sysLog.setLogDesc(annotationLog.logDesc());

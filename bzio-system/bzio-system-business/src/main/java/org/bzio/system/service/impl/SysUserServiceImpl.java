@@ -3,8 +3,8 @@ package org.bzio.system.service.impl;
 import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.core.util.BeanUtil;
 import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.entity.SysUserDept;
@@ -28,6 +28,8 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
 
     @Resource
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     SysUserMapper sysUserMapper;
     @Resource
@@ -74,7 +76,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
             // 新增用户，密码加密
             sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
             
-            sysUser.setUserId(IdUtil.snowflakeId());
+            sysUser.setUserId(snowflakeIdGenerator.snowflakeId());
             sysUser.setCreateBy(username);
             sysUser.setCreateName(nickname);
             sysUser.setCreateDate(DateUtil.getNowDate());
@@ -96,7 +98,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         if (result == 1) {
             // 用户部门处理
             SysUserDept sysUserDept = new SysUserDept();
-            sysUserDept.setId(IdUtil.snowflakeId());
+            sysUserDept.setId(snowflakeIdGenerator.snowflakeId());
             sysUserDept.setUserId(sysUser.getUserId());
             sysUserDept.setDeptId(sysUser.getDeptId());
             if (StringUtil.isNotNull(sysUser.getDeptId())) {

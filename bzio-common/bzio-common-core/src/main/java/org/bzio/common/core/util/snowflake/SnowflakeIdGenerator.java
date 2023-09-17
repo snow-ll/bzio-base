@@ -1,7 +1,6 @@
 package org.bzio.common.core.util.snowflake;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
 
 /**
  * @author snow
@@ -31,10 +30,7 @@ public class SnowflakeIdGenerator {
     private long sequence = 0L; // 序列号
     private long lastTimestamp = -1L; // 上一次时间戳
 
-    // 存储不同参数对应的实例
-    private static Map<String, SnowflakeIdGenerator> instanceMap = new HashMap<>();
-
-    private SnowflakeIdGenerator(long datacenterId, long machineId) {
+    public SnowflakeIdGenerator(long datacenterId, long machineId) {
         if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
             throw new IllegalArgumentException("Datacenter ID can't be greater than " + MAX_DATACENTER_NUM + " or less than 0");
         }
@@ -45,17 +41,8 @@ public class SnowflakeIdGenerator {
         this.machineId = machineId;
     }
 
-    // 获取实例的方法，传入不同的参数会返回不同的实例
-    public static SnowflakeIdGenerator getInstance(long datacenterId, long machineId) {
-        String key = datacenterId + "-" + machineId;
-        if (!instanceMap.containsKey(key)) {
-            synchronized (SnowflakeIdGenerator.class) {
-                if (!instanceMap.containsKey(key)) {
-                    instanceMap.put(key, new SnowflakeIdGenerator(datacenterId, machineId));
-                }
-            }
-        }
-        return instanceMap.get(key);
+    public String snowflakeId() {
+        return Long.toString(nextId());
     }
 
     public synchronized long nextId() {
@@ -92,17 +79,6 @@ public class SnowflakeIdGenerator {
             timestamp = getCurrentTimestamp();
         }
         return timestamp;
-    }
-
-    public static void main(String[] args) {
-        SnowflakeIdGenerator idGenerator = getInstance(1, 1);
-        SnowflakeIdGenerator idGenerator2 = getInstance(1, 1);
-        SnowflakeIdGenerator idGenerator3 = getInstance(2, 2);
-
-
-        System.out.println(idGenerator.toString());
-        System.out.println(idGenerator2.toString());
-        System.out.println(idGenerator3.toString());
     }
 }
 

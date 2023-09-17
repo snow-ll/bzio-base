@@ -1,6 +1,6 @@
 package org.bzio.system.service.impl;
 
-import org.bzio.common.core.util.IdUtil;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.entity.SysUserRole;
@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRoleService {
 
     @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
+    @Resource
     SysUserRoleMapper sysUserRoleMapper;
 
     /**
@@ -36,7 +38,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
 
         sysUserRoles.stream()
                 .peek(sysUserRole ->
-                    sysUserRole.setId(IdUtil.snowflakeId())
+                    sysUserRole.setId(snowflakeIdGenerator.snowflakeId())
                 ).collect(Collectors.toList());
 
         return sysUserRoleMapper.insertBatch(sysUserRoles);
@@ -52,7 +54,7 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
         SysUserRole sysUserRole = new SysUserRole();
 
         for (String userId: userIds) {
-            sysUserRole.setId(IdUtil.snowflakeId());
+            sysUserRole.setId(snowflakeIdGenerator.snowflakeId());
             sysUserRole.setUserId(userId);
             sysUserRole.setRoleId(sysUserRoleVo.getRoleId());
             result += sysUserRoleMapper.insert(sysUserRole);

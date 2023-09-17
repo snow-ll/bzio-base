@@ -12,22 +12,22 @@ import org.springframework.stereotype.Component;
 @RefreshScope
 public class AuthConfig {
 
-    public static String header;
+    private String header;
 
-    public static String prefix;
+    private String prefix;
 
-    public static String secret;
+    private String secret;
 
-    public static Long expiration;
+    private Long expiration;
 
-    public static String aesKey;
+    private String aesKey;
 
     public String getHeader() {
         return header;
     }
 
     public void setHeader(String header) {
-        AuthConfig.header = header;
+        this.header = header;
     }
 
     public String getPrefix() {
@@ -35,7 +35,7 @@ public class AuthConfig {
     }
 
     public void setPrefix(String prefix) {
-        AuthConfig.prefix = prefix;
+        this.prefix = prefix;
     }
 
     public String getSecret() {
@@ -43,7 +43,7 @@ public class AuthConfig {
     }
 
     public void setSecret(String secret) {
-        AuthConfig.secret = secret;
+        this.secret = secret;
     }
 
     public Long getExpiration() {
@@ -51,7 +51,7 @@ public class AuthConfig {
     }
 
     public void setExpiration(Long expiration) {
-        AuthConfig.expiration = expiration;
+        this.expiration = expiration;
     }
 
     public String getAesKey() {
@@ -59,6 +59,6 @@ public class AuthConfig {
     }
 
     public void setAesKey(String aesKey) {
-        AuthConfig.aesKey = aesKey;
+        this.aesKey = aesKey;
     }
 }

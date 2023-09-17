@@ -2,6 +2,7 @@ package org.bzio.system.service.impl;
 
 import org.bzio.common.core.exception.system.dept.DeptException;
 import org.bzio.common.core.util.*;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.DeptTreeNode;
 import org.bzio.common.security.entity.SysDept;
@@ -20,6 +21,8 @@ import java.util.Map;
 @Service
 public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptService {
 
+    @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     SysDeptMapper sysDeptMapper;
 
@@ -76,7 +79,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysDept.getDeptId())) {
-            sysDept.setDeptId(IdUtil.snowflakeId());
+            sysDept.setDeptId(snowflakeIdGenerator.snowflakeId());
             sysDept.setCreateBy(username);
             sysDept.setCreateName(nickname);
             sysDept.setCreateDate(DateUtil.getNowDate());

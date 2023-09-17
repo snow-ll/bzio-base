@@ -36,6 +36,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Resource
     private JwtUtil jwtUtil;
+    @Resource AuthConfig authConfig;
     @Resource
     private UserDetailsService userDetailsService;
     @Resource
@@ -43,9 +44,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader(AuthConfig.header);
+        String authHeader = request.getHeader(authConfig.getHeader());
         if (StringUtil.isNotEmpty(authHeader)) {
-            String authToken = stringRedisService.get(AuthConfig.prefix + AesUtil.decrypt(authHeader, AuthConfig.aesKey));
+            String authToken = stringRedisService.get(authConfig.getPrefix() + AesUtil.decrypt(authHeader, authConfig.getAesKey()));
             String username = jwtUtil.getUsernameFromToken(authToken);
             if (StringUtil.isNotEmpty(username) && jwtUtil.validateToken(authToken, username)) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);

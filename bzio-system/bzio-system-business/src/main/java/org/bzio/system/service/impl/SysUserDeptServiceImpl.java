@@ -1,6 +1,6 @@
 package org.bzio.system.service.impl;
 
-import org.bzio.common.core.util.IdUtil;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.entity.SysUserDept;
 import org.bzio.common.security.mapper.SysUserDeptMapper;
@@ -16,6 +16,8 @@ import javax.annotation.Resource;
 public class SysUserDeptServiceImpl extends BaseServiceImpl implements SysUserDeptService {
 
     @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
+    @Resource
     SysUserDeptMapper sysUserDeptMapper;
 
     /**
@@ -23,7 +25,7 @@ public class SysUserDeptServiceImpl extends BaseServiceImpl implements SysUserDe
      */
     @Override
     public int saveUserDept(SysUserDept sysUserDept) {
-        sysUserDept.setId(IdUtil.snowflakeId());
+        sysUserDept.setId(snowflakeIdGenerator.snowflakeId());
         return sysUserDeptMapper.insert(sysUserDept);
     }
 }

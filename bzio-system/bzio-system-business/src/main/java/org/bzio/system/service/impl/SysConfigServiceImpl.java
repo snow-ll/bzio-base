@@ -3,8 +3,8 @@ package org.bzio.system.service.impl;
 import org.bzio.common.core.exception.BaseException;
 import org.bzio.common.core.util.BeanUtil;
 import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.entity.SysConfig;
@@ -21,6 +21,8 @@ import java.util.List;
 @Service
 public class SysConfigServiceImpl extends BaseServiceImpl implements SysConfigService {
 
+    @Resource
+    private SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     SysConfigMapper sysConfigMapper;
 
@@ -41,7 +43,7 @@ public class SysConfigServiceImpl extends BaseServiceImpl implements SysConfigSe
         String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysConfig.getConfigId())) {
-            sysConfig.setConfigId(IdUtil.snowflakeId());
+            sysConfig.setConfigId(snowflakeIdGenerator.snowflakeId());
             sysConfig.setCreateBy(username);
             sysConfig.setCreateName(nickname);
             sysConfig.setCreateDate(DateUtil.getNowDate());

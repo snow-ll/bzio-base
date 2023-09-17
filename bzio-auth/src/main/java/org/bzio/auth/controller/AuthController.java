@@ -1,5 +1,6 @@
 package org.bzio.auth.controller;
 
+import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.core.exception.system.user.UserException;
 import org.bzio.common.log.annotation.Log;
 import org.bzio.auth.service.AuthService;
@@ -10,7 +11,6 @@ import org.bzio.common.core.util.DateUtil;
 import org.bzio.common.core.web.controller.BaseController;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.util.JwtUtil;
-import org.bzio.common.core.config.AuthConfig;
 import org.bzio.common.redis.service.StringRedisService;
 import org.bzio.common.security.entity.LoginUser;
 import org.bzio.common.security.entity.SysUser;
@@ -36,6 +36,8 @@ public class AuthController extends BaseController {
     @Resource
     JwtUtil jwtUtil;
     @Resource
+    AuthConfig authConfig;
+    @Resource
     AuthService authService;
     @Resource
     StringRedisService stringRedisService;
@@ -53,15 +55,15 @@ public class AuthController extends BaseController {
             user = authService.login(sysUser);
             key = user.getKey();
         } catch (UserException e) {
-            stringRedisService.delete(AuthConfig.prefix + key);
+            stringRedisService.delete(authConfig.getPrefix() + key);
             log.error("登录失败，异常信息：", e);
             return AjaxResult.error(e.getMessage());
         } catch (Exception e) {
-            stringRedisService.delete(AuthConfig.prefix + key);
+            stringRedisService.delete(authConfig.getPrefix() + key);
             log.error("登录失败，异常信息：", e);
             return AjaxResult.error("登录失败！");
         }
-        return AjaxResult.success("登录成功！", AesUtil.encrypt(key, AuthConfig.aesKey));
+        return AjaxResult.success("登录成功！", AesUtil.encrypt(key, authConfig.getAesKey()));
     }
 
     /**
@@ -96,9 +98,9 @@ public class AuthController extends BaseController {
     @Log(title = "注销用户", businessType = BusinessType.AUTH)
     @PostMapping("/logOut")
     public AjaxResult logOut(HttpServletRequest request) {
-        String key = request.getHeader(AuthConfig.header);
+        String key = request.getHeader(authConfig.getHeader());
         // 清楚缓存中的token
-        boolean f = stringRedisService.delete(AuthConfig.prefix + AesUtil.decrypt(key, AuthConfig.aesKey));
+        boolean f = stringRedisService.delete(authConfig.getPrefix() + AesUtil.decrypt(key, authConfig.getAesKey()));
 
         if (f) {
             return AjaxResult.success("登出成功！");
@@ -148,9 +150,9 @@ public class AuthController extends BaseController {
             return AjaxResult.error("token在有效期内，无需刷新");
 
          // 生成新的token
-        String newToken = jwtUtil.refreshToken(token, username);
+        String newToken = jwtUtil.refreshToken(token);
         // 新的token存入redis
-        stringRedisService.set(key, newToken, AuthConfig.expiration, TimeUnit.MILLISECONDS);
+        stringRedisService.set(key, newToken, authConfig.getExpiration(), TimeUnit.MILLISECONDS);
 
         return AjaxResult.success("刷新成功");
     }
@@ -158,7 +160,6 @@ public class AuthController extends BaseController {
     /**
      * 获取登录用户信息
      */
-    @Log(title = "获取登录用户信息", businessType = BusinessType.AUTH)
     @GetMapping("/getInfo")
     public AjaxResult getInfo() {
         return AjaxResult.success(authService.getInfo(AuthUtil.getUserId()));
@@ -167,7 +168,6 @@ public class AuthController extends BaseController {
     /**
      * 获取路由信息
      */
-    @Log(title = "获取路由信息", businessType = BusinessType.AUTH)
     @GetMapping("/getRouter")
     public AjaxResult getRouter() {
         return AjaxResult.success(authService.getRouter());

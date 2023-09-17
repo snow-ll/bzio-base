@@ -3,8 +3,8 @@ package org.bzio.system.service.impl;
 import org.bzio.common.core.exception.BaseException;
 import org.bzio.common.core.util.BeanUtil;
 import org.bzio.common.core.util.DateUtil;
-import org.bzio.common.core.util.IdUtil;
 import org.bzio.common.core.util.StringUtil;
+import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.core.web.service.BaseServiceImpl;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.entity.SysDictType;
@@ -23,6 +23,8 @@ import java.util.List;
 @Service
 public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTypeService {
 
+    @Resource
+    SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
     SysDictTypeMapper sysDictTypeMapper;
     @Resource
@@ -45,7 +47,7 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
         String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysDictType.getDictId())) {
-            sysDictType.setDictId(IdUtil.snowflakeId());
+            sysDictType.setDictId(snowflakeIdGenerator.snowflakeId());
             sysDictType.setCreateBy(username);
             sysDictType.setCreateName(nickname);
             sysDictType.setCreateDate(DateUtil.getNowDate());
