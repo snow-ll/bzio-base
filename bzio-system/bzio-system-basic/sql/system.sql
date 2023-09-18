@@ -54,7 +54,7 @@ create table bzio_base.sys_dept
 (
     dept_id     bigint not null primary key,
     dept_name   varchar(100) null,
-    parent_id   varchar(50)  null,
+    parent_id   bigint       null,
     parent_name varchar(100) null,
     ancestors   varchar(500) null,
     order_num   int          null,
@@ -79,7 +79,7 @@ create table bzio_base.sys_menu
 (
     menu_id     bigint not null primary key,
     menu_name   varchar(100) null,
-    parent_id   varchar(50)  null,
+    parent_id   bigint       null,
     order_num   int          null,
     path        varchar(50)  null,
     component   varchar(100) null,
