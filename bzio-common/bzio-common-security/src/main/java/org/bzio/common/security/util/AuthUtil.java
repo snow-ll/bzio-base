@@ -15,16 +15,16 @@ public class AuthUtil {
         return getLoginUser().getUsername();
     }
 
-    public static String getKey() {
-        return getLoginUser().getKey();
-    }
-
     public static String getNickname() {
         return getLoginUser().getNickname();
     }
     
     public static String getUserId() {
         return getLoginUser().getUserId();
+    }
+
+    public static String getKey() {
+        return getLoginUser().getKey();
     }
 
     private static LoginUser getLoginUser() {
