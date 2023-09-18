@@ -15,6 +15,10 @@ public class AuthUtil {
         return getLoginUser().getUsername();
     }
 
+    public static String getKey() {
+        return getLoginUser().getKey();
+    }
+
     public static String getNickname() {
         return getLoginUser().getNickname();
     }
