@@ -11,9 +11,9 @@ import org.bzio.common.core.util.snowflake.SnowflakeIdGenerator;
 import org.bzio.common.log.annotation.Log;
 import org.bzio.common.core.enums.BusinessStatus;
 import org.bzio.common.core.util.*;
-import org.bzio.common.security.entity.SysLog;
-import org.bzio.common.security.mapper.SysLogMapper;
 import org.bzio.common.security.util.AuthUtil;
+import org.bzio.system.entity.SysLog;
+import org.bzio.system.remote.RemoteLogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -36,7 +36,7 @@ public class LogAspect {
     @Resource
     private SnowflakeIdGenerator snowflakeIdGenerator;
     @Resource
-    private SysLogMapper sysLogMapper;
+    private RemoteLogService remoteLogService;
 
     /**
      * 切点
@@ -104,7 +104,7 @@ public class LogAspect {
                 sysLog.setErrorMsg(e.getMessage());
                 sysLog.setStatus(BusinessStatus.FAIL.ordinal());
             }
-            sysLogMapper.insert(sysLog);
+            remoteLogService.saveLog(sysLog);
         }
     }
 }

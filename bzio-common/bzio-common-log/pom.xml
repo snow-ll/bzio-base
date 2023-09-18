@@ -29,6 +29,11 @@
             <groupId>org.bzio</groupId>
             <artifactId>bzio-common-security</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.bzio</groupId>
+            <artifactId>bzio-system-basic</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

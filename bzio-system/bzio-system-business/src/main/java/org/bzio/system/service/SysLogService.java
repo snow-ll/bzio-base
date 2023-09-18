@@ -1,6 +1,6 @@
 package org.bzio.system.service;
 
-import org.bzio.common.security.entity.SysLog;
+import org.bzio.system.entity.SysLog;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import java.util.List;
 public interface SysLogService {
 
     List<SysLog> queryAll(SysLog sySLog);
+
+    int saveLog(SysLog sysLog);
 
     SysLog queryInfo(String logId);
 }

@@ -1,4 +1,4 @@
-package org.bzio.common.security.entity;
+package org.bzio.system.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;

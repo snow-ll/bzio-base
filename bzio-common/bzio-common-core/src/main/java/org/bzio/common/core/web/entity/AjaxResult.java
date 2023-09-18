@@ -5,13 +5,13 @@ package org.bzio.common.core.web.entity;
  *
  * @author snow
  */
-public class AjaxResult {
+public class AjaxResult<T> {
 
     private int code;
 
     private String msg;
 
-    private Object data;
+    private T data;
 
     public AjaxResult() {
 
@@ -22,7 +22,7 @@ public class AjaxResult {
         this.msg = msg;
     }
 
-    public AjaxResult(int code, String msg, Object data) {
+    public AjaxResult(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -95,7 +95,7 @@ public class AjaxResult {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 

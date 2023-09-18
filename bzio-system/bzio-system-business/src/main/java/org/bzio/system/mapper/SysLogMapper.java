@@ -1,7 +1,7 @@
-package org.bzio.common.security.mapper;
+package org.bzio.system.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.bzio.common.security.entity.SysLog;
+import org.bzio.system.entity.SysLog;
 
 import java.util.List;
 
