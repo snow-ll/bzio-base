@@ -7,7 +7,7 @@ import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
 import org.bzio.common.security.entity.SysUser;
 import org.bzio.common.security.qo.SysUserQo;
-import org.bzio.common.security.vo.SysUserVo;
+import org.bzio.common.security.bo.SysUserBo;
 import org.bzio.system.service.SysUserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +45,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("hasAnyAuthority('sys:user:search')")
     public TableData list(SysUserQo sysUser) {
         startPage();
-        List<SysUserVo> users = sysUserService.queryAll(sysUser);
+        List<SysUserBo> users = sysUserService.queryAll(sysUser);
         return getTableData(users);
     }
 

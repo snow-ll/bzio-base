@@ -12,7 +12,7 @@ import org.bzio.common.security.mapper.SysUserDeptMapper;
 import org.bzio.common.security.mapper.SysUserMapper;
 import org.bzio.common.security.qo.SysUserQo;
 import org.bzio.common.security.util.AuthUtil;
-import org.bzio.common.security.vo.SysUserVo;
+import org.bzio.common.security.bo.SysUserBo;
 import org.bzio.system.service.SysUserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
      * 根据条件查询用户列表
      */
     @Override
-    public List<SysUserVo> queryAll(SysUserQo sysUser) {
+    public List<SysUserBo> queryAll(SysUserQo sysUser) {
         return sysUserMapper.queryAll(sysUser);
     }
 

@@ -1,4 +1,4 @@
-package org.bzio.common.security.vo;
+package org.bzio.common.security.bo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,9 +7,8 @@ import java.util.Date;
 
 /**
  * @author snow
- * @since 2023/5/26 17:46
  */
-public class SysUserVo {
+public class SysUserBo {
 
     /**
      * 用户id

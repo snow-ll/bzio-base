@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * @author snow
- * @since 2023/2/28 10:46
  */
 @Mapper
 public interface SysConfigMapper {

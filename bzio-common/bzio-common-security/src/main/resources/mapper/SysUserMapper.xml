@@ -49,7 +49,7 @@
     </select>
 
     <!--查询指定行数据-->
-    <select id="queryAll" resultType="org.bzio.common.security.vo.SysUserVo">
+    <select id="queryAll" resultType="org.bzio.common.security.bo.SysUserBo">
         select
         u.user_id "userId", u.username, u.password, u.nickname, u.birthday, u.sex, 
         u.certificate_type "certificateType", u.certificate_num "certificateNum",

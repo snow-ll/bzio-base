@@ -5,7 +5,6 @@ import org.bzio.common.core.web.entity.AjaxResult;
 
 /**
  * @author snow
- * @since 2023/3/8 10:07
  */
 public interface ValidateCodeService {
 
