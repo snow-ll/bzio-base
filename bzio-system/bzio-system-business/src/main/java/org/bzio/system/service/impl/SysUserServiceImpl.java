@@ -66,7 +66,6 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         String username = AuthUtil.getUsername();
         String nickname = AuthUtil.getNickname();
 
-        SysUser newUser = sysUserMapper.queryByUserId(sysUser.getUserId());
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysUser.getUserId())) {
@@ -86,6 +85,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
             sysUser.setDelFlag(0);
             result = sysUserMapper.insert(sysUser);
         }else {
+            SysUser newUser = sysUserMapper.queryByUserId(sysUser.getUserId());
             if (newUser == null) throw new UserException("未查询到部门信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysUser, newUser);
