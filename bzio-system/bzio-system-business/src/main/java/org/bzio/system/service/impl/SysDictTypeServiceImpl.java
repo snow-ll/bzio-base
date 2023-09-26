@@ -46,7 +46,11 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
         String username = AuthUtil.getUsername();
         String nickname = AuthUtil.getNickname();
 
+        SysDictType newDictType = sysDictTypeMapper.queryByType(sysDictType.getDictType());
         if (StringUtil.isEmpty(sysDictType.getDictId())) {
+            if (StringUtil.isNotNull(newDictType))
+                throw new BaseException("当前字典类型已经存在！");
+
             sysDictType.setDictId(snowflakeIdGenerator.snowflakeId());
             sysDictType.setCreateBy(username);
             sysDictType.setCreateName(nickname);
@@ -56,7 +60,6 @@ public class SysDictTypeServiceImpl extends BaseServiceImpl implements SysDictTy
             sysDictType.setUpdateDate(DateUtil.getNowDate());
             return sysDictTypeMapper.insert(sysDictType);
         } else {
-            SysDictType newDictType = sysDictTypeMapper.queryById(sysDictType.getDictId());
             if (newDictType == null) throw new BaseException("未查询到字典数据信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysDictType, newDictType);

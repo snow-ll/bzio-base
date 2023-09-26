@@ -30,6 +30,13 @@
         where dict_code = #{dictCode}
     </select>
 
+    <!--查询单个-->
+    <select id="queryByValue" resultMap="SysDictDataMap">
+        <include refid="selectDictData"/>
+        where dict_value = #{dictValue} and dict_type = #{dictType}
+    </select>
+
+
     <!--查询指定行数据-->
     <select id="queryALl" resultMap="SysDictDataMap">
         <include refid="selectDictData"/>

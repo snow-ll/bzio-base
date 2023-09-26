@@ -58,8 +58,11 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
         String nickname = AuthUtil.getNickname();
 
         if (StringUtil.isEmpty(sysDictData.getDictType())) throw new BaseException("字典数据类型不能为空！");
+        SysDictData newData = sysDictDataMapper.queryByValue(sysDictData.getDictType(), sysDictData.getDictValue());
 
         if (StringUtil.isEmpty(sysDictData.getDictCode())) {
+            if (StringUtil.isNotNull(newData)) throw new BaseException("当前字典键值已经存在！");
+
             sysDictData.setDictCode(snowflakeIdGenerator.snowflakeId());
             sysDictData.setCreateBy(username);
             sysDictData.setCreateName(nickname);
@@ -69,7 +72,6 @@ public class SysDictDataServiceImpl extends BaseServiceImpl implements SysDictDa
             sysDictData.setUpdateDate(DateUtil.getNowDate());
             return sysDictDataMapper.insert(sysDictData);
         } else {
-            SysDictData newData = sysDictDataMapper.queryById(sysDictData.getDictCode());
             if (newData == null) throw new BaseException("未查询到字典数据信息！");
 
             BeanUtil.copyPropertiesIgnoreNull(sysDictData, newData);

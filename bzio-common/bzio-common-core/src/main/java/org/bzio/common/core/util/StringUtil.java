@@ -90,7 +90,14 @@ public class StringUtil {
      * 若字符串为null返回空串，不为null返回源字符串
      */
     public static String convertNullToEmptyStr(String src) {
-        return src == null ? "" : src;
+        return convertSpeValueToEmptyStr(src, "");
+    }
+
+    /**
+     * 若字符串为null返回自定义值，不为null返回源字符串
+     */
+    public static String convertSpeValueToEmptyStr(String src, String tar) {
+        return isNull(src) ? tar : src;
     }
 
     /**

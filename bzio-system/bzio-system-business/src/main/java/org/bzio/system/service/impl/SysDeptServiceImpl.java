@@ -10,6 +10,7 @@ import org.bzio.common.security.mapper.SysDeptMapper;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.service.SysDeptService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -103,6 +104,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      * 删除部门
      */
     @Override
+    @Transactional
     public int delBatch(String[] deptIds) {
         for (String deptId: deptIds) {
             deleteChild(deptId);
@@ -115,6 +117,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
      * @param parentId 当前父级id
      * @return
      */
+    @Transactional
     public void deleteChild(String parentId) {
         // 查询当前节点所有子节点
         List<Map> depts = sysDeptMapper.queryChild(parentId);

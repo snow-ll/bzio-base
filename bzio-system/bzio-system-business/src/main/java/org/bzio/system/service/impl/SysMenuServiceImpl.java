@@ -11,6 +11,7 @@ import org.bzio.common.security.qo.SysMenuQo;
 import org.bzio.common.security.util.AuthUtil;
 import org.bzio.system.service.SysMenuService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -110,6 +111,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * 批量删除菜单
      */
     @Override
+    @Transactional
     public int delBatch(String[] menuIds) {
         for (String menuId: menuIds) {
             deleteChild(menuId);
@@ -122,6 +124,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * @param parentId 当前父级id
      * @return
      */
+    @Transactional
     public void deleteChild(String parentId) {
         List<Map> menus = sysMenuMapper.queryChild(parentId);
 

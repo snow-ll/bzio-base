@@ -1,6 +1,7 @@
 package org.bzio.system.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.bzio.system.entity.SysDictData;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Map;
 public interface SysDictDataMapper {
 
     SysDictData queryById(String dictCode);
+
+    SysDictData queryByValue(@Param("dictType") String dictType, @Param("dictValue") String dictValue);
 
     List<SysDictData> queryALl(SysDictData sysDictData);
 
