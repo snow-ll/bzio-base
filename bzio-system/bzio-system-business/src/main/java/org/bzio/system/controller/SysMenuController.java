@@ -78,7 +78,7 @@ public class SysMenuController extends BaseController {
     /**
      * 保存菜单
      */
-    @Log(title = "新增或修改菜单", businessType = BusinessType.INSERT)
+    @Log(title = "新增或修改菜单", businessType = BusinessType.EDIT)
     @PostMapping("save")
     @PreAuthorize("hasAnyAuthority('sys:menu:add', 'sys:menu:edit')")
     public AjaxResult save(@RequestBody SysMenu sysMenu) {

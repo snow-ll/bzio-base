@@ -31,7 +31,7 @@ public class SysUserRoleController extends BaseController {
     /**
      * 用户添加权限
      */
-    @Log(title = "用户添加权限", businessType = BusinessType.INSERT)
+    @Log(title = "用户添加权限", businessType = BusinessType.EDIT)
     @PostMapping("/save")
     @PreAuthorize("hasAnyAuthority('sys:role:auth')")
     public AjaxResult save(@RequestBody List<SysUserRole> sysUserRoles) {
@@ -42,7 +42,7 @@ public class SysUserRoleController extends BaseController {
     /**
      * 用户授权
      */
-    @Log(title = "用户授权", businessType = BusinessType.INSERT)
+    @Log(title = "用户授权", businessType = BusinessType.EDIT)
     @PostMapping("/authUser")
     @PreAuthorize("hasAnyAuthority('sys:role:auth')")
     public AjaxResult authUser(@RequestBody SysUserRoleVo sysUserRoleVo) {

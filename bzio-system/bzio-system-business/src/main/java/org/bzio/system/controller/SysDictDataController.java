@@ -59,7 +59,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 保存系统字典数据
      */
-    @Log(title = "新增或修改系统字典数据", businessType = BusinessType.INSERT)
+    @Log(title = "新增或修改系统字典数据", businessType = BusinessType.EDIT)
     @PostMapping("save")
     @PreAuthorize("hasAnyAuthority('sys:dict:add', 'sys:dict:edit')")
     public AjaxResult save(@RequestBody SysDictData sysDictData) {

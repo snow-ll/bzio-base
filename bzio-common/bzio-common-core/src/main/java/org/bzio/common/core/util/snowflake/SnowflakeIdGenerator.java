@@ -1,7 +1,5 @@
 package org.bzio.common.core.util.snowflake;
 
-import javax.annotation.Resource;
-
 /**
  * @author snow
  */

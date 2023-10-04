@@ -15,7 +15,7 @@ public class AesUtil {
 
     private static final Logger log = LoggerFactory.getLogger(AesUtil.class);
 
-    private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
+    private static final String ALGORITHM_STR = "AES/ECB/PKCS5Padding";
     private static final String AES = "AES";
 
     public static String encrypt(String content, String key) {
@@ -25,7 +25,7 @@ public class AesUtil {
             SecretKeySpec secretKey = new SecretKeySpec(raw, AES);
             // 根据指定算法ALGORITHM自成密码器
             // "算法/模式/补码方式
-            Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
+            Cipher cipher = Cipher.getInstance(ALGORITHM_STR);
             // 初始化密码器
             // 第一个参数为加密(ENCRYPT_MODE)或者解密(DECRYPT_MODE)操作
             // 第二个参数为生成的AES密钥
@@ -50,7 +50,7 @@ public class AesUtil {
             // 根据密码生成AES密钥
             SecretKeySpec secretKey = new SecretKeySpec(raw, AES);
             // 根据指定算法ALGORITHM自成密码器
-            Cipher cipher = Cipher.getInstance(ALGORITHMSTR);
+            Cipher cipher = Cipher.getInstance(ALGORITHM_STR);
             // 初始化密码器，第一个参数为加密(ENCRYPT_MODE)或者解密(DECRYPT_MODE)操作，第二个参数为生成的AES密钥
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             Base64.Decoder base64 = Base64.getDecoder();

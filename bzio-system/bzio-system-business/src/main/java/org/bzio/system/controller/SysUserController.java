@@ -52,7 +52,7 @@ public class SysUserController extends BaseController {
     /**
      * 保存用户
      */
-    @Log(title = "新增或修改用户", businessType = BusinessType.INSERT)
+    @Log(title = "新增或修改用户", businessType = BusinessType.EDIT)
     @PostMapping("save")
     @PreAuthorize("hasAnyAuthority('sys:user:add', 'sys:user:edit')")
     public AjaxResult save(@RequestBody SysUser sysUser) {

@@ -1,7 +1,7 @@
 -- 基于MYSQL数据库
 
 -- 用户表
-create table bzio_base.sys_user
+create table sys_user
 (
     user_id                 bigint not null primary key comment '用户id',
     username                varchar(50)  null comment '用户名',
@@ -30,7 +30,7 @@ create table bzio_base.sys_user
 );
 
 -- 角色表
-create table bzio_base.sys_role
+create table sys_role
 (
     role_id             bigint not null primary key,
     role_name           varchar(100) null,
@@ -50,7 +50,7 @@ create table bzio_base.sys_role
 );
 
 -- 部门表
-create table bzio_base.sys_dept
+create table sys_dept
 (
     dept_id     bigint not null primary key,
     dept_name   varchar(100) null,
@@ -75,7 +75,7 @@ create table bzio_base.sys_dept
 );
 
 -- 菜单表
-create table bzio_base.sys_menu
+create table sys_menu
 (
     menu_id     bigint not null primary key,
     menu_name   varchar(100) null,
@@ -100,21 +100,21 @@ create table bzio_base.sys_menu
 );
 
 -- 关联表
-create table bzio_base.sys_user_role
+create table sys_user_role
 (
     id      bigint not null primary key,
     user_id bigint null,
     role_id bigint null
 );
 
-create table bzio_base.sys_role_menu
+create table sys_role_menu
 (
     id      bigint not null primary key,
     role_id bigint null,
     menu_id bigint null
 );
 
-create table bzio_base.sys_user_dept
+create table sys_user_dept
 (
     id      bigint not null primary key,
     user_id bigint null,
@@ -122,7 +122,7 @@ create table bzio_base.sys_user_dept
 );
 
 -- 系统日志表
-create table bzio_base.sys_log
+create table sys_log
 (
     log_id              bigint not null primary key comment '日志id',
     title               varchar(50)  null comment '日志标题',
@@ -143,7 +143,7 @@ create table bzio_base.sys_log
 
 
 -- 系统字典表（类型）
-create table bzio_base.sys_dict_type
+create table sys_dict_type
 (
     dict_id     bigint not null primary key,
     dict_name   varchar(50)  null,
@@ -160,7 +160,7 @@ create table bzio_base.sys_dict_type
 );
 
 -- 系统字典表（数据）
-create table bzio_base.sys_dict_data
+create table sys_dict_data
 (
     dict_code   bigint not null primary key,
     dict_label  varchar(50)  null,
@@ -178,7 +178,7 @@ create table bzio_base.sys_dict_data
 );
 
 -- 系统配置信息表
-create table bzio_base.sys_config
+create table sys_config
 (
     config_id       bigint not null primary key,
     config_name     varchar(50)  null,

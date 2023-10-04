@@ -7,8 +7,6 @@ import org.bzio.common.core.web.controller.BaseController;
 import org.bzio.common.core.web.entity.AjaxResult;
 import org.bzio.common.core.web.entity.TableData;
 import org.bzio.common.security.entity.SysRole;
-import org.bzio.common.security.entity.SysRoleMenu;
-import org.bzio.common.security.mapper.SysRoleMenuMapper;
 import org.bzio.system.service.SysRoleMenuService;
 import org.bzio.system.service.SysRoleService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -57,7 +55,7 @@ public class SysRoleController extends BaseController {
     /**
      * 保存角色
      */
-    @Log(title = "新增或修改角色", businessType = BusinessType.INSERT)
+    @Log(title = "新增或修改角色", businessType = BusinessType.EDIT)
     @PostMapping("save")
     @PreAuthorize("hasAnyAuthority('sys:role:add', 'sys:role:edit')")
     public AjaxResult save(@RequestBody SysRole sysRole) {

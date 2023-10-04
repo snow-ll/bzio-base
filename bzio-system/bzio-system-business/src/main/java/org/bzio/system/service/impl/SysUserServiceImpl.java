@@ -69,12 +69,12 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         // 判断传入的id是否为空
         // 为空新增用户
         if (StringUtil.isEmpty(sysUser.getUserId())) {
-            if (StringUtil.isNotNull(sysUserMapper.queryByUsername(sysUser.getUsername()))) 
+            if (StringUtil.isNotNull(sysUserMapper.queryByUsername(sysUser.getUsername())))
                 throw new UserException("用户名不能重复！");
 
             // 新增用户，密码加密
             sysUser.setPassword(bCryptPasswordEncoder.encode(sysUser.getPassword()));
-            
+
             sysUser.setUserId(snowflakeIdGenerator.snowflakeId());
             sysUser.setCreateBy(username);
             sysUser.setCreateName(nickname);
@@ -94,7 +94,7 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
             newUser.setUpdateDate(DateUtil.getNowDate());
             result = sysUserMapper.update(newUser);
         }
-        
+
         if (result == 1) {
             // 用户部门处理
             SysUserDept sysUserDept = new SysUserDept();

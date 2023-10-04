@@ -50,7 +50,7 @@ public class SysConfigController extends BaseController {
     /**
      * 保存系统参数
      */
-    @Log(title = "新增或修改系统参数", businessType = BusinessType.INSERT)
+    @Log(title = "新增或修改系统参数", businessType = BusinessType.EDIT)
     @PostMapping("save")
     @PreAuthorize("hasAnyAuthority('sys:config:add', 'sys:config:edit')")
     public AjaxResult save(@RequestBody SysConfig sysConfig) {

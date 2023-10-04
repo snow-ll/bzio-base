@@ -11,19 +11,14 @@ public enum BusinessType {
     OTHER,
 
     /**
-     * 新增
+     * 编辑
      */
-    INSERT,
+    EDIT,
 
     /**
      * 删除
      */
     DELETE,
-
-    /**
-     * 修改
-     */
-    UPDATE,
 
     /**
      * 查询

@@ -26,7 +26,7 @@ public class SysUserDeptController {
     /**
      * 用户添加到部门
      */
-    @Log(title = "用户添加部门", businessType = BusinessType.INSERT)
+    @Log(title = "用户添加部门", businessType = BusinessType.EDIT)
     @PostMapping("/save")
     public AjaxResult save(SysUserDept sysUserDept) {
         return AjaxResult.toAjax(sysUserDeptService.saveUserDept(sysUserDept));

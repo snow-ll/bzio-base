@@ -68,4 +68,35 @@ public class BeanUtil extends BeanUtils {
         }
         return dataMap;
     }
+
+    /**
+     * 对比两个对象属性是否一致
+     * @param obj1
+     * @param obj2
+     * @return
+     * @throws IllegalAccessException
+     */
+    public static boolean compareObjects(Object obj1, Object obj2) throws IllegalAccessException {
+        if (obj1 == obj2) {
+            return true;
+        }
+        if (obj1 == null || obj2 == null || obj1.getClass() != obj2.getClass()) {
+            return false;
+        }
+
+        Class<?> clazz = obj1.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            Object value1 = field.get(obj1);
+            Object value2 = field.get(obj2);
+
+            if (value1 == null && value2 != null) {
+                return false;
+            } else if (value1 != null && !value1.equals(value2)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

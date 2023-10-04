@@ -15,7 +15,7 @@ public interface SysDictDataMapper {
 
     SysDictData queryById(String dictCode);
 
-    SysDictData queryByValue(@Param("dictType") String dictType, @Param("dictValue") String dictValue);
+    SysDictData queryByValue(@Param("dictType") String dictType,@Param("dictValue") String dictValue);
 
     List<SysDictData> queryALl(SysDictData sysDictData);
 

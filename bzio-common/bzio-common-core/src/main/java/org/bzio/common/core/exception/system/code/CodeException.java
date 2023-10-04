@@ -5,7 +5,7 @@ import org.bzio.common.core.exception.BaseException;
 /**
  * @author snow
  */
-public class CodeException  extends BaseException {
+public class CodeException extends BaseException {
 
     public CodeException(String message) {
         super(message);

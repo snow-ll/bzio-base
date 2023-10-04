@@ -60,7 +60,7 @@ public class SysDeptController extends BaseController {
     /**
      * 保存部门
      */
-    @Log(title = "新增或修改部门", businessType = BusinessType.INSERT)
+    @Log(title = "新增或修改部门", businessType = BusinessType.EDIT)
     @PostMapping("save")
     @PreAuthorize("hasAnyAuthority('sys:dept:add', 'sys:dept:edit')")
     public AjaxResult save(@RequestBody SysDept sysDept) {
