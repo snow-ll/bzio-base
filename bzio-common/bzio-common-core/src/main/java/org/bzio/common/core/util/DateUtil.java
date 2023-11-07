@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -138,6 +139,30 @@ public class DateUtil {
             months = month2 - month1 - 1;
         }
         return (year2 - year1) * MONTHS_IN_A_YEAR + months;
+    }
+
+    /**
+     * 获取两个时间差之间所有的日期
+     * @return
+     */
+    public static List<String> getDateBetween(Date startDate, Date endDate, int type, String pattern) {
+        List<String> dateList = new ArrayList<>();
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(startDate);
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(endDate);
+
+        while (startCalendar.before(endCalendar) || startCalendar.equals(endCalendar)) {
+            dateList.add(format(startCalendar.getTime(), pattern));
+            startCalendar.add(type, 1);
+        }
+
+        return dateList;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getDateBetween(parse("2023-09-01", BaseConstant.YYYY_MM_DD), parse("2025-12-31", BaseConstant.YYYY_MM_DD),
+                Calendar.MONTH, BaseConstant.YYYY_MM));
     }
 
     /**

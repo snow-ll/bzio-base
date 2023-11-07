@@ -24,7 +24,7 @@ public class JwtUtil {
     @Resource
     AuthConfig authConfig;
 
-    private final Logger log = LoggerFactory.getLogger(JwtUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
 
     private final String USERNAME_KEY = "user_name";
 

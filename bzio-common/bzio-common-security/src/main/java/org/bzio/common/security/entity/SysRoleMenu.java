@@ -1,5 +1,7 @@
 package org.bzio.common.security.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  *
  * @author snow
  */
+@Data
 public class SysRoleMenu implements Serializable {
 
     private static final long serialVersionUID = -8753494836637008114L;
@@ -16,28 +19,4 @@ public class SysRoleMenu implements Serializable {
     private String roleId;
 
     private String menuId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
 }

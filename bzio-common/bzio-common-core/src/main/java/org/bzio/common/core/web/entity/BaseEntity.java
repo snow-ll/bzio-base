@@ -1,6 +1,7 @@
 package org.bzio.common.core.web.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Date;
  *
  * @author snow
  */
+@Data
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,71 +49,4 @@ public class BaseEntity implements Serializable {
      * 备注
      */
     private String remark;
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public String getCreateName() {
-        return createName;
-    }
-
-    public void setCreateName(String createName) {
-        this.createName = createName;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public String getUpdateName() {
-        return updateName;
-    }
-
-    public void setUpdateName(String updateName) {
-        this.updateName = updateName;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return  ", createBy='" + createBy + '\'' +
-                ", createName='" + createName + '\'' +
-                ", createDate=" + createDate +
-                ", updateBy='" + updateBy + '\'' +
-                ", updateName='" + updateName + '\'' +
-                ", updateDate=" + updateDate +
-                ", remark='" + remark + '\'';
-    }
 }

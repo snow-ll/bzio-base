@@ -1,5 +1,6 @@
 package org.bzio.common.security.entity;
 
+import lombok.Data;
 import org.bzio.common.core.web.entity.BaseEntity;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.List;
  *
  * @author snow
  */
+@Data
 public class SysRole extends BaseEntity {
 
     private static final long serialVersionUID = 4080774754247548788L;
@@ -48,77 +50,5 @@ public class SysRole extends BaseEntity {
     private Integer delFlag;
     
     private List<String> menuIds;
-
-    public String getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getRoleKey() {
-        return roleKey;
-    }
-
-    public void setRoleKey(String roleKey) {
-        this.roleKey = roleKey;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public Boolean getMenuCheckStrictly() {
-        return menuCheckStrictly;
-    }
-
-    public void setMenuCheckStrictly(Boolean menuCheckStrictly) {
-        this.menuCheckStrictly = menuCheckStrictly;
-    }
-
-    public Boolean getDeptCheckStrictly() {
-        return deptCheckStrictly;
-    }
-
-    public void setDeptCheckStrictly(Boolean deptCheckStrictly) {
-        this.deptCheckStrictly = deptCheckStrictly;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(Integer delFlag) {
-        this.delFlag = delFlag;
-    }
-
-    public List<String> getMenuIds() {
-        return menuIds;
-    }
-
-    public void setMenuIds(List<String> menuIds) {
-        this.menuIds = menuIds;
-    }
 }
 

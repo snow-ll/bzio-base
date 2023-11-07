@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionHandlerResolver {
 
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+    protected static final Logger log = LoggerFactory.getLogger(ExceptionHandlerResolver.class);
 
     @ExceptionHandler(value = BaseException.class)
     public AjaxResult handleException(BaseException e) {

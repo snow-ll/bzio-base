@@ -1,6 +1,7 @@
 package org.bzio.common.security.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.bzio.common.core.web.entity.TreeNode;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 /**
  * @author snow
  */
+@Data
 public class MenuTreeNode extends TreeNode {
 
     private static final long serialVersionUID = 6774016705616742314L;
@@ -49,60 +51,4 @@ public class MenuTreeNode extends TreeNode {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public String getPerms() {
-        return perms;
-    }
-
-    public void setPerms(String perms) {
-        this.perms = perms;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
 }

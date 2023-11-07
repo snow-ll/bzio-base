@@ -1,5 +1,6 @@
 package org.bzio.system.entity;
 
+import lombok.Data;
 import org.bzio.common.core.web.entity.BaseEntity;
 
 /**
@@ -7,6 +8,7 @@ import org.bzio.common.core.web.entity.BaseEntity;
  *
  * @author snow
  */
+@Data
 public class SysDictType extends BaseEntity {
 
     private static final long serialVersionUID = 266769603328128983L;
@@ -22,53 +24,5 @@ public class SysDictType extends BaseEntity {
     private Integer status;
     
     private String note;
-
-    public String getDictId() {
-        return dictId;
-    }
-
-    public void setDictId(String dictId) {
-        this.dictId = dictId;
-    }
-
-    public String getDictName() {
-        return dictName;
-    }
-
-    public void setDictName(String dictName) {
-        this.dictName = dictName;
-    }
-
-    public String getDictType() {
-        return dictType;
-    }
-
-    public void setDictType(String dictType) {
-        this.dictType = dictType;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
 }
 

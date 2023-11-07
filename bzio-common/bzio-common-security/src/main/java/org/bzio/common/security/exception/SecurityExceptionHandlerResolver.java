@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecurityExceptionHandlerResolver {
 
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+    protected static final Logger log = LoggerFactory.getLogger(SecurityExceptionHandlerResolver.class);
 
     @ExceptionHandler(value = BaseException.class)
     public AjaxResult handleException(BaseException e) {

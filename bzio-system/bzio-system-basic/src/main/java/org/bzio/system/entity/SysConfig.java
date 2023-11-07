@@ -1,5 +1,6 @@
 package org.bzio.system.entity;
 
+import lombok.Data;
 import org.bzio.common.core.web.entity.BaseEntity;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.io.Serializable;
  *
  * @author snow
  */
+@Data
 public class SysConfig extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 505170173396504308L;
@@ -22,44 +24,4 @@ public class SysConfig extends BaseEntity implements Serializable {
     private String configValue;
     
     private String note;
-
-    public String getConfigId() {
-        return configId;
-    }
-
-    public void setConfigId(String configId) {
-        this.configId = configId;
-    }
-
-    public String getConfigName() {
-        return configName;
-    }
-
-    public void setConfigName(String configName) {
-        this.configName = configName;
-    }
-
-    public String getConfigKey() {
-        return configKey;
-    }
-
-    public void setConfigKey(String configKey) {
-        this.configKey = configKey;
-    }
-
-    public String getConfigValue() {
-        return configValue;
-    }
-
-    public void setConfigValue(String configValue) {
-        this.configValue = configValue;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
 }
