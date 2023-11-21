@@ -4,7 +4,7 @@
 
     <groupId>org.bzio</groupId>
     <artifactId>bzio-base</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <modules>
         <module>bzio-gateway</module>
         <module>bzio-common</module>
@@ -24,7 +24,7 @@
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <mybatis.version>2.2.0</mybatis.version>
         <mysql.version>8.0.32</mysql.version>
-        <bzio.version>1.0-SNAPSHOT</bzio.version>
+        <revision>1.0-SNAPSHOT</revision>
         <lombok.version>RELEASE</lombok.version>
 
         <maven.compiler.source>19</maven.compiler.source>
@@ -83,31 +83,31 @@
             <dependency>
                 <groupId>org.bzio</groupId>
                 <artifactId>bzio-common-core</artifactId>
-                <version>${bzio.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.bzio</groupId>
                 <artifactId>bzio-common-log</artifactId>
-                <version>${bzio.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.bzio</groupId>
                 <artifactId>bzio-common-redis</artifactId>
-                <version>${bzio.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.bzio</groupId>
                 <artifactId>bzio-common-security</artifactId>
-                <version>${bzio.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.bzio</groupId>
                 <artifactId>bzio-system-basic</artifactId>
-                <version>${bzio.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
