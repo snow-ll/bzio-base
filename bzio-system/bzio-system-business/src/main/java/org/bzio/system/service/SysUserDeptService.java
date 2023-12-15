@@ -7,5 +7,8 @@ import org.bzio.common.security.entity.SysUserDept;
  */
 public interface SysUserDeptService {
 
+    /**
+     * 用户添加到部门
+     */
     int saveUserDept(SysUserDept sysUserDept);
 }

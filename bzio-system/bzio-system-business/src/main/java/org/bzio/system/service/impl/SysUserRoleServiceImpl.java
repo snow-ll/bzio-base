@@ -25,11 +25,11 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
     @Resource
     SysUserRoleMapper sysUserRoleMapper;
 
-    /**
-     * 批量保存用户角色关联信息
-     * @param sysUserRoles
-     * @return
-     */
+    @Override
+    public List<SysUser> queryUserByRole(SysUserQo sysUserQo) {
+        return sysUserRoleMapper.queryUserByRole(sysUserQo);
+    }
+
     @Override
     public int saveUserRole(List<SysUserRole> sysUserRoles) {
 
@@ -44,9 +44,6 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
         return sysUserRoleMapper.insertBatch(sysUserRoles);
     }
 
-    /**
-     * 授权用户权限
-     */
     @Override
     public int authUser(SysUserRoleVo sysUserRoleVo) {
         int result = 0;
@@ -62,19 +59,6 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl implements SysUserRo
         return result;
     }
 
-    /**
-     * 根绝角色id查询用户信息
-     * @return
-     */
-    @Override
-    public List<SysUser> queryUserByRole(SysUserQo sysUserQo) {
-        return sysUserRoleMapper.queryUserByRole(sysUserQo);
-    }
-
-    /**
-     * 取消用户授权
-     * @return
-     */
     @Override
     public int cancel(SysUserRole sysUserRole) {
         return sysUserRoleMapper.delete(sysUserRole);

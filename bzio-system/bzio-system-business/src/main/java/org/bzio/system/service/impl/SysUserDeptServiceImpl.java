@@ -20,9 +20,6 @@ public class SysUserDeptServiceImpl extends BaseServiceImpl implements SysUserDe
     @Resource
     SysUserDeptMapper sysUserDeptMapper;
 
-    /**
-     * 用户添加到部门
-     */
     @Override
     public int saveUserDept(SysUserDept sysUserDept) {
         sysUserDept.setId(snowflakeIdGenerator.snowflakeId());

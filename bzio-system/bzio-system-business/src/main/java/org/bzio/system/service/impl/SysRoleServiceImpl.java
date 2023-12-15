@@ -30,25 +30,16 @@ public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleServic
     @Resource
     SysRoleMenuMapper sysRoleMenuMapper;
 
-    /**
-     * 角色详情信息
-     */
     @Override
     public SysRole queryInfo(String roleId) {
         return sysRoleMapper.queryById(roleId);
     }
 
-    /**
-     * 角色列表查询
-     */
     @Override
     public List<SysRole> queryAll(SysRole sysRole) {
         return sysRoleMapper.queryAll(sysRole);
     }
 
-    /**
-     * 保存角色
-     */
     @Override
     public int saveRole(SysRole sysRole) {
         // 获取登录人信息
@@ -79,9 +70,6 @@ public class SysRoleServiceImpl extends BaseServiceImpl implements SysRoleServic
         }
     }
 
-    /**
-     * 删除角色
-     */
     @Override
     @Transactional
     public int deleteRole(String roleId) {

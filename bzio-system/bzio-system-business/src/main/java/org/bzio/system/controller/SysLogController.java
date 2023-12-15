@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
+ * 系统日志控制层
+ *
  * @author snow
  */
 @RestController
@@ -17,6 +19,9 @@ public class SysLogController {
     @Resource
     SysLogService sysLogService;
 
+    /**
+     * 日志列表
+     */
     @GetMapping("list")
     public AjaxResult list(@RequestBody SysLog sysLog) {
         return AjaxResult.success(sysLogService.queryAll(sysLog));

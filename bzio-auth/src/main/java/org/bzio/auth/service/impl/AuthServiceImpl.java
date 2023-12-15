@@ -56,9 +56,6 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     @Resource
     SysMenuMapper sysMenuMapper;
 
-    /**
-     * 用户登录
-     */
     @Override
     public LoginUser login(SysUser sysUser) {
         // 用户名为空，抛出异常
@@ -109,9 +106,6 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         return loginUser;
     }
 
-    /**
-     * 用户注册
-     */
     @Override
     public int register(SysUser sysUser) {
         // 用户名为空，抛出异常
@@ -156,7 +150,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
 
     @Override
     public boolean isLogin(String username) {
-        String key = getKey(username);
+        String key = generateKey(username);
         String token = stringRedisService.get(key);
         return StringUtil.isNotEmpty(token);
     }
@@ -166,7 +160,7 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
         // 验证用户名密码是否正确
         if (verifyUser(username, password)) {
             // 验证信息成功删除登录信息
-            String key = getKey(username);
+            String key = generateKey(username);
             return stringRedisService.delete(key);
         } else {
             return false;
@@ -174,11 +168,29 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
     }
 
     @Override
-    public String getKey(String username) {
+    public String generateKey(String username) {
         SysUser user = sysUserMapper.queryByUsername(username);
         return authConfig.getPrefix() + user.getUserId() + "_" + DateUtil.format(user.getLoginDate(), BaseConstant.YYYYMMDDHHMMSS);
     }
 
+    @Override
+    public Map<String, Object> getInfo(String userId) {
+        Map<String, Object> userInfo = new HashMap();
+        userInfo.put("user", sysUserMapper.queryByUserId(userId));
+        userInfo.put("roles", sysRoleMapper.queryRoleByUserId(userId));
+        userInfo.put("perms", sysMenuMapper.queryPermByUserId(userId).stream().filter(item -> StringUtil.isNotEmpty(item)).collect(Collectors.toList()));
+        return userInfo;
+    }
+
+    @Override
+    public List<MenuTreeNode> getRouter() {
+        return TreeNodeUtil.buildTreeList((sysMenuMapper.queryRouter(AuthUtil.getUserId())));
+    }
+
+
+    /**
+     * 验证用户
+     */
     private boolean verifyUser(String username, String password) {
         // 用户名为空，抛出异常
         if (StringUtil.isEmpty(username)) {
@@ -197,22 +209,5 @@ public class AuthServiceImpl extends BaseServiceImpl implements AuthService {
             return false;
         }
         return true;
-    }
-
-    /**
-     * 获取登录用户信息（用户信息、角色、权限）
-     */
-    @Override
-    public Map<String, Object> getInfo(String userId) {
-        Map<String, Object> userInfo = new HashMap();
-        userInfo.put("user", sysUserMapper.queryByUserId(userId));
-        userInfo.put("roles", sysRoleMapper.queryRoleByUserId(userId));
-        userInfo.put("perms", sysMenuMapper.queryPermByUserId(userId).stream().filter(item -> StringUtil.isNotEmpty(item)).collect(Collectors.toList()));
-        return userInfo;
-    }
-
-    @Override
-    public List<MenuTreeNode> getRouter() {
-        return TreeNodeUtil.buildTreeList((sysMenuMapper.queryRouter(AuthUtil.getUserId())));
     }
 }

@@ -28,57 +28,37 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
     @Resource
     SysMenuMapper sysMenuMapper;
 
-    /**
-     * 查询菜单详细信息
-     */
     @Override
     public SysMenu queryInfo(String menuId) {
         return sysMenuMapper.queryById(menuId);
     }
 
-    /**
-     * 查询菜单集合
-     */
     @Override
     public List<SysMenu> queryAll(SysMenu sysMenu) {
         return sysMenuMapper.queryAll(sysMenu);
     }
 
-    /**
-     * 查询树节点信息
-     */
     @Override
     public List<MenuTreeNode> queryTreeNode(SysMenuQo sysMenu) {
         return sysMenuMapper.queryTreeNode(sysMenu);
     }
 
-    /**
-     * 菜单树结构
-     */
     @Override
     public List<MenuTreeNode> treeList(List<MenuTreeNode> treeNodes) {
         return TreeNodeUtil.buildTreeList(treeNodes);
     }
 
-    /**
-     * 查询子级菜单
-     */
     @Override
     public List<Map> queryChild(String parentId) {
         return sysMenuMapper.queryChild(parentId);
     }
-    
-    /**
-     * 查询父级菜单
-     */
+
     @Override
     public List<Map> queryParent(String menuId) {
         return sysMenuMapper.queryParent(menuId);
     }
 
-    /**
-     * 保存菜单
-     */
+
     @Override
     public int saveMenu(SysMenu sysMenu) {
         // 获取登录人信息
@@ -107,9 +87,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
         }
     }
 
-    /**
-     * 批量删除菜单
-     */
+
     @Override
     @Transactional
     public int delBatch(String[] menuIds) {

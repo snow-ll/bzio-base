@@ -21,20 +21,13 @@ public class SysRoleMenuServiceImpl extends BaseServiceImpl implements SysRoleMe
     @Resource
     SysRoleMenuMapper sysRoleMenuMapper;
 
-    /**
-     * 获取菜单id
-     */
+
     @Override
     public List<String> queryMenuIdsByRoleId(String roleId) {
         return sysRoleMenuMapper.queryMenuIdsByRoleId(roleId);
     }
 
-    /**
-     * 批量给角色添加菜单访问权限
-     * @param roleId 添加菜单角色
-     * @param menuIds 添加菜单的id
-     * @return
-     */
+
     @Override
     public int insertBatch(String roleId, List<String> menuIds) {
         int result = 0;
@@ -49,9 +42,6 @@ public class SysRoleMenuServiceImpl extends BaseServiceImpl implements SysRoleMe
         return result;
     }
 
-    /**
-     * 清空原有的菜单权限
-     */
     @Override
     public int clearMenu(String roleId) {
         return sysRoleMenuMapper.deleteByRoleId(roleId);

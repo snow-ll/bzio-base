@@ -27,41 +27,27 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
     @Resource
     SysDeptMapper sysDeptMapper;
 
-    /**
-     * 部门详情信息
-     */
+
     @Override
     public SysDept queryInfo(String deptId) {
         return sysDeptMapper.queryById(deptId);
     }
 
-    /**
-     * 查询部门列表
-     */
     @Override
     public List<SysDept> queryAll(SysDept sysDept) {
         return sysDeptMapper.queryAll(sysDept);
     }
 
-    /**
-     * 查询树节点信息
-     */
     @Override
     public List<DeptTreeNode> queryTreeNode() {
         return sysDeptMapper.queryTreeNode();
     }
 
-    /**
-     * 部门树状下拉列表
-     */
     @Override
     public List<DeptTreeNode> treeList(List<DeptTreeNode> treeNodes) {
         return TreeNodeUtil.buildTreeList(treeNodes);
     }
 
-    /**
-     * 保存部门
-     */
     @Override
     public int saveDept(SysDept sysDept) {
         // 获取登录人信息
@@ -100,9 +86,7 @@ public class SysDeptServiceImpl extends BaseServiceImpl implements SysDeptServic
         }
     }
 
-    /**
-     * 删除部门
-     */
+
     @Override
     @Transactional
     public int delBatch(String[] deptIds) {

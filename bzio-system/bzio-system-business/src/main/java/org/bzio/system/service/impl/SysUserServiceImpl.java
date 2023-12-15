@@ -35,9 +35,6 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
     @Resource
     SysUserDeptMapper sysUserDeptMapper;
 
-    /**
-     * 根据用户名查询用户详情
-     */
     @Override
     public SysUser queryInfo(String userId) {
         SysUser sysUser = sysUserMapper.queryByUserId(userId);
@@ -48,17 +45,12 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         return sysUser;
     }
 
-    /**
-     * 根据条件查询用户列表
-     */
     @Override
     public List<SysUserBo> queryAll(SysUserQo sysUser) {
         return sysUserMapper.queryAll(sysUser);
     }
 
-    /**
-     * 新增用户
-     */
+
     @Override
     public int saveUser(SysUser sysUser) {
         int result = 0;
@@ -109,16 +101,13 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
         return result;
     }
 
-    /**
-     * 根据用户名删除用户
-     */
-    @Override
-    public int deleteUser(String username) {
-        return sysUserMapper.deleteByUsername(username);
-    }
-
     @Override
     public int changeStatus(String userId, Integer status) {
         return sysUserMapper.changeStatus(userId, status);
+    }
+
+    @Override
+    public int deleteUser(String username) {
+        return sysUserMapper.deleteByUsername(username);
     }
 }

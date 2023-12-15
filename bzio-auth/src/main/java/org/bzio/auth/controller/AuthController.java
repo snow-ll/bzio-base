@@ -119,7 +119,7 @@ public class AuthController extends BaseController {
     /**
      * 强制注销
      */
-    @Log(title = "强制踢出", businessType = BusinessType.AUTH)
+    @Log(title = "强制注销", businessType = BusinessType.AUTH)
     @PostMapping("/force")
     public AjaxResult force(String username, String password) {
         return AjaxResult.toAjax(authService.force(username, password));
@@ -133,7 +133,7 @@ public class AuthController extends BaseController {
     public AjaxResult refreshToken() {
         String username = AuthUtil.getUsername();
         // 获取token
-        String key = authService.getKey(username);
+        String key = authService.generateKey(username);
         log.info("生成key：" + key);
         String token = stringRedisService.get(key);
 
